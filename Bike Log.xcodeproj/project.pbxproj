@@ -1,0 +1,601 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		84468861279224A900720716 /* WorkoutRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84468860279224A900720716 /* WorkoutRow.swift */; };
+		844688652793CAC900720716 /* WorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844688642793CAC900720716 /* WorkoutViewModel.swift */; };
+		8446886D2793D46C00720716 /* Bike_LogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446886C2793D46C00720716 /* Bike_LogTests.swift */; };
+		84BFA4E0278E612F008E690D /* Bike_LogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BFA4DF278E612F008E690D /* Bike_LogApp.swift */; };
+		84BFA4E2278E612F008E690D /* ExerciseLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BFA4E1278E612F008E690D /* ExerciseLog.swift */; };
+		84BFA4E4278E6130008E690D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BFA4E3278E6130008E690D /* Assets.xcassets */; };
+		84BFA4E7278E6130008E690D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BFA4E6278E6130008E690D /* Preview Assets.xcassets */; };
+		84BFA4F0278E62D3008E690D /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84BFA4EF278E62D3008E690D /* HealthKit.framework */; };
+		84BFA4F3278E6325008E690D /* StatisticalPeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BFA4F2278E6325008E690D /* StatisticalPeriod.swift */; };
+		84BFA4F6278E6374008E690D /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BFA4F5278E6374008E690D /* Calendar.swift */; };
+		84BFA4F8278E669F008E690D /* HealthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BFA4F7278E669F008E690D /* HealthProvider.swift */; };
+		84BFA4FA278E8C81008E690D /* HealthKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BFA4F9278E8C81008E690D /* HealthKit.swift */; };
+		84BFA4FC278E8CAD008E690D /* Measurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BFA4FB278E8CAD008E690D /* Measurement.swift */; };
+		84BFA4FE278E8E38008E690D /* WorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BFA4FD278E8E38008E690D /* WorkoutManager.swift */; };
+		84C416992794718F00C303CE /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C416982794718F00C303CE /* Color.swift */; };
+		84C4169B2794784A00C303CE /* DateBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C4169A2794784A00C303CE /* DateBlock.swift */; };
+		84C4169D2794F87400C303CE /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C4169C2794F87400C303CE /* Sequence.swift */; };
+		84C4169F2795038A00C303CE /* WorkoutSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C4169E2795038A00C303CE /* WorkoutSort.swift */; };
+		84CEC87E2791022A00520F65 /* HealthKitProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CEC87D2791022A00520F65 /* HealthKitProvider.swift */; };
+		84CEC880279103A900520F65 /* MockHealthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CEC87F279103A900520F65 /* MockHealthProvider.swift */; };
+		84D3502C278FCBEE00C47FFA /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D3502B278FCBEE00C47FFA /* Workout.swift */; };
+		84D3502E278FCE9300C47FFA /* WorkoutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D3502D278FCE9300C47FFA /* WorkoutType.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8446886E2793D46C00720716 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84BFA4D4278E612F008E690D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84BFA4DB278E612F008E690D;
+			remoteInfo = "Bike Log";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		84468860279224A900720716 /* WorkoutRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRow.swift; sourceTree = "<group>"; };
+		844688642793CAC900720716 /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
+		8446886A2793D46C00720716 /* Bike LogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bike LogTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8446886C2793D46C00720716 /* Bike_LogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bike_LogTests.swift; sourceTree = "<group>"; };
+		84BFA4DC278E612F008E690D /* Bike Log.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bike Log.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		84BFA4DF278E612F008E690D /* Bike_LogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bike_LogApp.swift; sourceTree = "<group>"; };
+		84BFA4E1278E612F008E690D /* ExerciseLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseLog.swift; sourceTree = "<group>"; };
+		84BFA4E3278E6130008E690D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		84BFA4E6278E6130008E690D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		84BFA4ED278E62D3008E690D /* Bike Log.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bike Log.entitlements"; sourceTree = "<group>"; };
+		84BFA4EF278E62D3008E690D /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		84BFA4F2278E6325008E690D /* StatisticalPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticalPeriod.swift; sourceTree = "<group>"; };
+		84BFA4F5278E6374008E690D /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		84BFA4F7278E669F008E690D /* HealthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthProvider.swift; sourceTree = "<group>"; };
+		84BFA4F9278E8C81008E690D /* HealthKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKit.swift; sourceTree = "<group>"; };
+		84BFA4FB278E8CAD008E690D /* Measurement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measurement.swift; sourceTree = "<group>"; };
+		84BFA4FD278E8E38008E690D /* WorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutManager.swift; sourceTree = "<group>"; };
+		84C416982794718F00C303CE /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		84C4169A2794784A00C303CE /* DateBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateBlock.swift; sourceTree = "<group>"; };
+		84C4169C2794F87400C303CE /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
+		84C4169E2795038A00C303CE /* WorkoutSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSort.swift; sourceTree = "<group>"; };
+		84CEC87D2791022A00520F65 /* HealthKitProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitProvider.swift; sourceTree = "<group>"; };
+		84CEC87F279103A900520F65 /* MockHealthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHealthProvider.swift; sourceTree = "<group>"; };
+		84D3502B278FCBEE00C47FFA /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		84D3502D278FCE9300C47FFA /* WorkoutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutType.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		844688672793D46C00720716 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84BFA4D9278E612F008E690D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84BFA4F0278E62D3008E690D /* HealthKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		84468862279224D600720716 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				84BFA4E1278E612F008E690D /* ExerciseLog.swift */,
+				84468860279224A900720716 /* WorkoutRow.swift */,
+				84C4169A2794784A00C303CE /* DateBlock.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		844688632793CA5800720716 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				844688642793CAC900720716 /* WorkoutViewModel.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		8446886B2793D46C00720716 /* Bike LogTests */ = {
+			isa = PBXGroup;
+			children = (
+				8446886C2793D46C00720716 /* Bike_LogTests.swift */,
+			);
+			path = "Bike LogTests";
+			sourceTree = "<group>";
+		};
+		844688732793E78C00720716 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				84CEC87F279103A900520F65 /* MockHealthProvider.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		84BFA4D3278E612F008E690D = {
+			isa = PBXGroup;
+			children = (
+				84BFA4DE278E612F008E690D /* Bike Log */,
+				8446886B2793D46C00720716 /* Bike LogTests */,
+				84BFA4DD278E612F008E690D /* Products */,
+				84BFA4EE278E62D3008E690D /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		84BFA4DD278E612F008E690D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				84BFA4DC278E612F008E690D /* Bike Log.app */,
+				8446886A2793D46C00720716 /* Bike LogTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		84BFA4DE278E612F008E690D /* Bike Log */ = {
+			isa = PBXGroup;
+			children = (
+				84468862279224D600720716 /* Views */,
+				84D35028278FCA4300C47FFA /* Controllers */,
+				84BFA4F1278E6314008E690D /* Models */,
+				844688632793CA5800720716 /* View Models */,
+				84BFA4F4278E6366008E690D /* Extensions */,
+				844688732793E78C00720716 /* Mocks */,
+				84BFA4ED278E62D3008E690D /* Bike Log.entitlements */,
+				84BFA4DF278E612F008E690D /* Bike_LogApp.swift */,
+				84BFA4E3278E6130008E690D /* Assets.xcassets */,
+				84BFA4E5278E6130008E690D /* Preview Content */,
+			);
+			path = "Bike Log";
+			sourceTree = "<group>";
+		};
+		84BFA4E5278E6130008E690D /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				84BFA4E6278E6130008E690D /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		84BFA4EE278E62D3008E690D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84BFA4EF278E62D3008E690D /* HealthKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		84BFA4F1278E6314008E690D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				84D3502B278FCBEE00C47FFA /* Workout.swift */,
+				84D3502D278FCE9300C47FFA /* WorkoutType.swift */,
+				84C4169E2795038A00C303CE /* WorkoutSort.swift */,
+				84BFA4F2278E6325008E690D /* StatisticalPeriod.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		84BFA4F4278E6366008E690D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				84BFA4F5278E6374008E690D /* Calendar.swift */,
+				84BFA4F9278E8C81008E690D /* HealthKit.swift */,
+				84BFA4FB278E8CAD008E690D /* Measurement.swift */,
+				84C416982794718F00C303CE /* Color.swift */,
+				84C4169C2794F87400C303CE /* Sequence.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		84D35028278FCA4300C47FFA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				84BFA4FD278E8E38008E690D /* WorkoutManager.swift */,
+				84BFA4F7278E669F008E690D /* HealthProvider.swift */,
+				84CEC87D2791022A00520F65 /* HealthKitProvider.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		844688692793D46C00720716 /* Bike LogTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 844688702793D46C00720716 /* Build configuration list for PBXNativeTarget "Bike LogTests" */;
+			buildPhases = (
+				844688662793D46C00720716 /* Sources */,
+				844688672793D46C00720716 /* Frameworks */,
+				844688682793D46C00720716 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8446886F2793D46C00720716 /* PBXTargetDependency */,
+			);
+			name = "Bike LogTests";
+			productName = "Bike LogTests";
+			productReference = 8446886A2793D46C00720716 /* Bike LogTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		84BFA4DB278E612F008E690D /* Bike Log */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84BFA4EA278E6130008E690D /* Build configuration list for PBXNativeTarget "Bike Log" */;
+			buildPhases = (
+				84BFA4D8278E612F008E690D /* Sources */,
+				84BFA4D9278E612F008E690D /* Frameworks */,
+				84BFA4DA278E612F008E690D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Bike Log";
+			productName = "Bike Log";
+			productReference = 84BFA4DC278E612F008E690D /* Bike Log.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		84BFA4D4278E612F008E690D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					844688692793D46C00720716 = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 84BFA4DB278E612F008E690D;
+					};
+					84BFA4DB278E612F008E690D = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 84BFA4D7278E612F008E690D /* Build configuration list for PBXProject "Bike Log" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 84BFA4D3278E612F008E690D;
+			productRefGroup = 84BFA4DD278E612F008E690D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				84BFA4DB278E612F008E690D /* Bike Log */,
+				844688692793D46C00720716 /* Bike LogTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		844688682793D46C00720716 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84BFA4DA278E612F008E690D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84BFA4E7278E6130008E690D /* Preview Assets.xcassets in Resources */,
+				84BFA4E4278E6130008E690D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		844688662793D46C00720716 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8446886D2793D46C00720716 /* Bike_LogTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84BFA4D8278E612F008E690D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84468861279224A900720716 /* WorkoutRow.swift in Sources */,
+				84BFA4FA278E8C81008E690D /* HealthKit.swift in Sources */,
+				84D3502E278FCE9300C47FFA /* WorkoutType.swift in Sources */,
+				84C4169B2794784A00C303CE /* DateBlock.swift in Sources */,
+				84BFA4E2278E612F008E690D /* ExerciseLog.swift in Sources */,
+				844688652793CAC900720716 /* WorkoutViewModel.swift in Sources */,
+				84C4169D2794F87400C303CE /* Sequence.swift in Sources */,
+				84CEC87E2791022A00520F65 /* HealthKitProvider.swift in Sources */,
+				84BFA4F8278E669F008E690D /* HealthProvider.swift in Sources */,
+				84D3502C278FCBEE00C47FFA /* Workout.swift in Sources */,
+				84C416992794718F00C303CE /* Color.swift in Sources */,
+				84BFA4FE278E8E38008E690D /* WorkoutManager.swift in Sources */,
+				84BFA4E0278E612F008E690D /* Bike_LogApp.swift in Sources */,
+				84C4169F2795038A00C303CE /* WorkoutSort.swift in Sources */,
+				84BFA4F3278E6325008E690D /* StatisticalPeriod.swift in Sources */,
+				84CEC880279103A900520F65 /* MockHealthProvider.swift in Sources */,
+				84BFA4F6278E6374008E690D /* Calendar.swift in Sources */,
+				84BFA4FC278E8CAD008E690D /* Measurement.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8446886F2793D46C00720716 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84BFA4DB278E612F008E690D /* Bike Log */;
+			targetProxy = 8446886E2793D46C00720716 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		844688712793D46C00720716 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5H3PBG23RV;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.batoulapps.Bike-LogTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bike Log.app/Bike Log";
+			};
+			name = Debug;
+		};
+		844688722793D46C00720716 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5H3PBG23RV;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.batoulapps.Bike-LogTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bike Log.app/Bike Log";
+			};
+			name = Release;
+		};
+		84BFA4E8278E6130008E690D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		84BFA4E9278E6130008E690D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		84BFA4EB278E6130008E690D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Bike Log/Bike Log.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Bike Log/Preview Content\"";
+				DEVELOPMENT_TEAM = 5H3PBG23RV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Display Workouts";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Import Workouts";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.batoulapps.BikerLog;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		84BFA4EC278E6130008E690D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Bike Log/Bike Log.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Bike Log/Preview Content\"";
+				DEVELOPMENT_TEAM = 5H3PBG23RV;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Display Workouts";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Import Workouts";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.batoulapps.BikerLog;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		844688702793D46C00720716 /* Build configuration list for PBXNativeTarget "Bike LogTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				844688712793D46C00720716 /* Debug */,
+				844688722793D46C00720716 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84BFA4D7278E612F008E690D /* Build configuration list for PBXProject "Bike Log" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84BFA4E8278E6130008E690D /* Debug */,
+				84BFA4E9278E6130008E690D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84BFA4EA278E6130008E690D /* Build configuration list for PBXNativeTarget "Bike Log" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84BFA4EB278E6130008E690D /* Debug */,
+				84BFA4EC278E6130008E690D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 84BFA4D4278E612F008E690D /* Project object */;
+}
