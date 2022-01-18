@@ -39,17 +39,11 @@ struct WorkoutRow: View {
 
 struct WorkoutRow_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutRow(workout: MockHealthProvider().generateWorkout(type: .cycling))
-            .previewLayout(PreviewLayout.sizeThatFits)
-            .padding()
-            .previewDisplayName("Cycling")
-        WorkoutRow(workout: MockHealthProvider().generateWorkout(type: .walking))
-            .previewLayout(PreviewLayout.sizeThatFits)
-            .padding()
-            .previewDisplayName("Walking")
-        WorkoutRow(workout: MockHealthProvider().generateWorkout(type: .running))
-            .previewLayout(PreviewLayout.sizeThatFits)
-            .padding()
-            .previewDisplayName("Running")
+        ForEach(WorkoutType.allCases, id: \.self) { type in
+            WorkoutRow(workout: MockHealthProvider().generateWorkout(type: type))
+                .previewLayout(PreviewLayout.sizeThatFits)
+                .padding()
+                .previewDisplayName(type.name)
+        }
     }
 }

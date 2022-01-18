@@ -9,16 +9,17 @@ import Foundation
 import HealthKit
 import Combine
 
+@MainActor
 class HealthKitProvider: HealthProvider {
 
     let store = HKHealthStore()
-    
+
     let healthTypes: Set = [HKWorkoutType.workoutType(),
-                                   HKQuantityType.quantityType(forIdentifier: .distanceCycling)!,
-                                   HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-                                   HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-                                   HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-                                   HKQuantityType.quantityType(forIdentifier: .basalEnergyBurned)!]
+                            HKQuantityType.quantityType(forIdentifier: .distanceCycling)!,
+                            HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+                            HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+                            HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
+                            HKQuantityType.quantityType(forIdentifier: .basalEnergyBurned)!]
     
     enum HealthDataError: Error {
         case unavailableOnDevice
@@ -71,7 +72,7 @@ class HealthKitProvider: HealthProvider {
             return (workouts: [], unit: .miles)
         }
 
-        let workouts = Workout.fromHealthKit(workouts: hkWorkouts, unit: hkUnit)
+        let workouts = hkWorkouts.compactMap { Workout(hkWorkout: $0, hkUnit: hkUnit) }
         let unit = hkUnit.lengthUnit()
         return (workouts: workouts, unit: unit)
     }

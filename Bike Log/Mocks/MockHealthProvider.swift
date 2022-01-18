@@ -55,3 +55,9 @@ class MockHealthProvider: HealthProvider {
         return (workouts: workouts, unit: unit)
     }
 }
+
+extension WorkoutManager {
+    static func mock(unit: UnitLength = .miles) -> WorkoutManager {
+        WorkoutManager(healthProvider: MockHealthProvider(unit: unit))
+    }
+}

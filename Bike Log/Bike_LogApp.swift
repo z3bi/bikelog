@@ -16,13 +16,16 @@ struct Bike_LogApp: App {
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = UIColor(.Theme.orange)
     }
     
+#if targetEnvironment(simulator)
+    @StateObject var workoutManager: WorkoutManager = WorkoutManager.mock()
+#else
+    @StateObject var workoutManager: WorkoutManager = WorkoutManager(healthProvider: HealthKitProvider())
+#endif
+    
     var body: some Scene {
         WindowGroup {
-            #if targetEnvironment(simulator)
-                ExerciseLog(healthProvider: MockHealthProvider())
-            #else
-                ExerciseLog(healthProvider: HealthKitProvider())
-            #endif
+            ExerciseLog()
+                .environmentObject(workoutManager)
         }
     }
 }

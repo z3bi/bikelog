@@ -11,18 +11,18 @@ struct WorkoutViewModel {
     let workout: Workout
     
     var formattedDistance: String {
-        workout.distance.formatted(WorkoutViewModel.lengthFormat)
+        workout.distance.formatted(LengthFormat.lengthFormat())
     }
     
     var formattedSpeed: String {
         switch workout.type {
         case .cycling:
-            return workout.speed.formatted(WorkoutViewModel.speedFormat)
+            return workout.speed.formatted(SpeedFormat.speedFormat())
         case .running, .walking:
             let minutes = Int(workout.speed.value).formatted()
             let secondsValue = round((workout.speed.value - floor(workout.speed.value)) * 60)
             let seconds = Int(secondsValue).formatted()
-            return String(format: NSLocalizedString("%@'%@\"/%@", comment: ""), minutes, seconds, workout.unit.symbol)
+            return String(format: String(localized: "%@'%@\"/%@"), minutes, seconds, workout.unit.symbol)
         }
     }
     
@@ -41,14 +41,4 @@ struct WorkoutViewModel {
     var formattedDuration: String {
         durationRange.formatted(.components(style: .condensedAbbreviated, fields: durationComponents))
     }
-    
-    typealias SpeedFormat = Measurement<UnitSpeed>.FormatStyle
-    static let speedFormat: SpeedFormat = .measurement(width: .abbreviated,
-                                                       usage: .asProvided,
-                                                       numberFormatStyle: .number.precision(.fractionLength(1)))
-
-    typealias LengthFormat = Measurement<UnitLength>.FormatStyle
-    static let lengthFormat: LengthFormat = .measurement(width: .abbreviated,
-                                                           usage: .asProvided,
-                                                           numberFormatStyle: .number.precision(.fractionLength(2)))
 }

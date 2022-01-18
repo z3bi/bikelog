@@ -15,15 +15,15 @@ enum WorkoutSort: CaseIterable {
     var name: String {
         switch self {
         case .date:
-            return NSLocalizedString("Date", comment: "")
+            return String(localized: "Date")
         case .distance:
-            return NSLocalizedString("Distance", comment: "")
+            return String(localized: "Distance")
         case .speed:
-            return NSLocalizedString("Speed", comment: "")
+            return String(localized: "Speed")
         }
     }
     
-    func sort(_ workouts: [Workout]) -> [Workout] {
+    func sortedWorkouts(_ workouts: [Workout]) -> [Workout] {
         switch self {
         case .date:
             return workouts.sorted(comparingKeyPath: \.startDate, ascending: false)

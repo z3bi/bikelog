@@ -16,11 +16,11 @@ enum WorkoutType: CaseIterable {
     var name: String {
         switch self {
         case .cycling:
-            return NSLocalizedString("Cycling", comment: "")
+            return String(localized: "Cycling")
         case .running:
-            return NSLocalizedString("Running", comment: "")
+            return String(localized: "Running")
         case .walking:
-            return NSLocalizedString("Walking", comment: "")
+            return String(localized: "Walking")
         }
     }
     

@@ -59,3 +59,22 @@ class UnitConverterInverse: UnitConverter {
     }
 }
 
+
+typealias SpeedFormat = Measurement<UnitSpeed>.FormatStyle
+typealias LengthFormat = Measurement<UnitLength>.FormatStyle
+
+extension SpeedFormat {
+    static func speedFormat(fractions: Int = 1) -> SpeedFormat {
+        .measurement(width: .abbreviated,
+                     usage: .asProvided,
+                     numberFormatStyle: .number.precision(.fractionLength(fractions)))
+    }
+}
+
+extension LengthFormat {
+    static func lengthFormat(fractions: Int = 2) -> LengthFormat {
+        .measurement(width: .abbreviated,
+                     usage: .asProvided,
+                     numberFormatStyle: .number.precision(.fractionLength(fractions)))
+    }
+}

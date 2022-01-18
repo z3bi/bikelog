@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum StatisticalPeriod {
+enum StatisticalPeriod: CaseIterable {
     case all
     case year
     case month
@@ -16,61 +16,46 @@ enum StatisticalPeriod {
     var name: String {
         switch self {
         case .all:
-            return NSLocalizedString("All", comment: "")
+            return String(localized: "All")
         case .year:
-            return NSLocalizedString("Year", comment: "")
+            return String(localized: "Year")
         case .month:
-            return NSLocalizedString("Month", comment: "")
+            return String(localized: "Month")
         case .week:
-            return NSLocalizedString("Week", comment: "")
+            return String(localized: "Week")
         }
     }
     
     func dateInterval(from date: Date = Date()) -> DateInterval {
+        let cal = Calendar.current
+        let comps = cal.dateComponents([.year, .month, .weekday], from: date)
+        guard let year = comps.year, let month = comps.month, let weekday = comps.weekday else {
+            return DateInterval(start: date, end: date)
+        }
+        
+        let startDate: Date
+        let endDate: Date
+        
         switch self {
         case .all:
-            return DateInterval(start: .distantPast, end: .distantFuture)
+            startDate = .distantPast
+            endDate = .distantFuture
         case .year:
-            var startComponents = Calendar.gregorian.dateComponents([.year, .month, .day], from: date)
-            startComponents.day = 1
-            startComponents.month = 1
-            var endComponents = Calendar.gregorian.dateComponents([.year, .month, .day], from: date)
-            endComponents.year? += 1
-            endComponents.day = 1
-            endComponents.month = 1
-            guard let start = Calendar.gregorian.date(from: startComponents), let end = Calendar.gregorian.date(from: endComponents) else {
-                return DateInterval(start: date, end: date)
-            }
-            
-            return DateInterval(start: Calendar.gregorian.startOfDay(for: start), end: Calendar.gregorian.startOfDay(for: end).addingTimeInterval(-1))
+            startDate = cal.date(from: DateComponents(year: year, month: 1, day: 1)) ?? date
+            endDate = cal.date(from: DateComponents(year: year + 1, month: 1, day: 1)) ?? date
         case .month:
-            var startComponents = Calendar.gregorian.dateComponents([.year, .month, .day], from: date)
-            startComponents.day = 1
-            var endComponents = Calendar.gregorian.dateComponents([.year, .month, .day], from: date)
-            endComponents.month? += 1
-            endComponents.day = 1
-            guard let start = Calendar.gregorian.date(from: startComponents), let end = Calendar.gregorian.date(from: endComponents) else {
-                return DateInterval(start: date, end: date)
-            }
-            
-            return DateInterval(start: Calendar.gregorian.startOfDay(for: start), end: Calendar.gregorian.startOfDay(for: end).addingTimeInterval(-1))
+            startDate = cal.date(from: DateComponents(year: year, month: month, day: 1)) ?? date
+            endDate = cal.date(from: DateComponents(year: year, month: month + 1, day: 1)) ?? date
         case .week:
-            var offset = Calendar.gregorian.component(.weekday, from: date) - 2
-            offset = offset < 0 ? 6 : offset
-            var startComponents = Calendar.gregorian.dateComponents([.year, .month, .day], from: date)
-            startComponents.day? -= offset
-            var endComponents = Calendar.gregorian.dateComponents([.year, .month, .day], from: date)
-            endComponents.day? += (7 - offset)
-            guard let start = Calendar.gregorian.date(from: startComponents), let end = Calendar.gregorian.date(from: endComponents) else {
-                return DateInterval(start: date, end: date)
+            if weekday == 2 {
+                startDate = cal.startOfDay(for: date)
+            } else {
+                let monday = cal.nextDate(after: date, matching: DateComponents(weekday: 2), matchingPolicy: .nextTime, direction: .backward) ?? date
+                startDate = cal.startOfDay(for: monday)
             }
-            
-            return DateInterval(start: Calendar.gregorian.startOfDay(for: start), end: Calendar.gregorian.startOfDay(for: end).addingTimeInterval(-1))
+            endDate = cal.date(byAdding: .day, value: 7, to: startDate) ?? date
         }
-    }
-    
-    func filterWorkouts(_ workouts: [Workout], date: Date = Date()) -> [Workout] {
-        let interval = dateInterval(from: date)
-        return workouts.filter { interval.contains($0.startDate) }
+        
+        return DateInterval(start: startDate, end: endDate)
     }
 }

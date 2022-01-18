@@ -9,9 +9,9 @@ import Foundation
 import Combine
 import UIKit
 
-@MainActor
 class WorkoutManager: ObservableObject {
     @Published private(set) var workouts: [Workout] = []
+    private(set) var unit: UnitLength = .miles
     
     var sort: WorkoutSort = .date {
         didSet {
@@ -47,16 +47,9 @@ class WorkoutManager: ObservableObject {
         setWorkouts(workoutData)
     }
     
-    func totalDistance() -> Measurement<UnitLength> {
-        let initial = Measurement(value: 0, unit: unit)
-        return workouts.reduce(initial) { $0 + $1.distance }
-    }
-    
     // MARK: Internal
-    
-    private var unit: UnitLength = .miles
 
     private func setWorkouts(_ newWorkouts: [Workout]) {
-        workouts = sort.sort(newWorkouts)
+        workouts = sort.sortedWorkouts(newWorkouts)
     }
 }
