@@ -9,7 +9,6 @@ import Foundation
 import HealthKit
 import Combine
 
-@MainActor
 class HealthKitProvider: HealthProvider {
 
     let store = HKHealthStore()
@@ -63,13 +62,13 @@ class HealthKitProvider: HealthProvider {
         }
     }
     
-    func fetchWorkouts(type: WorkoutType) async -> (workouts: [Workout], unit: UnitLength) {
+    func fetchWorkouts(activity: WorkoutActivity) async -> (workouts: [Workout], unit: UnitLength) {
         await requestAuthorization()
-        async let fetchWorkouts = queryWorkouts(activity: type.hkWorkoutActivityType)
-        async let fetchUnit = preferredUnit(for: HKWorkout.distanceType(for: type.hkWorkoutActivityType))
+        async let fetchWorkouts = queryWorkouts(activity: activity.hkActivityType)
+        async let fetchUnit = preferredUnit(for: HKWorkout.distanceType(for: activity.hkActivityType))
         let (hkWorkouts, hkUnit) = await (fetchWorkouts, fetchUnit)
         guard let hkUnit = hkUnit else {
-            return (workouts: [], unit: .miles)
+            return (workouts: [], unit: Locale.current.distanceUnit())
         }
 
         let workouts = hkWorkouts.compactMap { Workout(hkWorkout: $0, hkUnit: hkUnit) }

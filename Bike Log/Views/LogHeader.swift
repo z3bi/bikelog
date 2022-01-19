@@ -16,7 +16,7 @@ struct LogHeader: View {
         self.models = StatisticalPeriod.allCases.map {
             StatsViewModel(date: Date(),
                            period: $0,
-                           type: manager.type,
+                           activity: manager.activity,
                            unit: manager.unit,
                            workouts: manager.workouts)
         }

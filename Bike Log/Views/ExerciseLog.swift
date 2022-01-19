@@ -24,13 +24,13 @@ struct ExerciseLog: View {
             .task {
                 await workoutManager.fetchWorkouts()
             }
-            .navigationTitle(workoutManager.type.name)
+            .navigationTitle(workoutManager.activity.name)
             .toolbar {
                 ToolbarItem {
                     Menu("Activity") {
-                        Picker(selection: $workoutManager.type, label: Text("Activity")) {
-                            ForEach(WorkoutType.allCases, id: \.self) { type in
-                                Text(type.name)
+                        Picker(selection: $workoutManager.activity, label: Text("Activity")) {
+                            ForEach(WorkoutActivity.allCases, id: \.self) { activity in
+                                Text(activity.name)
                             }
                         }
                     }

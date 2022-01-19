@@ -10,15 +10,15 @@ import Foundation
 struct StatsViewModel: Hashable {
     let dateInterval: DateInterval
     let period: StatisticalPeriod
-    let type: WorkoutType
+    let activity: WorkoutActivity
     let unit: UnitLength
     let workouts: [Workout]
     
-    init(date: Date, period: StatisticalPeriod, type: WorkoutType, unit: UnitLength, workouts: [Workout]) {
+    init(date: Date, period: StatisticalPeriod, activity: WorkoutActivity, unit: UnitLength, workouts: [Workout]) {
         let interval = period.dateInterval(from: date)
         self.dateInterval = interval
         self.period = period
-        self.type = type
+        self.activity = activity
         self.unit = unit
         self.workouts = workouts.filter { interval.contains($0.startDate) }
     }
@@ -42,13 +42,13 @@ struct StatsViewModel: Hashable {
     }
     
     func workoutCount() -> String {
-        switch type {
+        switch activity {
         case .cycling:
-            return "\(workouts.count) rides"
+            return String.localizedStringWithFormat(String(localized: "%d rides"), workouts.count)
         case .running:
-            return "\(workouts.count) runs"
+            return String.localizedStringWithFormat(String(localized: "%d runs"), workouts.count)
         case .walking:
-            return "\(workouts.count) walks"
+            return String.localizedStringWithFormat(String(localized: "%d walks"), workouts.count)
         }
     }
 }

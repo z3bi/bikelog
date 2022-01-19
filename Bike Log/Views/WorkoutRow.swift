@@ -19,7 +19,7 @@ struct WorkoutRow: View {
         HStack {
             DateBlock(date: model.workout.startDate)
             
-            Spacer().frame(width: 15)
+            Spacer().frame(width: 16)
             
             VStack(alignment: .leading) {
                 Text(model.formattedDistance)
@@ -39,11 +39,11 @@ struct WorkoutRow: View {
 
 struct WorkoutRow_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(WorkoutType.allCases, id: \.self) { type in
-            WorkoutRow(workout: MockHealthProvider().generateWorkout(type: type))
+        ForEach(WorkoutActivity.allCases, id: \.self) { activity in
+            WorkoutRow(workout: MockHealthProvider().generateWorkout(activity: activity))
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()
-                .previewDisplayName(type.name)
+                .previewDisplayName(activity.name)
         }
     }
 }

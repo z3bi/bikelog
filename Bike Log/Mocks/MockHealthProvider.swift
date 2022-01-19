@@ -16,10 +16,10 @@ class MockHealthProvider: HealthProvider {
     
     let unit: UnitLength
     
-    func generateWorkout(type: WorkoutType, dayOffset: Int = 1) -> Workout {
+    func generateWorkout(activity: WorkoutActivity, dayOffset: Int = 1) -> Workout {
         let distance: Measurement<UnitLength>
         let duration: TimeInterval
-        switch type {
+        switch activity {
         case .cycling:
             distance = Measurement(value: Double.random(in: 15...30), unit: unit)
             let mph = Double.random(in: 10...20)
@@ -40,24 +40,23 @@ class MockHealthProvider: HealthProvider {
         return Workout(id: UUID(),
                        startDate: start,
                        endDate: end,
-                       type: type,
+                       activity: activity,
                        duration: duration,
-                       distance: distance,
-                       unit: unit)
+                       distance: distance)
     }
     
-    func generateWorkouts(type: WorkoutType) -> [Workout] {
-        (1...100).map { generateWorkout(type: type, dayOffset: $0) }
+    func generateWorkouts(activity: WorkoutActivity) -> [Workout] {
+        (0...100).map { generateWorkout(activity: activity, dayOffset: $0) }
     }
     
-    func fetchWorkouts(type: WorkoutType) async -> (workouts: [Workout], unit: UnitLength) {
-        let workouts = generateWorkouts(type: type)
+    func fetchWorkouts(activity: WorkoutActivity) async -> (workouts: [Workout], unit: UnitLength) {
+        let workouts = generateWorkouts(activity: activity)
         return (workouts: workouts, unit: unit)
     }
 }
 
 extension WorkoutManager {
-    static func mock(unit: UnitLength = .miles) -> WorkoutManager {
+    static func mock(activity: WorkoutActivity = .cycling, unit: UnitLength = .miles) -> WorkoutManager {
         WorkoutManager(healthProvider: MockHealthProvider(unit: unit))
     }
 }

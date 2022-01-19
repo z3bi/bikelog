@@ -8,10 +8,11 @@
 import Foundation
 import Combine
 import UIKit
+import SwiftUI
 
 class WorkoutManager: ObservableObject {
     @Published private(set) var workouts: [Workout] = []
-    private(set) var unit: UnitLength = .miles
+    private(set) var unit: UnitLength
     
     var sort: WorkoutSort = .date {
         didSet {
@@ -19,14 +20,15 @@ class WorkoutManager: ObservableObject {
         }
     }
     
-    var type: WorkoutType = .cycling {
+    @AppStorage(DefaultKey.workoutActivity.rawValue)
+    var activity: WorkoutActivity = .cycling {
         willSet {
-            if type != newValue {
+            if activity != newValue {
                 workouts = []
             }
         }
         didSet {
-            if type != oldValue {
+            if activity != oldValue {
                 Task {
                     await fetchWorkouts()
                 }
@@ -38,11 +40,12 @@ class WorkoutManager: ObservableObject {
     
     init(healthProvider: HealthProvider) {
         self.healthProvider = healthProvider
+        self.unit = Locale.current.distanceUnit()
     }
 
+    @MainActor
     func fetchWorkouts() async {
-        let (workoutData, preferredUnit) = await healthProvider.fetchWorkouts(type: type)
-        print(">> did fetch workouts")
+        let (workoutData, preferredUnit) = await healthProvider.fetchWorkouts(activity: activity)
         unit = preferredUnit
         setWorkouts(workoutData)
     }

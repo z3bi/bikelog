@@ -10,5 +10,5 @@ import HealthKit
 import Combine
 
 protocol HealthProvider {
-    func fetchWorkouts(type: WorkoutType) async -> (workouts: [Workout], unit: UnitLength)
+    func fetchWorkouts(activity: WorkoutActivity) async -> (workouts: [Workout], unit: UnitLength)
 }

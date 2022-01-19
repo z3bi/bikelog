@@ -8,7 +8,7 @@
 import Foundation
 import HealthKit
 
-enum WorkoutType: CaseIterable {
+enum WorkoutActivity: String, Codable, CaseIterable {
     case cycling
     case running
     case walking
@@ -33,8 +33,8 @@ enum WorkoutType: CaseIterable {
         }
     }
     
-    init?(activityType: HKWorkoutActivityType) {
-        switch activityType {
+    init?(hkActivityType: HKWorkoutActivityType) {
+        switch hkActivityType {
         case .cycling:
             self = .cycling
         case .running:
@@ -46,7 +46,7 @@ enum WorkoutType: CaseIterable {
         }
     }
     
-    var hkWorkoutActivityType: HKWorkoutActivityType {
+    var hkActivityType: HKWorkoutActivityType {
         switch self {
         case .cycling:
             return .cycling

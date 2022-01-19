@@ -49,6 +49,7 @@ struct DateBlock_Previews: PreviewProvider {
         let comps = DateComponents(year: 2021, month: 12, day: 1)
         return Calendar.current.date(from: comps)!
     }()
+
     static var previews: some View {
         DateBlock(date: jan9)
             .previewLayout(PreviewLayout.sizeThatFits)
