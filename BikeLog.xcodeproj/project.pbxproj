@@ -61,7 +61,7 @@
 		84BFA4E1278E612F008E690D /* ExerciseLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseLog.swift; sourceTree = "<group>"; };
 		84BFA4E3278E6130008E690D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84BFA4E6278E6130008E690D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		84BFA4ED278E62D3008E690D /* Bike Log.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bike Log.entitlements"; sourceTree = "<group>"; };
+		84BFA4ED278E62D3008E690D /* BikeLog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BikeLog.entitlements; sourceTree = "<group>"; };
 		84BFA4EF278E62D3008E690D /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		84BFA4F2278E6325008E690D /* StatisticalPeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticalPeriod.swift; sourceTree = "<group>"; };
 		84BFA4F7278E669F008E690D /* HealthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthProvider.swift; sourceTree = "<group>"; };
@@ -174,7 +174,7 @@
 				84BFA4F4278E6366008E690D /* Extensions */,
 				844688732793E78C00720716 /* Mocks */,
 				84AB706E27966BCE00021E96 /* Assets */,
-				84BFA4ED278E62D3008E690D /* Bike Log.entitlements */,
+				84BFA4ED278E62D3008E690D /* BikeLog.entitlements */,
 				84BFA4E5278E6130008E690D /* Preview Content */,
 			);
 			path = BikeLog;

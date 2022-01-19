@@ -9,7 +9,7 @@ import Foundation
 
 extension Locale {
     var measurementSystem: String {
-        (Locale.current as NSLocale).object(forKey: .measurementSystem) as? String ?? ""
+        (self as NSLocale).object(forKey: .measurementSystem) as? String ?? ""
     }
     
     func distanceUnit() -> UnitLength {
