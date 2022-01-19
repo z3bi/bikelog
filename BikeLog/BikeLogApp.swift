@@ -1,5 +1,5 @@
 //
-//  Bike_LogApp.swift
+//  BikeLogApp.swift
 //  Bike Log
 //
 //  Created by Ameir Al-Zoubi on 1/11/22.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct Bike_LogApp: App {
+struct BikeLogApp: App {
     
     init() {
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(.Theme.orange)]

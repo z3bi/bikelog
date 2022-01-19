@@ -15,7 +15,7 @@
 		8469A2362795FD7B00F39BEF /* DatePeriodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8469A2352795FD7B00F39BEF /* DatePeriodTests.swift */; };
 		84AB706B279623EB00021E96 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AB706A279623EB00021E96 /* Color.swift */; };
 		84AB706D27966BC800021E96 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 84AB706C27966BC800021E96 /* Localizable.stringsdict */; };
-		84BFA4E0278E612F008E690D /* Bike_LogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BFA4DF278E612F008E690D /* Bike_LogApp.swift */; };
+		84BFA4E0278E612F008E690D /* BikeLogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BFA4DF278E612F008E690D /* BikeLogApp.swift */; };
 		84BFA4E2278E612F008E690D /* ExerciseLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BFA4E1278E612F008E690D /* ExerciseLog.swift */; };
 		84BFA4E4278E6130008E690D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BFA4E3278E6130008E690D /* Assets.xcassets */; };
 		84BFA4E7278E6130008E690D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BFA4E6278E6130008E690D /* Preview Assets.xcassets */; };
@@ -50,14 +50,14 @@
 		841E05E227951FFD0038813A /* LogHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogHeader.swift; sourceTree = "<group>"; };
 		84468860279224A900720716 /* WorkoutRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRow.swift; sourceTree = "<group>"; };
 		844688642793CAC900720716 /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
-		8446886A2793D46C00720716 /* Bike LogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bike LogTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8446886A2793D46C00720716 /* BikeLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BikeLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8469A2312795B58B00F39BEF /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		8469A2332795E48D00F39BEF /* PaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceTests.swift; sourceTree = "<group>"; };
 		8469A2352795FD7B00F39BEF /* DatePeriodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePeriodTests.swift; sourceTree = "<group>"; };
 		84AB706A279623EB00021E96 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		84AB706C27966BC800021E96 /* Localizable.stringsdict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
-		84BFA4DC278E612F008E690D /* Bike Log.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bike Log.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		84BFA4DF278E612F008E690D /* Bike_LogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bike_LogApp.swift; sourceTree = "<group>"; };
+		84BFA4DC278E612F008E690D /* BikeLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BikeLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		84BFA4DF278E612F008E690D /* BikeLogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeLogApp.swift; sourceTree = "<group>"; };
 		84BFA4E1278E612F008E690D /* ExerciseLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseLog.swift; sourceTree = "<group>"; };
 		84BFA4E3278E6130008E690D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84BFA4E6278E6130008E690D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -118,13 +118,13 @@
 			path = "View Models";
 			sourceTree = "<group>";
 		};
-		8446886B2793D46C00720716 /* Bike LogTests */ = {
+		8446886B2793D46C00720716 /* BikeLogTests */ = {
 			isa = PBXGroup;
 			children = (
 				8469A2332795E48D00F39BEF /* PaceTests.swift */,
 				8469A2352795FD7B00F39BEF /* DatePeriodTests.swift */,
 			);
-			path = "Bike LogTests";
+			path = BikeLogTests;
 			sourceTree = "<group>";
 		};
 		844688732793E78C00720716 /* Mocks */ = {
@@ -147,8 +147,8 @@
 		84BFA4D3278E612F008E690D = {
 			isa = PBXGroup;
 			children = (
-				84BFA4DE278E612F008E690D /* Bike Log */,
-				8446886B2793D46C00720716 /* Bike LogTests */,
+				84BFA4DE278E612F008E690D /* BikeLog */,
+				8446886B2793D46C00720716 /* BikeLogTests */,
 				84BFA4DD278E612F008E690D /* Products */,
 				84BFA4EE278E62D3008E690D /* Frameworks */,
 			);
@@ -157,16 +157,16 @@
 		84BFA4DD278E612F008E690D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				84BFA4DC278E612F008E690D /* Bike Log.app */,
-				8446886A2793D46C00720716 /* Bike LogTests.xctest */,
+				84BFA4DC278E612F008E690D /* BikeLog.app */,
+				8446886A2793D46C00720716 /* BikeLogTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		84BFA4DE278E612F008E690D /* Bike Log */ = {
+		84BFA4DE278E612F008E690D /* BikeLog */ = {
 			isa = PBXGroup;
 			children = (
-				84BFA4DF278E612F008E690D /* Bike_LogApp.swift */,
+				84BFA4DF278E612F008E690D /* BikeLogApp.swift */,
 				84468862279224D600720716 /* Views */,
 				84D35028278FCA4300C47FFA /* Controllers */,
 				84BFA4F1278E6314008E690D /* Models */,
@@ -177,7 +177,7 @@
 				84BFA4ED278E62D3008E690D /* Bike Log.entitlements */,
 				84BFA4E5278E6130008E690D /* Preview Content */,
 			);
-			path = "Bike Log";
+			path = BikeLog;
 			sourceTree = "<group>";
 		};
 		84BFA4E5278E6130008E690D /* Preview Content */ = {
@@ -233,9 +233,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		844688692793D46C00720716 /* Bike LogTests */ = {
+		844688692793D46C00720716 /* BikeLogTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 844688702793D46C00720716 /* Build configuration list for PBXNativeTarget "Bike LogTests" */;
+			buildConfigurationList = 844688702793D46C00720716 /* Build configuration list for PBXNativeTarget "BikeLogTests" */;
 			buildPhases = (
 				844688662793D46C00720716 /* Sources */,
 				844688672793D46C00720716 /* Frameworks */,
@@ -246,14 +246,14 @@
 			dependencies = (
 				8446886F2793D46C00720716 /* PBXTargetDependency */,
 			);
-			name = "Bike LogTests";
+			name = BikeLogTests;
 			productName = "Bike LogTests";
-			productReference = 8446886A2793D46C00720716 /* Bike LogTests.xctest */;
+			productReference = 8446886A2793D46C00720716 /* BikeLogTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		84BFA4DB278E612F008E690D /* Bike Log */ = {
+		84BFA4DB278E612F008E690D /* BikeLog */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 84BFA4EA278E6130008E690D /* Build configuration list for PBXNativeTarget "Bike Log" */;
+			buildConfigurationList = 84BFA4EA278E6130008E690D /* Build configuration list for PBXNativeTarget "BikeLog" */;
 			buildPhases = (
 				84BFA4D8278E612F008E690D /* Sources */,
 				84BFA4D9278E612F008E690D /* Frameworks */,
@@ -263,9 +263,9 @@
 			);
 			dependencies = (
 			);
-			name = "Bike Log";
+			name = BikeLog;
 			productName = "Bike Log";
-			productReference = 84BFA4DC278E612F008E690D /* Bike Log.app */;
+			productReference = 84BFA4DC278E612F008E690D /* BikeLog.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -287,7 +287,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 84BFA4D7278E612F008E690D /* Build configuration list for PBXProject "Bike Log" */;
+			buildConfigurationList = 84BFA4D7278E612F008E690D /* Build configuration list for PBXProject "BikeLog" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -300,8 +300,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				84BFA4DB278E612F008E690D /* Bike Log */,
-				844688692793D46C00720716 /* Bike LogTests */,
+				84BFA4DB278E612F008E690D /* BikeLog */,
+				844688692793D46C00720716 /* BikeLogTests */,
 			);
 		};
 /* End PBXProject section */
@@ -354,7 +354,7 @@
 				84BFA4F8278E669F008E690D /* HealthProvider.swift in Sources */,
 				84D3502C278FCBEE00C47FFA /* Workout.swift in Sources */,
 				84BFA4FE278E8E38008E690D /* WorkoutManager.swift in Sources */,
-				84BFA4E0278E612F008E690D /* Bike_LogApp.swift in Sources */,
+				84BFA4E0278E612F008E690D /* BikeLogApp.swift in Sources */,
 				84C4169F2795038A00C303CE /* WorkoutSort.swift in Sources */,
 				84BFA4F3278E6325008E690D /* StatisticalPeriod.swift in Sources */,
 				84CEC880279103A900520F65 /* MockHealthProvider.swift in Sources */,
@@ -369,7 +369,7 @@
 /* Begin PBXTargetDependency section */
 		8446886F2793D46C00720716 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 84BFA4DB278E612F008E690D /* Bike Log */;
+			target = 84BFA4DB278E612F008E690D /* BikeLog */;
 			targetProxy = 8446886E2793D46C00720716 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -389,7 +389,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bike Log.app/Bike Log";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BikeLog.app/BikeLog";
 			};
 			name = Debug;
 		};
@@ -407,7 +407,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bike Log.app/Bike Log";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BikeLog.app/BikeLog";
 			};
 			name = Release;
 		};
@@ -532,10 +532,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Bike Log/Bike Log.entitlements";
+				CODE_SIGN_ENTITLEMENTS = BikeLog/BikeLog.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Bike Log/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"BikeLog/Preview Content\"";
 				DEVELOPMENT_TEAM = 5H3PBG23RV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -552,7 +552,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.batoulapps.BikerLog;
+				PRODUCT_BUNDLE_IDENTIFIER = com.batoulapps.BikeLog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -565,10 +565,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Bike Log/Bike Log.entitlements";
+				CODE_SIGN_ENTITLEMENTS = BikeLog/BikeLog.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Bike Log/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"BikeLog/Preview Content\"";
 				DEVELOPMENT_TEAM = 5H3PBG23RV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -585,7 +585,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.batoulapps.BikerLog;
+				PRODUCT_BUNDLE_IDENTIFIER = com.batoulapps.BikeLog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -596,7 +596,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		844688702793D46C00720716 /* Build configuration list for PBXNativeTarget "Bike LogTests" */ = {
+		844688702793D46C00720716 /* Build configuration list for PBXNativeTarget "BikeLogTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				844688712793D46C00720716 /* Debug */,
@@ -605,7 +605,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		84BFA4D7278E612F008E690D /* Build configuration list for PBXProject "Bike Log" */ = {
+		84BFA4D7278E612F008E690D /* Build configuration list for PBXProject "BikeLog" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				84BFA4E8278E6130008E690D /* Debug */,
@@ -614,7 +614,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		84BFA4EA278E6130008E690D /* Build configuration list for PBXNativeTarget "Bike Log" */ = {
+		84BFA4EA278E6130008E690D /* Build configuration list for PBXNativeTarget "BikeLog" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				84BFA4EB278E6130008E690D /* Debug */,

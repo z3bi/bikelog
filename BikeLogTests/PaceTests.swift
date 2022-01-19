@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Bike_Log
+@testable import BikeLog
 
 class PaceTests: XCTestCase {
     func testPaceMiles1() {
@@ -55,14 +55,14 @@ class PaceTests: XCTestCase {
         let pace: TimeInterval = (11 * 60) + 8
         let duration: TimeInterval = pace * 3
         let distance = Measurement(value: 3, unit: UnitLength.miles)
-        let workout = Workout(id: UUID(), startDate: Date(), endDate: Date() + duration, type: .running, duration: duration, distance: distance)
+        let workout = Workout(id: UUID(), startDate: Date(), endDate: Date() + duration, activity: .running, duration: duration, distance: distance)
         XCTAssertEqual(WorkoutViewModel(workout: workout).formattedSpeed, "11'8\"/mi")
     }
     
     func testFormattedPace2() {
         let duration: TimeInterval = (47 * 60) + 46
         let distance = Measurement(value: 5, unit: UnitLength.miles)
-        let workout = Workout(id: UUID(), startDate: Date(), endDate: Date() + duration, type: .running, duration: duration, distance: distance)
+        let workout = Workout(id: UUID(), startDate: Date(), endDate: Date() + duration, activity: .running, duration: duration, distance: distance)
         XCTAssertEqual(WorkoutViewModel(workout: workout).formattedSpeed, "9'33\"/mi")
     }
 }

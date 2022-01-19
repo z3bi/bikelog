@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import Bike_Log
+@testable import BikeLog
 
 class DatePeriodTests: XCTestCase {
 
