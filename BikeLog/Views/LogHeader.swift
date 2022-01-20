@@ -44,6 +44,13 @@ struct LogHeader: View {
                 }
             }
             .pickerStyle(.segmented)
+            if manager.isLoading {
+                HStack(spacing: 8) {
+                    ProgressView()
+                    Text("Loading...")
+                        .foregroundColor(.gray)
+                }
+            }
         }
     }
 }

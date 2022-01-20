@@ -9,19 +9,23 @@ import SwiftUI
 import HealthKit
 
 struct ExerciseLog: View {
-    @EnvironmentObject var workoutManager: WorkoutManager
+    
+    @ObservedObject var workoutManager: WorkoutManager
 
     var body: some View {
         NavigationView {
             List {
                 LogHeader(manager: workoutManager)
                     .listRowSeparator(.hidden)
-                ForEach(workoutManager.workouts) {
-                    WorkoutRow(workout: $0)
+                ForEach(workoutManager.workouts) { workout in
+                    NavigationLink(destination: WorkoutDetail(workout: workout)) {
+                        WorkoutRow(workout: workout)
+                    }
                 }
             }
             .listStyle(.plain)
             .task {
+                print(">> running task")
                 await workoutManager.fetchWorkouts()
             }
             .navigationTitle(workoutManager.activity.name)
@@ -42,7 +46,6 @@ struct ExerciseLog: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseLog()
-            .environmentObject(WorkoutManager.mock(unit: .kilometers))
+        ExerciseLog(workoutManager: WorkoutManager.mock())
     }
 }

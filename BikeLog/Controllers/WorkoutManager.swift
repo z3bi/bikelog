@@ -12,6 +12,7 @@ import SwiftUI
 
 class WorkoutManager: ObservableObject {
     @Published private(set) var workouts: [Workout] = []
+    @Published private(set) var isLoading: Bool = false
     private(set) var unit: UnitLength
     
     var sort: WorkoutSort = .date {
@@ -22,13 +23,9 @@ class WorkoutManager: ObservableObject {
     
     @AppStorage(DefaultKey.workoutActivity.rawValue)
     var activity: WorkoutActivity = .cycling {
-        willSet {
-            if activity != newValue {
-                workouts = []
-            }
-        }
         didSet {
             if activity != oldValue {
+                workouts = []
                 Task {
                     await fetchWorkouts()
                 }
@@ -45,9 +42,12 @@ class WorkoutManager: ObservableObject {
 
     @MainActor
     func fetchWorkouts() async {
+        print(">> fetching workouts")
+        isLoading = true
         let (workoutData, preferredUnit) = await healthProvider.fetchWorkouts(activity: activity)
         unit = preferredUnit
         setWorkouts(workoutData)
+        isLoading = false
     }
     
     // MARK: Internal

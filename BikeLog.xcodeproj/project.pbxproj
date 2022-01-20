@@ -10,6 +10,7 @@
 		841E05E327951FFD0038813A /* LogHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E05E227951FFD0038813A /* LogHeader.swift */; };
 		84468861279224A900720716 /* WorkoutRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84468860279224A900720716 /* WorkoutRow.swift */; };
 		844688652793CAC900720716 /* WorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844688642793CAC900720716 /* WorkoutViewModel.swift */; };
+		8457C60927991A4300361EC9 /* WorkoutDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C60827991A4300361EC9 /* WorkoutDetail.swift */; };
 		8469A2322795B58B00F39BEF /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8469A2312795B58B00F39BEF /* StatsViewModel.swift */; };
 		8469A2342795E48D00F39BEF /* PaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8469A2332795E48D00F39BEF /* PaceTests.swift */; };
 		8469A2362795FD7B00F39BEF /* DatePeriodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8469A2352795FD7B00F39BEF /* DatePeriodTests.swift */; };
@@ -51,6 +52,7 @@
 		84468860279224A900720716 /* WorkoutRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRow.swift; sourceTree = "<group>"; };
 		844688642793CAC900720716 /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
 		8446886A2793D46C00720716 /* BikeLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BikeLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8457C60827991A4300361EC9 /* WorkoutDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetail.swift; sourceTree = "<group>"; };
 		8469A2312795B58B00F39BEF /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		8469A2332795E48D00F39BEF /* PaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceTests.swift; sourceTree = "<group>"; };
 		8469A2352795FD7B00F39BEF /* DatePeriodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePeriodTests.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				84468860279224A900720716 /* WorkoutRow.swift */,
 				84C4169A2794784A00C303CE /* DateBlock.swift */,
 				841E05E227951FFD0038813A /* LogHeader.swift */,
+				8457C60827991A4300361EC9 /* WorkoutDetail.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				84C4169F2795038A00C303CE /* WorkoutSort.swift in Sources */,
 				84BFA4F3278E6325008E690D /* StatisticalPeriod.swift in Sources */,
 				84CEC880279103A900520F65 /* MockHealthProvider.swift in Sources */,
+				8457C60927991A4300361EC9 /* WorkoutDetail.swift in Sources */,
 				84BFA4FC278E8CAD008E690D /* Measurement.swift in Sources */,
 				84AB706B279623EB00021E96 /* Color.swift in Sources */,
 				84F0BF512797BAC6000BD834 /* DefaultKey.swift in Sources */,

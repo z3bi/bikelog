@@ -50,6 +50,11 @@ class MockHealthProvider: HealthProvider {
     }
     
     func fetchWorkouts(activity: WorkoutActivity) async -> (workouts: [Workout], unit: UnitLength) {
+        do {
+            try await Task.sleep(nanoseconds: 2000000000)
+        } catch {
+            print("\(error)")
+        }
         let workouts = generateWorkouts(activity: activity)
         return (workouts: workouts, unit: unit)
     }
