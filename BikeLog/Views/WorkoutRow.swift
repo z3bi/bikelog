@@ -39,7 +39,7 @@ struct WorkoutRow: View {
 
 struct WorkoutRow_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(WorkoutActivity.allCases, id: \.self) { activity in
+        ForEach(Activity.allCases, id: \.self) { activity in
             WorkoutRow(workout: MockHealthProvider().generateWorkout(activity: activity))
                 .previewLayout(PreviewLayout.sizeThatFits)
                 .padding()

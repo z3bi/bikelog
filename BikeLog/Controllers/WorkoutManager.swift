@@ -21,33 +21,36 @@ class WorkoutManager: ObservableObject {
         }
     }
     
-    @AppStorage(DefaultKey.workoutActivity.rawValue)
-    var activity: WorkoutActivity = .cycling {
+    @AppStorage(DefaultKey.activity.rawValue)
+    var activity: Activity = .cycling {
         didSet {
             if activity != oldValue {
-                workouts = []
-                Task {
-                    await fetchWorkouts()
-                }
+                fetchWorkouts()
             }
         }
     }
     
-    let healthProvider: HealthProvider
+    var healthProvider: HealthProvider
     
     init(healthProvider: HealthProvider) {
         self.healthProvider = healthProvider
         self.unit = Locale.current.distanceUnit()
+        
+        healthProvider.workoutsPublisher().sink { [weak self] healthResult in
+            self?.unit = healthResult.unit
+            self?.setWorkouts(healthResult.workouts)
+            self?.isLoading = healthResult.cached
+        }.store(in: &cancellables)
     }
+    
+    var cancellables = [AnyCancellable]()
 
-    @MainActor
-    func fetchWorkouts() async {
-        print(">> fetching workouts")
+    func fetchWorkouts() {
+        workouts = []
         isLoading = true
-        let (workoutData, preferredUnit) = await healthProvider.fetchWorkouts(activity: activity)
-        unit = preferredUnit
-        setWorkouts(workoutData)
-        isLoading = false
+        Task {
+            await healthProvider.monitorWorkouts(activity: activity)
+        }
     }
     
     // MARK: Internal

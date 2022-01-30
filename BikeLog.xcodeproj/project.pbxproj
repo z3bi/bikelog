@@ -32,7 +32,8 @@
 		84CEC87E2791022A00520F65 /* HealthKitProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CEC87D2791022A00520F65 /* HealthKitProvider.swift */; };
 		84CEC880279103A900520F65 /* MockHealthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CEC87F279103A900520F65 /* MockHealthProvider.swift */; };
 		84D3502C278FCBEE00C47FFA /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D3502B278FCBEE00C47FFA /* Workout.swift */; };
-		84D3502E278FCE9300C47FFA /* WorkoutActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D3502D278FCE9300C47FFA /* WorkoutActivity.swift */; };
+		84D3502E278FCE9300C47FFA /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D3502D278FCE9300C47FFA /* Activity.swift */; };
+		84E3F20727A490A2001A1A6E /* HealthResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3F20627A490A2001A1A6E /* HealthResult.swift */; };
 		84F0BF4D2797ACBB000BD834 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F0BF4C2797ACBB000BD834 /* Locale.swift */; };
 		84F0BF512797BAC6000BD834 /* DefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F0BF502797BAC6000BD834 /* DefaultKey.swift */; };
 /* End PBXBuildFile section */
@@ -76,7 +77,8 @@
 		84CEC87D2791022A00520F65 /* HealthKitProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitProvider.swift; sourceTree = "<group>"; };
 		84CEC87F279103A900520F65 /* MockHealthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHealthProvider.swift; sourceTree = "<group>"; };
 		84D3502B278FCBEE00C47FFA /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
-		84D3502D278FCE9300C47FFA /* WorkoutActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutActivity.swift; sourceTree = "<group>"; };
+		84D3502D278FCE9300C47FFA /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		84E3F20627A490A2001A1A6E /* HealthResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthResult.swift; sourceTree = "<group>"; };
 		84F0BF4C2797ACBB000BD834 /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
 		84F0BF502797BAC6000BD834 /* DefaultKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -203,10 +205,11 @@
 			isa = PBXGroup;
 			children = (
 				84D3502B278FCBEE00C47FFA /* Workout.swift */,
-				84D3502D278FCE9300C47FFA /* WorkoutActivity.swift */,
+				84D3502D278FCE9300C47FFA /* Activity.swift */,
 				84C4169E2795038A00C303CE /* WorkoutSort.swift */,
 				84BFA4F2278E6325008E690D /* StatisticalPeriod.swift */,
 				84F0BF502797BAC6000BD834 /* DefaultKey.swift */,
+				84E3F20627A490A2001A1A6E /* HealthResult.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -345,8 +348,9 @@
 			files = (
 				841E05E327951FFD0038813A /* LogHeader.swift in Sources */,
 				84468861279224A900720716 /* WorkoutRow.swift in Sources */,
+				84E3F20727A490A2001A1A6E /* HealthResult.swift in Sources */,
 				84BFA4FA278E8C81008E690D /* HealthKit.swift in Sources */,
-				84D3502E278FCE9300C47FFA /* WorkoutActivity.swift in Sources */,
+				84D3502E278FCE9300C47FFA /* Activity.swift in Sources */,
 				84C4169B2794784A00C303CE /* DateBlock.swift in Sources */,
 				84BFA4E2278E612F008E690D /* ExerciseLog.swift in Sources */,
 				844688652793CAC900720716 /* WorkoutViewModel.swift in Sources */,
@@ -550,7 +554,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -583,7 +587,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

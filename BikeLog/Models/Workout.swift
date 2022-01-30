@@ -8,42 +8,53 @@
 import Foundation
 import HealthKit
 
-struct Workout: Hashable, Identifiable, Codable {
+struct Workout: Hashable, Equatable, Identifiable, Codable {
     let id: UUID
     let startDate: Date
     let endDate: Date
-    let activity: WorkoutActivity
+    let activity: Activity
     let duration: TimeInterval
-    let distance: Measurement<UnitLength>
-    let speed: Measurement<UnitSpeed>
+    private(set) var distance: Measurement<UnitLength>
+    
+    var speed: Measurement<UnitSpeed> {
+        (distance / Measurement(value: duration, unit: .seconds)).converted(to: activity.speedUnit(for: distance.unit))
+    }
+    
+    mutating func updateUnit(_ unit: UnitLength) {
+        guard distance.unit != unit else { return }
+        distance = distance.converted(to: unit)
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func ==(lhs: Workout, rhs: Workout) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    static func updateWorkouts(_ workouts: [Workout], unit: UnitLength) -> [Workout] {
+        workouts.map { workout in
+            var mutableWorkout = workout
+            mutableWorkout.updateUnit(unit)
+            return mutableWorkout
+        }
+    }
 }
 
 extension Workout {
-    init(id: UUID, startDate: Date, endDate: Date, activity: WorkoutActivity, duration: TimeInterval, distance: Measurement<UnitLength>) {
-        let speed = (distance / Measurement(value: duration, unit: .seconds)).converted(to: activity.speedUnit(for: distance.unit))
-
-        self.init(id: id,
-                  startDate: startDate,
-                  endDate: endDate,
-                  activity: activity,
-                  duration: duration,
-                  distance: distance,
-                  speed: speed)
-    }
-    
     init?(hkWorkout: HKWorkout, hkUnit: HKUnit) {
-        guard let activity = WorkoutActivity(hkActivityType: hkWorkout.workoutActivityType) else {
+        guard let activity = Activity(hkActivityType: hkWorkout.workoutActivityType),
+              let distance = hkWorkout.totalDistance?.doubleValue(for: hkUnit),
+              distance > 0.01 else {
             return nil
         }
         
-        let distance = Measurement(value: hkWorkout.totalDistance?.doubleValue(for: hkUnit) ?? 0,
-                                    unit: hkUnit.lengthUnit())
-
         self.init(id: hkWorkout.uuid,
                   startDate: hkWorkout.startDate,
                   endDate: hkWorkout.endDate,
                   activity: activity,
                   duration: hkWorkout.duration,
-                  distance: distance)
+                  distance: Measurement(value: distance, unit: hkUnit.lengthUnit()))
     }
 }

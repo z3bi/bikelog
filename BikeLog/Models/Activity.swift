@@ -8,7 +8,7 @@
 import Foundation
 import HealthKit
 
-enum WorkoutActivity: String, Codable, CaseIterable {
+enum Activity: String, Codable, CaseIterable {
     case cycling
     case running
     case walking

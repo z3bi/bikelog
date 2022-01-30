@@ -15,8 +15,9 @@ class MockHealthProvider: HealthProvider {
     }
     
     let unit: UnitLength
+    let publisher = CurrentValueSubject<HealthResult, Never>(.empty)
     
-    func generateWorkout(activity: WorkoutActivity, dayOffset: Int = 1) -> Workout {
+    func generateWorkout(activity: Activity, dayOffset: Int = 1) -> Workout {
         let distance: Measurement<UnitLength>
         let duration: TimeInterval
         switch activity {
@@ -45,23 +46,29 @@ class MockHealthProvider: HealthProvider {
                        distance: distance)
     }
     
-    func generateWorkouts(activity: WorkoutActivity) -> [Workout] {
-        (0...100).map { generateWorkout(activity: activity, dayOffset: $0) }
+    func generateWorkouts(activity: Activity, range: ClosedRange<Int>) -> [Workout] {
+        range.map { generateWorkout(activity: activity, dayOffset: $0) }
     }
     
-    func fetchWorkouts(activity: WorkoutActivity) async -> (workouts: [Workout], unit: UnitLength) {
-        do {
-            try await Task.sleep(nanoseconds: 2000000000)
-        } catch {
-            print("\(error)")
-        }
-        let workouts = generateWorkouts(activity: activity)
-        return (workouts: workouts, unit: unit)
+    func monitorWorkouts(activity: Activity) {
+        publisher.value = HealthResult(workouts: [], unit: unit, cached: true)
+        let initialWorkouts = generateWorkouts(activity: activity, range: 50...100)
+        publisher.value.workouts = initialWorkouts
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            let newWorkouts = self.generateWorkouts(activity: activity, range: 10...13)
+            let workouts = self.publisher.value.workouts + newWorkouts
+            self.publisher.value = HealthResult(workouts: workouts, unit: self.unit, cached: false)
+        }        
+    }
+    
+    func workoutsPublisher() -> AnyPublisher<HealthResult, Never> {
+        return publisher.receive(on: RunLoop.main).eraseToAnyPublisher()
     }
 }
 
 extension WorkoutManager {
-    static func mock(activity: WorkoutActivity = .cycling, unit: UnitLength = .miles) -> WorkoutManager {
+    static func mock(activity: Activity = .cycling, unit: UnitLength = .miles) -> WorkoutManager {
         WorkoutManager(healthProvider: MockHealthProvider(unit: unit))
     }
 }

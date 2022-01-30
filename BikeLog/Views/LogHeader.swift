@@ -24,7 +24,7 @@ struct LogHeader: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            ForEach(models, id: \.self) { model in
+            ForEach(models) { model in
                 HStack {
                     Text(model.title)
                         .textCase(.uppercase)

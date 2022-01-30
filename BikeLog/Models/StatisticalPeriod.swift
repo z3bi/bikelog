@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum StatisticalPeriod: CaseIterable {
+enum StatisticalPeriod: String, CaseIterable {
     case all
     case year
     case month

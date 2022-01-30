@@ -8,5 +8,5 @@
 import Foundation
 
 enum DefaultKey: String {
-    case workoutActivity
+    case activity
 }

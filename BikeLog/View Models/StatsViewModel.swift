@@ -7,20 +7,22 @@
 
 import Foundation
 
-struct StatsViewModel: Hashable {
+struct StatsViewModel: Hashable, Equatable, Identifiable {
     let dateInterval: DateInterval
     let period: StatisticalPeriod
-    let activity: WorkoutActivity
+    let activity: Activity
     let unit: UnitLength
     let workouts: [Workout]
+    let id: UUID
     
-    init(date: Date, period: StatisticalPeriod, activity: WorkoutActivity, unit: UnitLength, workouts: [Workout]) {
+    init(date: Date, period: StatisticalPeriod, activity: Activity, unit: UnitLength, workouts: [Workout]) {
         let interval = period.dateInterval(from: date)
         self.dateInterval = interval
         self.period = period
         self.activity = activity
         self.unit = unit
         self.workouts = workouts.filter { interval.contains($0.startDate) }
+        self.id = UUID()
     }
 
     var title: String {
@@ -50,6 +52,14 @@ struct StatsViewModel: Hashable {
         case .walking:
             return String.localizedStringWithFormat(String(localized: "%d walks"), workouts.count)
         }
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func ==(lhs: StatsViewModel, rhs: StatsViewModel) -> Bool {
+        lhs.id == rhs.id
     }
 }
 

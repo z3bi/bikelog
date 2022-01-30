@@ -17,7 +17,19 @@ extension HKWorkout {
             return HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
         }
     }
-    
+}
+
+extension UnitLength {
+    func hkUnit() -> HKUnit {
+        switch self {
+        case .miles:
+            return .mile()
+        case .kilometers:
+            return .meterUnit(with: .kilo)
+        default:
+            return .meter()
+        }
+    }
 }
 
 extension HKUnit {

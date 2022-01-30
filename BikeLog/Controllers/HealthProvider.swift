@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import HealthKit
 import Combine
 
 protocol HealthProvider {
-    func fetchWorkouts(activity: WorkoutActivity) async -> (workouts: [Workout], unit: UnitLength)
+    func monitorWorkouts(activity: Activity) async
+    func workoutsPublisher() -> AnyPublisher<HealthResult, Never>
 }
