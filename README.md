@@ -4,7 +4,7 @@
 
 BikeLog is an open source app exploring modern app development through the lens of displaying workout data from HealthKit.
 
-![screenshot](screenshot.png)
+<img src="screenshot.png" height="500">
 
 ## Development Concepts
 ### Framworks
