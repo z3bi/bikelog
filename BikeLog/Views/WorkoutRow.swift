@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct WorkoutRow: View {
-    
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     let model: WorkoutViewModel
     
     init(workout: Workout) {
@@ -16,34 +17,46 @@ struct WorkoutRow: View {
     }
     
     var body: some View {
-        HStack {
+        let rowLayout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 8))
+            : AnyLayout(HStackLayout(spacing: 24))
+        let metricsLayout = dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 4))
+            : AnyLayout(HStackLayout(spacing: 4))
+
+        rowLayout {
             DateBlock(date: model.workout.startDate)
-            
-            Spacer().frame(width: 16)
-            
+
             VStack(alignment: .leading) {
                 Text(model.formattedDistance)
-                    .font(.system(size: 36, weight: .semibold))
-                    .foregroundColor(.Theme.teal)
-                HStack(spacing: 4) {
+                    .font(.largeTitle.weight(.semibold))
+                    .foregroundStyle(Color.Theme.teal)
+                metricsLayout {
                     Text(model.formattedDuration)
-                    Text("•")
+                    if !dynamicTypeSize.isAccessibilitySize {
+                        Text("•")
+                            .accessibilityHidden(true)
+                    }
                     Text(model.formattedSpeed)
                 }
-                .foregroundColor(.Theme.orange)
-                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(Color.Theme.orange)
+                .font(.subheadline.weight(.semibold))
             }
         }
     }
 }
 
-struct WorkoutRow_Previews: PreviewProvider {
-    static var previews: some View {
-        ForEach(Activity.allCases, id: \.self) { activity in
-            WorkoutRow(workout: MockHealthProvider().generateWorkout(activity: activity))
-                .previewLayout(PreviewLayout.sizeThatFits)
-                .padding()
-                .previewDisplayName(activity.name)
-        }
-    }
+#Preview("Cycling", traits: .sizeThatFitsLayout) {
+    WorkoutRow(workout: MockHealthProvider().generateWorkout(activity: .cycling))
+        .padding()
+}
+
+#Preview("Running", traits: .sizeThatFitsLayout) {
+    WorkoutRow(workout: MockHealthProvider().generateWorkout(activity: .running))
+        .padding()
+}
+
+#Preview("Walking", traits: .sizeThatFitsLayout) {
+    WorkoutRow(workout: MockHealthProvider().generateWorkout(activity: .walking))
+        .padding()
 }

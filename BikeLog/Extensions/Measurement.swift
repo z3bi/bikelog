@@ -72,8 +72,8 @@ extension SpeedFormat {
 }
 
 extension LengthFormat {
-    static func lengthFormat(fractions: Int = 2) -> LengthFormat {
-        .measurement(width: .abbreviated,
+    static func lengthFormat(fractions: Int = 2, width: UnitWidth = .abbreviated) -> LengthFormat {
+        .measurement(width: width,
                      usage: .asProvided,
                      numberFormatStyle: .number.precision(.fractionLength(fractions)))
     }

@@ -23,6 +23,17 @@ enum Activity: String, Codable, CaseIterable {
             return String(localized: "Walking")
         }
     }
+
+    func workoutCount(_ count: Int) -> String {
+        switch self {
+        case .cycling:
+            return String.localizedStringWithFormat(String(localized: "%d rides"), count)
+        case .running:
+            return String.localizedStringWithFormat(String(localized: "%d runs"), count)
+        case .walking:
+            return String.localizedStringWithFormat(String(localized: "%d walks"), count)
+        }
+    }
     
     func speedUnit(for lengthUnit: UnitLength) -> UnitSpeed {
         switch self {

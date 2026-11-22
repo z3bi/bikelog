@@ -8,12 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		841E05E327951FFD0038813A /* LogHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E05E227951FFD0038813A /* LogHeader.swift */; };
+		841E05E527951FFD0038813A /* YearlyTotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E05E427951FFD0038813A /* YearlyTotalsView.swift */; };
+		841E05E727951FFD0038813A /* WorkoutPeriodTotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E05E627951FFD0038813A /* WorkoutPeriodTotal.swift */; };
+		841E05E927951FFD0038813A /* WorkoutSummaryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E05E827951FFD0038813A /* WorkoutSummaryRow.swift */; };
+		841E05EB27951FFD0038813A /* MonthlyTotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E05EA27951FFD0038813A /* MonthlyTotalsView.swift */; };
+		841E05ED27951FFD0038813A /* PeriodWorkoutsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E05EC27951FFD0038813A /* PeriodWorkoutsView.swift */; };
+		841E05F127951FFD0038813A /* WorkoutListStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E05F027951FFD0038813A /* WorkoutListStatus.swift */; };
+		841E05EF27951FFD0038813A /* WorkoutRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841E05EE27951FFD0038813A /* WorkoutRows.swift */; };
 		84468861279224A900720716 /* WorkoutRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84468860279224A900720716 /* WorkoutRow.swift */; };
 		844688652793CAC900720716 /* WorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844688642793CAC900720716 /* WorkoutViewModel.swift */; };
 		8457C60927991A4300361EC9 /* WorkoutDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C60827991A4300361EC9 /* WorkoutDetail.swift */; };
+		8457C60B27991A4300361EC9 /* WorkoutDetailCharts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C60A27991A4300361EC9 /* WorkoutDetailCharts.swift */; };
+		8457C60D27991A4300361EC9 /* WorkoutRouteMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C60C27991A4300361EC9 /* WorkoutRouteMap.swift */; };
+		8457C60F27991A4300361EC9 /* HealthKitProvider+Details.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C60E27991A4300361EC9 /* HealthKitProvider+Details.swift */; };
+		8457C61127991A4300361EC9 /* WorkoutDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C61027991A4300361EC9 /* WorkoutDetails.swift */; };
+		8457C61327991A4300361EC9 /* MileSpeedSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C61227991A4300361EC9 /* MileSpeedSplit.swift */; };
+		8457C61527991A4300361EC9 /* MileSpeedSplitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C61427991A4300361EC9 /* MileSpeedSplitTests.swift */; };
+		8457C61727991A4300361EC9 /* WorkoutDetailValueRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C61627991A4300361EC9 /* WorkoutDetailValueRow.swift */; };
 		8469A2322795B58B00F39BEF /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8469A2312795B58B00F39BEF /* StatsViewModel.swift */; };
 		8469A2342795E48D00F39BEF /* PaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8469A2332795E48D00F39BEF /* PaceTests.swift */; };
 		8469A2362795FD7B00F39BEF /* DatePeriodTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8469A2352795FD7B00F39BEF /* DatePeriodTests.swift */; };
+		8469A2382795FD7B00F39BEF /* WorkoutManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8469A2372795FD7B00F39BEF /* WorkoutManagerTests.swift */; };
+		8469A23A2795FD7B00F39BEF /* WorkoutCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8469A2392795FD7B00F39BEF /* WorkoutCacheTests.swift */; };
 		84AB706B279623EB00021E96 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AB706A279623EB00021E96 /* Color.swift */; };
 		84AB706D27966BC800021E96 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 84AB706C27966BC800021E96 /* Localizable.stringsdict */; };
 		84BFA4E0278E612F008E690D /* BikeLogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BFA4DF278E612F008E690D /* BikeLogApp.swift */; };
@@ -34,6 +50,7 @@
 		84D3502C278FCBEE00C47FFA /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D3502B278FCBEE00C47FFA /* Workout.swift */; };
 		84D3502E278FCE9300C47FFA /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D3502D278FCE9300C47FFA /* Activity.swift */; };
 		84E3F20727A490A2001A1A6E /* HealthResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3F20627A490A2001A1A6E /* HealthResult.swift */; };
+		84E3F20927A490A2001A1A6E /* WorkoutCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E3F20827A490A2001A1A6E /* WorkoutCache.swift */; };
 		84F0BF4D2797ACBB000BD834 /* Locale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F0BF4C2797ACBB000BD834 /* Locale.swift */; };
 		84F0BF512797BAC6000BD834 /* DefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F0BF502797BAC6000BD834 /* DefaultKey.swift */; };
 /* End PBXBuildFile section */
@@ -50,13 +67,29 @@
 
 /* Begin PBXFileReference section */
 		841E05E227951FFD0038813A /* LogHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogHeader.swift; sourceTree = "<group>"; };
+		841E05E427951FFD0038813A /* YearlyTotalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearlyTotalsView.swift; sourceTree = "<group>"; };
+		841E05E627951FFD0038813A /* WorkoutPeriodTotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutPeriodTotal.swift; sourceTree = "<group>"; };
+		841E05E827951FFD0038813A /* WorkoutSummaryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSummaryRow.swift; sourceTree = "<group>"; };
+		841E05EA27951FFD0038813A /* MonthlyTotalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyTotalsView.swift; sourceTree = "<group>"; };
+		841E05EC27951FFD0038813A /* PeriodWorkoutsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodWorkoutsView.swift; sourceTree = "<group>"; };
+		841E05F027951FFD0038813A /* WorkoutListStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListStatus.swift; sourceTree = "<group>"; };
+		841E05EE27951FFD0038813A /* WorkoutRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRows.swift; sourceTree = "<group>"; };
 		84468860279224A900720716 /* WorkoutRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRow.swift; sourceTree = "<group>"; };
 		844688642793CAC900720716 /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
 		8446886A2793D46C00720716 /* BikeLogTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BikeLogTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8457C60827991A4300361EC9 /* WorkoutDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetail.swift; sourceTree = "<group>"; };
+		8457C60A27991A4300361EC9 /* WorkoutDetailCharts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailCharts.swift; sourceTree = "<group>"; };
+		8457C60C27991A4300361EC9 /* WorkoutRouteMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRouteMap.swift; sourceTree = "<group>"; };
+		8457C60E27991A4300361EC9 /* HealthKitProvider+Details.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthKitProvider+Details.swift"; sourceTree = "<group>"; };
+		8457C61027991A4300361EC9 /* WorkoutDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetails.swift; sourceTree = "<group>"; };
+		8457C61227991A4300361EC9 /* MileSpeedSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileSpeedSplit.swift; sourceTree = "<group>"; };
+		8457C61427991A4300361EC9 /* MileSpeedSplitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MileSpeedSplitTests.swift; sourceTree = "<group>"; };
+		8457C61627991A4300361EC9 /* WorkoutDetailValueRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailValueRow.swift; sourceTree = "<group>"; };
 		8469A2312795B58B00F39BEF /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		8469A2332795E48D00F39BEF /* PaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaceTests.swift; sourceTree = "<group>"; };
 		8469A2352795FD7B00F39BEF /* DatePeriodTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePeriodTests.swift; sourceTree = "<group>"; };
+		8469A2372795FD7B00F39BEF /* WorkoutManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutManagerTests.swift; sourceTree = "<group>"; };
+		8469A2392795FD7B00F39BEF /* WorkoutCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCacheTests.swift; sourceTree = "<group>"; };
 		84AB706A279623EB00021E96 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		84AB706C27966BC800021E96 /* Localizable.stringsdict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
 		84BFA4DC278E612F008E690D /* BikeLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BikeLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,6 +112,7 @@
 		84D3502B278FCBEE00C47FFA /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		84D3502D278FCE9300C47FFA /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		84E3F20627A490A2001A1A6E /* HealthResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthResult.swift; sourceTree = "<group>"; };
+		84E3F20827A490A2001A1A6E /* WorkoutCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCache.swift; sourceTree = "<group>"; };
 		84F0BF4C2797ACBB000BD834 /* Locale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locale.swift; sourceTree = "<group>"; };
 		84F0BF502797BAC6000BD834 /* DefaultKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,7 +143,16 @@
 				84468860279224A900720716 /* WorkoutRow.swift */,
 				84C4169A2794784A00C303CE /* DateBlock.swift */,
 				841E05E227951FFD0038813A /* LogHeader.swift */,
+				841E05E427951FFD0038813A /* YearlyTotalsView.swift */,
+				841E05EA27951FFD0038813A /* MonthlyTotalsView.swift */,
+				841E05EC27951FFD0038813A /* PeriodWorkoutsView.swift */,
+				841E05F027951FFD0038813A /* WorkoutListStatus.swift */,
+				841E05EE27951FFD0038813A /* WorkoutRows.swift */,
+				841E05E827951FFD0038813A /* WorkoutSummaryRow.swift */,
 				8457C60827991A4300361EC9 /* WorkoutDetail.swift */,
+				8457C60A27991A4300361EC9 /* WorkoutDetailCharts.swift */,
+				8457C61627991A4300361EC9 /* WorkoutDetailValueRow.swift */,
+				8457C60C27991A4300361EC9 /* WorkoutRouteMap.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -128,6 +171,9 @@
 			children = (
 				8469A2332795E48D00F39BEF /* PaceTests.swift */,
 				8469A2352795FD7B00F39BEF /* DatePeriodTests.swift */,
+				8469A2372795FD7B00F39BEF /* WorkoutManagerTests.swift */,
+				8457C61427991A4300361EC9 /* MileSpeedSplitTests.swift */,
+				8469A2392795FD7B00F39BEF /* WorkoutCacheTests.swift */,
 			);
 			path = BikeLogTests;
 			sourceTree = "<group>";
@@ -205,9 +251,12 @@
 			isa = PBXGroup;
 			children = (
 				84D3502B278FCBEE00C47FFA /* Workout.swift */,
+				8457C61027991A4300361EC9 /* WorkoutDetails.swift */,
+				8457C61227991A4300361EC9 /* MileSpeedSplit.swift */,
 				84D3502D278FCE9300C47FFA /* Activity.swift */,
 				84C4169E2795038A00C303CE /* WorkoutSort.swift */,
 				84BFA4F2278E6325008E690D /* StatisticalPeriod.swift */,
+				841E05E627951FFD0038813A /* WorkoutPeriodTotal.swift */,
 				84F0BF502797BAC6000BD834 /* DefaultKey.swift */,
 				84E3F20627A490A2001A1A6E /* HealthResult.swift */,
 			);
@@ -232,6 +281,8 @@
 				84BFA4FD278E8E38008E690D /* WorkoutManager.swift */,
 				84BFA4F7278E669F008E690D /* HealthProvider.swift */,
 				84CEC87D2791022A00520F65 /* HealthKitProvider.swift */,
+				8457C60E27991A4300361EC9 /* HealthKitProvider+Details.swift */,
+				84E3F20827A490A2001A1A6E /* WorkoutCache.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -339,6 +390,9 @@
 			files = (
 				8469A2362795FD7B00F39BEF /* DatePeriodTests.swift in Sources */,
 				8469A2342795E48D00F39BEF /* PaceTests.swift in Sources */,
+				8469A2382795FD7B00F39BEF /* WorkoutManagerTests.swift in Sources */,
+				8457C61527991A4300361EC9 /* MileSpeedSplitTests.swift in Sources */,
+				8469A23A2795FD7B00F39BEF /* WorkoutCacheTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,8 +401,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				841E05E327951FFD0038813A /* LogHeader.swift in Sources */,
+				841E05E527951FFD0038813A /* YearlyTotalsView.swift in Sources */,
+				841E05E727951FFD0038813A /* WorkoutPeriodTotal.swift in Sources */,
+				841E05E927951FFD0038813A /* WorkoutSummaryRow.swift in Sources */,
+				841E05EB27951FFD0038813A /* MonthlyTotalsView.swift in Sources */,
+				841E05ED27951FFD0038813A /* PeriodWorkoutsView.swift in Sources */,
+				841E05F127951FFD0038813A /* WorkoutListStatus.swift in Sources */,
+				841E05EF27951FFD0038813A /* WorkoutRows.swift in Sources */,
 				84468861279224A900720716 /* WorkoutRow.swift in Sources */,
 				84E3F20727A490A2001A1A6E /* HealthResult.swift in Sources */,
+				84E3F20927A490A2001A1A6E /* WorkoutCache.swift in Sources */,
 				84BFA4FA278E8C81008E690D /* HealthKit.swift in Sources */,
 				84D3502E278FCE9300C47FFA /* Activity.swift in Sources */,
 				84C4169B2794784A00C303CE /* DateBlock.swift in Sources */,
@@ -366,6 +428,12 @@
 				84BFA4F3278E6325008E690D /* StatisticalPeriod.swift in Sources */,
 				84CEC880279103A900520F65 /* MockHealthProvider.swift in Sources */,
 				8457C60927991A4300361EC9 /* WorkoutDetail.swift in Sources */,
+				8457C60B27991A4300361EC9 /* WorkoutDetailCharts.swift in Sources */,
+				8457C61727991A4300361EC9 /* WorkoutDetailValueRow.swift in Sources */,
+				8457C60D27991A4300361EC9 /* WorkoutRouteMap.swift in Sources */,
+				8457C60F27991A4300361EC9 /* HealthKitProvider+Details.swift in Sources */,
+				8457C61127991A4300361EC9 /* WorkoutDetails.swift in Sources */,
+				8457C61327991A4300361EC9 /* MileSpeedSplit.swift in Sources */,
 				84BFA4FC278E8CAD008E690D /* Measurement.swift in Sources */,
 				84AB706B279623EB00021E96 /* Color.swift in Sources */,
 				84F0BF512797BAC6000BD834 /* DefaultKey.swift in Sources */,
@@ -395,7 +463,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.batoulapps.Bike-LogTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BikeLog.app/BikeLog";
 			};
@@ -413,7 +481,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.batoulapps.Bike-LogTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BikeLog.app/BikeLog";
 			};
@@ -470,7 +538,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -525,7 +593,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -544,7 +612,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BikeLog/Preview Content\"";
-				DEVELOPMENT_TEAM = 5H3PBG23RV;
+				DEVELOPMENT_TEAM = 2JZJKNZN56;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Display Workouts";
@@ -554,16 +622,16 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.batoulapps.BikeLog;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ameir.BikeLog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -577,7 +645,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BikeLog/Preview Content\"";
-				DEVELOPMENT_TEAM = 5H3PBG23RV;
+				DEVELOPMENT_TEAM = 2JZJKNZN56;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "Display Workouts";
@@ -587,16 +655,16 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.batoulapps.BikeLog;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ameir.BikeLog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

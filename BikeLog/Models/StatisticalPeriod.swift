@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import OSLog
 
 enum StatisticalPeriod: String, CaseIterable {
+    private static let logger = Logger(subsystem: "BikeLog", category: "Workout totals")
+
     case all
     case year
     case month
@@ -26,36 +29,25 @@ enum StatisticalPeriod: String, CaseIterable {
         }
     }
     
-    func dateInterval(from date: Date = Date()) -> DateInterval {
-        let cal = Calendar.current
-        let comps = cal.dateComponents([.year, .month, .weekday], from: date)
-        guard let year = comps.year, let month = comps.month, let weekday = comps.weekday else {
-            return DateInterval(start: date, end: date)
-        }
-        
-        let startDate: Date
-        let endDate: Date
-        
+    func dateInterval(from date: Date = .now, calendar: Calendar = .current) -> DateInterval {
+        var calendar = calendar
+        let component: Calendar.Component
         switch self {
         case .all:
-            startDate = .distantPast
-            endDate = .distantFuture
+            return DateInterval(start: .distantPast, end: .distantFuture)
         case .year:
-            startDate = cal.date(from: DateComponents(year: year, month: 1, day: 1)) ?? date
-            endDate = cal.date(from: DateComponents(year: year + 1, month: 1, day: 1)) ?? date
+            component = .year
         case .month:
-            startDate = cal.date(from: DateComponents(year: year, month: month, day: 1)) ?? date
-            endDate = cal.date(from: DateComponents(year: year, month: month + 1, day: 1)) ?? date
+            component = .month
         case .week:
-            if weekday == 2 {
-                startDate = cal.startOfDay(for: date)
-            } else {
-                let monday = cal.nextDate(after: date, matching: DateComponents(weekday: 2), matchingPolicy: .nextTime, direction: .backward) ?? date
-                startDate = cal.startOfDay(for: monday)
-            }
-            endDate = cal.date(byAdding: .day, value: 7, to: startDate) ?? date
+            calendar.firstWeekday = 2
+            component = .weekOfYear
         }
-        
-        return DateInterval(start: startDate, end: endDate)
+
+        guard let interval = calendar.dateInterval(of: component, for: date) else {
+            Self.logger.error("Could not determine the date interval for \(self.rawValue).")
+            return DateInterval(start: date, end: date)
+        }
+        return interval
     }
 }

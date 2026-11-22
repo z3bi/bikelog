@@ -11,9 +11,9 @@ import SwiftUI
 struct BikeLogApp: App {
     
 #if targetEnvironment(simulator)
-    @StateObject var workoutManager: WorkoutManager = WorkoutManager.mock()
+    @State private var workoutManager = WorkoutManager.mock()
 #else
-    @StateObject var workoutManager: WorkoutManager = WorkoutManager(healthProvider: HealthKitProvider())
+    @State private var workoutManager = WorkoutManager(healthProvider: HealthKitProvider())
 #endif
     
     init() {

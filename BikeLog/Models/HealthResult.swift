@@ -7,6 +7,7 @@
 
 import Foundation
 import HealthKit
+import OSLog
 
 struct HealthResult {
     var workouts: [Workout]
@@ -18,7 +19,18 @@ struct HealthResult {
         HealthResult(workouts: [], unit: Locale.current.distanceUnit(), cached: true, anchor: nil)
     }
     
-    private static let queue = DispatchQueue(label: "CachingQueue", qos: .default, attributes: .concurrent)
+    private static let logger = Logger(subsystem: "BikeLog", category: "Workout cache")
+
+    func applying(added: [Workout], deleted: [UUID], newAnchor: HKQueryAnchor) -> Self {
+        var byID: [UUID: Workout] = [:]
+        // An unanchored query starts a new snapshot, not a delta against the cache.
+        if anchor != nil {
+            for workout in workouts { byID[workout.id] = workout }
+        }
+        for workout in added { byID[workout.id] = workout }
+        for id in deleted { byID.removeValue(forKey: id) }
+        return Self(workouts: Array(byID.values), unit: unit, cached: false, anchor: newAnchor)
+    }
 }
  
 extension HealthResult: Codable {
@@ -40,10 +52,15 @@ extension HealthResult: Codable {
         }
             
         
-        if let anchorData = try? container.decode(Data.self, forKey: .anchor),
-           let decodedAnchor = try? NSKeyedUnarchiver.unarchivedObject(ofClass: HKQueryAnchor.self, from: anchorData) {
-            anchor = decodedAnchor
-        } else {
+        do {
+            if let data = try container.decodeIfPresent(Data.self, forKey: .anchor) {
+                anchor = try NSKeyedUnarchiver.unarchivedObject(ofClass: HKQueryAnchor.self, from: data)
+                if anchor == nil { Self.logger.error("Cached query anchor was unreadable; will rebuild.") }
+            } else {
+                anchor = nil
+            }
+        } catch {
+            Self.logger.error("Cached query anchor was unreadable; will rebuild.")
             anchor = nil
         }
     }
@@ -53,46 +70,13 @@ extension HealthResult: Codable {
         try container.encode(cached, forKey: .cached)
         try container.encode(workouts, forKey: .workouts)
 
-        let unitData = try NSKeyedArchiver.archivedData(withRootObject: unit, requiringSecureCoding: false)
+        let unitData = try NSKeyedArchiver.archivedData(withRootObject: unit, requiringSecureCoding: true)
         try container.encode(unitData, forKey: .unit)
         
         if let anchor = anchor {
-            let anchorData = try NSKeyedArchiver.archivedData(withRootObject: anchor, requiringSecureCoding: false)
+            let anchorData = try NSKeyedArchiver.archivedData(withRootObject: anchor, requiringSecureCoding: true)
             try container.encodeIfPresent(anchorData, forKey: .anchor)
         }
     }
     
-    static func fileName(activity: Activity) -> URL {
-        let baseDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        return baseDir.appendingPathComponent(activity.rawValue)
-    }
-    
-    func save(for activity: Activity) {
-        HealthResult.queue.async {
-            do {
-                var cache = self
-                cache.cached = true
-                let fileName = HealthResult.fileName(activity: activity)
-                let data = try JSONEncoder().encode(cache)
-                try data.write(to: fileName)
-            } catch {
-                print("Error caching data: \(error)")
-            }
-        }
-    }
-    
-    static func load(activity: Activity) async throws -> HealthResult {
-        return try await withCheckedThrowingContinuation { continuation in
-            HealthResult.queue.async {
-                do {
-                    let data = try Data(contentsOf: fileName(activity: activity))
-                    let cache = try JSONDecoder().decode(HealthResult.self, from: data)
-                    continuation.resume(returning: cache)
-                } catch {
-                    print("error loading cache: \(error)")
-                    continuation.resume(throwing: error)
-                }
-            }
-        }
-    }
 }

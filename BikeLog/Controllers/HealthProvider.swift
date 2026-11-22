@@ -5,10 +5,10 @@
 //  Created by Ameir Al-Zoubi on 1/11/22.
 //
 
-import Foundation
-import Combine
-
 protocol HealthProvider {
-    func monitorWorkouts(activity: Activity) async
-    func workoutsPublisher() -> AnyPublisher<HealthResult, Never>
+    @MainActor
+    func monitorWorkouts(activity: Activity, onResult: @MainActor (HealthResult) -> Void) async throws
+
+    @MainActor
+    func details(for workout: Workout) async throws -> WorkoutDetails
 }

@@ -44,8 +44,11 @@ struct Workout: Hashable, Equatable, Identifiable, Codable {
 
 extension Workout {
     init?(hkWorkout: HKWorkout, hkUnit: HKUnit) {
-        guard let activity = Activity(hkActivityType: hkWorkout.workoutActivityType),
-              let distance = hkWorkout.totalDistance?.doubleValue(for: hkUnit),
+        guard let activity = Activity(hkActivityType: hkWorkout.workoutActivityType) else { return nil }
+
+        let distanceType = HKWorkout.distanceType(for: hkWorkout.workoutActivityType)
+        let distanceQuantity = hkWorkout.statistics(for: distanceType)?.sumQuantity() ?? hkWorkout.totalDistance
+        guard let distance = distanceQuantity?.doubleValue(for: hkUnit),
               distance > 0.01 else {
             return nil
         }

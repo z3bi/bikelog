@@ -7,13 +7,13 @@
 
 import Foundation
 import HealthKit
-import Combine
+import OSLog
 
-class HealthKitProvider: HealthProvider {
-    
+@MainActor
+final class HealthKitProvider: HealthProvider {
+    private static let logger = Logger(subsystem: "BikeLog", category: "HealthKit")
+    private let cache = WorkoutCache()
     let store = HKHealthStore()
-    let publisher = CurrentValueSubject<HealthResult, Never>(.empty)
-    var updateTask: Task<(), Error>?
     
     let healthTypes: Set = [HKWorkoutType.workoutType(),
                             HKQuantityType.quantityType(forIdentifier: .distanceCycling)!,
@@ -22,41 +22,11 @@ class HealthKitProvider: HealthProvider {
                             HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
                             HKQuantityType.quantityType(forIdentifier: .basalEnergyBurned)!]
     
-    func requestAuthorization() async {
-        do {
-            try await store.requestAuthorization(toShare: [], read: healthTypes)
-        } catch {
-            print("Error requesting HealthKit authorization \(error)")
-        }
-    }
-
-    func queryWorkouts(activity: Activity) {
-        updateTask?.cancel()
-
-        let activityPredicate = HKSamplePredicate.workout(HKQuery.predicateForWorkouts(with: activity.hkActivityType))
-        let query = HKAnchoredObjectQueryDescriptor(predicates: [activityPredicate], anchor: publisher.value.anchor)
-        let updatingResults = query.results(for: store)
-
-        updateTask = Task {
-            for try await newResult in updatingResults {
-                publishResult(newResult, activity: activity)
-            }
-        }
-    }
-    
-    private func publishResult(_ result: HKAnchoredObjectQueryDescriptor<HKWorkout>.Result, activity: Activity) {
-        let unit = publisher.value.unit
-        let newWorkouts = result.addedSamples.compactMap { Workout(hkWorkout: $0, hkUnit: unit.hkUnit()) }
-        let deletedIDs = result.deletedObjects.map { $0.uuid }
-        let validWorkouts = publisher.value.workouts.filter { !deletedIDs.contains($0.id) }
-        let workouts = Array(Set(validWorkouts + newWorkouts))
-        
-        let newState = HealthResult(workouts: workouts,
-                                    unit: publisher.value.unit,
-                                    cached: false,
-                                    anchor: result.newAnchor)
-        publisher.value = newState
-        newState.save(for: activity)
+    private func applying(_ result: HKAnchoredObjectQueryDescriptor<HKWorkout>.Result, to state: HealthResult) -> HealthResult {
+        let unit = state.unit.hkUnit()
+        return state.applying(added: result.addedSamples.compactMap { Workout(hkWorkout: $0, hkUnit: unit) },
+                              deleted: result.deletedObjects.map(\.uuid),
+                              newAnchor: result.newAnchor)
     }
     
     func preferredUnit(for type: HKQuantityType) async -> HKUnit {
@@ -66,33 +36,49 @@ class HealthKitProvider: HealthProvider {
                 return unit
             }
         } catch {
-            print("Error retrieving preferredUnits \(error)")
+            if !Task.isCancelled {
+                Self.logger.error("Could not read the preferred unit: \(error.localizedDescription, privacy: .private)")
+            }
         }
         
         return Locale.current.distanceUnit().hkUnit()
     }
     
-    func monitorWorkouts(activity: Activity) async {
-        let cachedResult = try? await HealthResult.load(activity: activity)
-        publisher.value = cachedResult ?? .empty
+    func monitorWorkouts(activity: Activity, onResult: @MainActor (HealthResult) -> Void) async throws {
+        var state: HealthResult
+        do {
+            state = try await cache.load(for: activity) ?? .empty
+        } catch {
+            Self.logger.error("Could not read the workout cache; will rebuild: \(error.localizedDescription, privacy: .private)")
+            state = .empty
+        }
+        try Task.checkCancellation()
+        onResult(state)
 
-        await requestAuthorization()
+        try await store.requestAuthorization(toShare: [], read: healthTypes)
+        try Task.checkCancellation()
         let hkUnit = await preferredUnit(for: HKWorkout.distanceType(for: activity.hkActivityType))
+        try Task.checkCancellation()
         let unit = hkUnit.lengthUnit()
 
-        if unit != publisher.value.unit {
-            let workouts = Workout.updateWorkouts(publisher.value.workouts, unit: unit)
-            let updatedResult = HealthResult(workouts: workouts, unit: unit, cached: true, anchor: cachedResult?.anchor)
-            publisher.value = updatedResult
+        if unit != state.unit {
+            state.workouts = Workout.updateWorkouts(state.workouts, unit: unit)
+            state.unit = unit
+            onResult(state)
         }
-        
-        queryWorkouts(activity: activity)
-    }
-    
-    func workoutsPublisher() -> AnyPublisher<HealthResult, Never> {
-        publisher
-            .receive(on: RunLoop.main)
-            .eraseToAnyPublisher()
+
+        let predicate = HKSamplePredicate.workout(HKQuery.predicateForWorkouts(with: activity.hkActivityType))
+        let query = HKAnchoredObjectQueryDescriptor(predicates: [predicate], anchor: state.anchor)
+        for try await result in query.results(for: store) {
+            try Task.checkCancellation()
+            state = applying(result, to: state)
+            onResult(state)
+            do {
+                try await cache.save(state, for: activity)
+            } catch {
+                Self.logger.error("Could not save the workout cache: \(error.localizedDescription, privacy: .private)")
+            }
+        }
     }
 }
 

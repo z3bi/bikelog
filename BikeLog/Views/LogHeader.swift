@@ -8,57 +8,76 @@
 import SwiftUI
 
 struct LogHeader: View {
-    @ObservedObject var manager: WorkoutManager
-    let models: [StatsViewModel]
+    @Environment(\.calendar) private var calendar
+    @Bindable var manager: WorkoutManager
+    let showDestination: (ExerciseLog.Destination) -> Void
 
-    init(manager: WorkoutManager) {
-        self.manager = manager
-        self.models = StatisticalPeriod.allCases.map {
-            StatsViewModel(date: Date(),
-                           period: $0,
-                           activity: manager.activity,
-                           unit: manager.unit,
-                           workouts: manager.workouts)
+    private func summary(for period: StatisticalPeriod, at date: Date) -> StatsViewModel {
+        StatsViewModel(date: date,
+                       period: period,
+                       activity: manager.activity,
+                       unit: manager.unit,
+                       workouts: manager.workouts,
+                       calendar: calendar)
+    }
+
+    private func destination(for summary: StatsViewModel) -> ExerciseLog.Destination {
+        switch summary.period {
+        case .all:
+            .yearlyTotals
+        case .year:
+            .monthlyTotals(year: summary.dateInterval.start)
+        case .month, .week:
+            .periodWorkouts(period: summary.period, interval: summary.dateInterval)
         }
     }
     
     var body: some View {
+        let date = Date.now
+        let textScale = 1.08
+
         VStack(alignment: .leading, spacing: 8) {
-            ForEach(models) { model in
-                HStack {
-                    Text(model.title)
-                        .textCase(.uppercase)
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundColor(.Theme.darkGreen)
-                    Text(model.totalDistance())
-                        .font(.system(size: 22, weight: .bold))
-                        .foregroundColor(.Theme.teal)
-                    Text(model.workoutCount())
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.Theme.gray)
+            VStack(alignment: .leading, spacing: 0) {
+                ForEach(StatisticalPeriod.allCases, id: \.self) { period in
+                    let model = summary(for: period, at: date)
+                    Button {
+                        showDestination(destination(for: model))
+                    } label: {
+                        HStack {
+                            WorkoutSummaryRow(title: model.title,
+                                              distance: model.totalDistance(),
+                                              count: model.workoutCount(),
+                                              textScale: textScale)
+                            Spacer()
+                            Image(systemName: "chevron.forward")
+                                .font(.footnote.weight(.semibold))
+                                .foregroundStyle(.tertiary)
+                                .accessibilityHidden(true)
+                        }
+                        .padding(.vertical, 5)
+                        .frame(minHeight: 44)
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
                 }
             }
+
             Picker("Sort", selection: $manager.sort) {
                 ForEach(WorkoutSort.allCases, id: \.self) {
                     Text($0.name)
                 }
             }
             .pickerStyle(.segmented)
+            .padding(.top, 8)
             if manager.isLoading {
                 HStack(spacing: 8) {
                     ProgressView()
                     Text("Loading...")
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.gray)
                 }
+            } else if manager.refreshState == .failed {
+                WorkoutListStatus(manager: manager)
             }
         }
-    }
-}
-
-struct StatHeader_Previews: PreviewProvider {
-    static var previews: some View {
-        LogHeader(manager: WorkoutManager.mock())
-            .previewLayout(PreviewLayout.sizeThatFits)
-            .padding()
     }
 }

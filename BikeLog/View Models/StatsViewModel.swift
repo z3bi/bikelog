@@ -7,59 +7,44 @@
 
 import Foundation
 
-struct StatsViewModel: Hashable, Equatable, Identifiable {
+struct StatsViewModel {
     let dateInterval: DateInterval
     let period: StatisticalPeriod
     let activity: Activity
     let unit: UnitLength
     let workouts: [Workout]
-    let id: UUID
+    private let calendar: Calendar
     
-    init(date: Date, period: StatisticalPeriod, activity: Activity, unit: UnitLength, workouts: [Workout]) {
-        let interval = period.dateInterval(from: date)
+    init(date: Date, period: StatisticalPeriod, activity: Activity, unit: UnitLength, workouts: [Workout], calendar: Calendar = .current) {
+        let interval = period.dateInterval(from: date, calendar: calendar)
         self.dateInterval = interval
         self.period = period
         self.activity = activity
         self.unit = unit
-        self.workouts = workouts.filter { interval.contains($0.startDate) }
-        self.id = UUID()
+        self.workouts = WorkoutPeriodTotal.workouts(workouts, in: interval)
+        self.calendar = calendar
     }
 
     var title: String {
+        let dateFormat = Date.FormatStyle(calendar: calendar, timeZone: calendar.timeZone)
         switch period {
         case .all, .week:
             return period.name
         case .year:
-            return dateInterval.start.formatted(.dateTime.year())
+            return dateInterval.start.formatted(dateFormat.year())
         case .month:
-            return dateInterval.start.formatted(.dateTime.month(.abbreviated))
+            return dateInterval.start.formatted(dateFormat.month(.abbreviated))
         }
     }
 
     func totalDistance() -> String {
-        let initial = Measurement(value: 0, unit: unit)
-        let distance = workouts.reduce(initial) { $0 + $1.distance }
+        let distance = WorkoutPeriodTotal.distance(of: workouts, in: unit)
         let fractions = distance.value == 0 ? 0 : 1
         return distance.formatted(LengthFormat.lengthFormat(fractions: fractions))
     }
     
     func workoutCount() -> String {
-        switch activity {
-        case .cycling:
-            return String.localizedStringWithFormat(String(localized: "%d rides"), workouts.count)
-        case .running:
-            return String.localizedStringWithFormat(String(localized: "%d runs"), workouts.count)
-        case .walking:
-            return String.localizedStringWithFormat(String(localized: "%d walks"), workouts.count)
-        }
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    static func ==(lhs: StatsViewModel, rhs: StatsViewModel) -> Bool {
-        lhs.id == rhs.id
+        activity.workoutCount(workouts.count)
     }
 }
 

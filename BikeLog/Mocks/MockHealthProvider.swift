@@ -5,8 +5,8 @@
 //  Created by Ameir Al-Zoubi on 1/13/22.
 //
 
+import CoreLocation
 import Foundation
-import Combine
 
 class MockHealthProvider: HealthProvider {
     
@@ -15,7 +15,6 @@ class MockHealthProvider: HealthProvider {
     }
     
     let unit: UnitLength
-    let publisher = CurrentValueSubject<HealthResult, Never>(.empty)
     
     func generateWorkout(activity: Activity, dayOffset: Int = 1) -> Workout {
         let distance: Measurement<UnitLength>
@@ -49,26 +48,49 @@ class MockHealthProvider: HealthProvider {
     func generateWorkouts(activity: Activity, range: ClosedRange<Int>) -> [Workout] {
         range.map { generateWorkout(activity: activity, dayOffset: $0) }
     }
-    
-    func monitorWorkouts(activity: Activity) {
-        publisher.value = HealthResult(workouts: [], unit: unit, cached: true)
-        let initialWorkouts = generateWorkouts(activity: activity, range: 50...100)
-        publisher.value.workouts = initialWorkouts
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            let newWorkouts = self.generateWorkouts(activity: activity, range: 10...13)
-            let workouts = self.publisher.value.workouts + newWorkouts
-            self.publisher.value = HealthResult(workouts: workouts, unit: self.unit, cached: false)
-        }        
+    func details(for workout: Workout) async throws -> WorkoutDetails {
+        let distances = (0..<48).map { _ in workout.distance.converted(to: .meters).value / 48 }
+        let weights = distances.indices.map { 1 + 0.22 * cos(Double($0) / 3) }
+        let weightSum = weights.reduce(0, +)
+        var start = workout.startDate
+        let samples = zip(distances, weights).map { meters, weight in
+            let end = min(start + workout.duration * weight / weightSum, workout.endDate)
+            defer { start = end }
+            return MileSpeedSplit.DistanceSample(start: start, end: end, meters: meters)
+        }
+        let readings = (0..<24).map { index in
+            WorkoutDetails.HeartRateReading(id: UUID(),
+                                            time: workout.startDate + workout.duration * Double(index) / 24,
+                                            beatsPerMinute: 125 + 19 * sin(Double(index) / 4))
+        }
+        let route = [
+            CLLocationCoordinate2D(latitude: 37.7695, longitude: -122.4860),
+            CLLocationCoordinate2D(latitude: 37.7691, longitude: -122.4803),
+            CLLocationCoordinate2D(latitude: 37.7698, longitude: -122.4766),
+            CLLocationCoordinate2D(latitude: 37.7713, longitude: -122.4722)
+        ]
+        return WorkoutDetails(route: [route], heartRate: readings,
+                              averageHeartRate: readings.map(\.beatsPerMinute).reduce(0, +) / Double(readings.count),
+                              peakHeartRate: readings.map(\.beatsPerMinute).max(),
+                              activeCalories: workout.duration / 60 * 6,
+                              elevationGain: Measurement(value: 85, unit: .meters),
+                              mileSpeeds: MileSpeedSplit.calculate(samples: samples, workoutStart: workout.startDate,
+                                                                   workoutEnd: workout.endDate))
     }
     
-    func workoutsPublisher() -> AnyPublisher<HealthResult, Never> {
-        return publisher.receive(on: RunLoop.main).eraseToAnyPublisher()
+    func monitorWorkouts(activity: Activity, onResult: @MainActor (HealthResult) -> Void) async throws {
+        let initialWorkouts = generateWorkouts(activity: activity, range: 50...100)
+        onResult(HealthResult(workouts: initialWorkouts, unit: unit, cached: true))
+
+        try await Task.sleep(for: .seconds(2))
+        let newWorkouts = generateWorkouts(activity: activity, range: 10...13)
+        onResult(HealthResult(workouts: initialWorkouts + newWorkouts, unit: unit, cached: false))
     }
 }
 
 extension WorkoutManager {
-    static func mock(activity: Activity = .cycling, unit: UnitLength = .miles) -> WorkoutManager {
+    static func mock(unit: UnitLength = .miles) -> WorkoutManager {
         WorkoutManager(healthProvider: MockHealthProvider(unit: unit))
     }
 }

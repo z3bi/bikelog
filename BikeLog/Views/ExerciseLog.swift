@@ -6,28 +6,43 @@
 //
 
 import SwiftUI
-import HealthKit
 
 struct ExerciseLog: View {
-    
-    @ObservedObject var workoutManager: WorkoutManager
+    enum Destination: Hashable {
+        case yearlyTotals
+        case monthlyTotals(year: Date)
+        case periodWorkouts(period: StatisticalPeriod, interval: DateInterval)
+    }
+
+    @State private var path = NavigationPath()
+    @Bindable var workoutManager: WorkoutManager
 
     var body: some View {
-        NavigationView {
+        let activity = workoutManager.activity
+
+        NavigationStack(path: $path) {
             List {
-                LogHeader(manager: workoutManager)
-                    .listRowSeparator(.hidden)
-                ForEach(workoutManager.workouts) { workout in
-                    NavigationLink(destination: WorkoutDetail(workout: workout)) {
-                        WorkoutRow(workout: workout)
-                    }
+                LogHeader(manager: workoutManager) { destination in
+                    path.append(destination)
                 }
+                .listRowSeparator(.hidden)
+                WorkoutRows(workouts: workoutManager.workouts)
             }
             .listStyle(.plain)
-            .onAppear() {
-                workoutManager.fetchWorkouts()
+            .navigationDestination(for: Workout.self) { workout in
+                WorkoutDetail(workout: workout, loadDetails: workoutManager.details(for:))
             }
-            .navigationTitle(workoutManager.activity.name)
+            .navigationDestination(for: Destination.self) { destination in
+                switch destination {
+                case .yearlyTotals:
+                    YearlyTotalsView(manager: workoutManager)
+                case .monthlyTotals(let year):
+                    MonthlyTotalsView(year: year, manager: workoutManager)
+                case .periodWorkouts(let period, let interval):
+                    PeriodWorkoutsView(period: period, interval: interval, manager: workoutManager)
+                }
+            }
+            .navigationTitle(activity.name)
             .toolbar {
                 ToolbarItem {
                     Menu("Activity") {
@@ -40,11 +55,12 @@ struct ExerciseLog: View {
                 }
             }
         }
+        .task(id: workoutManager.refreshRequestID) {
+            await workoutManager.monitorWorkouts(for: activity)
+        }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExerciseLog(workoutManager: WorkoutManager.mock())
-    }
+#Preview {
+    ExerciseLog(workoutManager: WorkoutManager.mock())
 }
