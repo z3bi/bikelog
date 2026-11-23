@@ -7,6 +7,7 @@ struct WorkoutRouteMap: View {
 
     var body: some View {
         map(interactionModes: [])
+            .listRowBackground(Color.Theme.appBackground)
             .frame(height: 200)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
@@ -39,15 +40,15 @@ struct WorkoutRouteMap: View {
         Map(initialPosition: .automatic, interactionModes: interactionModes) {
             ForEach(segments.indices, id: \.self) { index in
                 MapPolyline(coordinates: segments[index])
-                    .stroke(Color.Theme.teal, lineWidth: 4)
+                    .stroke(Color._Theme.teal, lineWidth: 4)
             }
             if let start = segments.first?.first {
                 Marker("Start", systemImage: "flag", coordinate: start)
-                    .tint(Color.Theme.teal)
+                    .tint(Color._Theme.teal)
             }
             if let finish = segments.last?.last {
                 Marker("Finish", systemImage: "flag.checkered", coordinate: finish)
-                    .tint(Color.Theme.orange)
+                    .tint(Color._Theme.orange)
             }
         }
     }

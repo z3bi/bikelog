@@ -43,12 +43,11 @@ struct LogHeader: View {
                     Button {
                         showDestination(destination(for: model))
                     } label: {
-                        HStack {
+                        HStack(spacing: 12) {
                             WorkoutSummaryRow(title: model.title,
                                               distance: model.totalDistance(),
                                               count: model.workoutCount(),
                                               textScale: textScale)
-                            Spacer()
                             Image(systemName: "chevron.forward")
                                 .font(.footnote.weight(.semibold))
                                 .foregroundStyle(.tertiary)
@@ -72,9 +71,10 @@ struct LogHeader: View {
             if manager.isLoading {
                 HStack(spacing: 8) {
                     ProgressView()
-                    Text("Loading...")
+                    Text("Fetching workouts...")
                         .foregroundStyle(.gray)
                 }
+                .padding(.top, 22)
             } else if manager.refreshState == .failed {
                 WorkoutListStatus(manager: manager)
             }

@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct WorkoutSummaryRow: View {
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let title: String
     let distance: String
     let count: String
@@ -9,22 +8,18 @@ struct WorkoutSummaryRow: View {
     var textScale = 1.0
 
     var body: some View {
-        let layout = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 4))
-            : AnyLayout(HStackLayout())
-
-        layout {
+        HStack {
             Text(title)
-                .textCase(isAllTimeHeader ? nil : .uppercase)
+                .textCase(.uppercase)
                 .font(.headline.scaled(by: textScale))
-                .foregroundStyle(isAllTimeHeader ? Color.Theme.red : Color.Theme.darkGreen)
+                .foregroundStyle(isAllTimeHeader ? Color.Theme.accent : Color.Theme.secondary)
             Text(distance)
                 .font(.title2.scaled(by: textScale).bold())
-                .foregroundStyle(Color.Theme.teal)
+                .foregroundStyle(Color.Theme.primary)
             Text(count)
                 .font(.callout.scaled(by: textScale).weight(.medium))
-                .foregroundStyle(Color.Theme.gray)
+                .foregroundStyle(Color.Theme.accentSecondary)
         }
-        .accessibilityElement(children: .combine)
+        .listRowBackground(Color.Theme.appBackground)
     }
 }

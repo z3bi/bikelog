@@ -25,9 +25,13 @@ struct ExerciseLog: View {
                 LogHeader(manager: workoutManager) { destination in
                     path.append(destination)
                 }
+                .listRowBackground(Color.Theme.appBackground)
                 .listRowSeparator(.hidden)
                 WorkoutRows(workouts: workoutManager.workouts)
+                    .listRowBackground(Color.Theme.appBackground)
             }
+            .scrollContentBackground(.hidden)
+            .background(Color.Theme.appBackground)
             .listStyle(.plain)
             .navigationDestination(for: Workout.self) { workout in
                 WorkoutDetail(workout: workout, loadDetails: workoutManager.details(for:))

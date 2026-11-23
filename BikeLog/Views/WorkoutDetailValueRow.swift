@@ -14,13 +14,16 @@ struct WorkoutDetailValueRow: View {
             Text(value).workoutDetailValueStyle()
         } label: {
             Text(label)
+                .font(.system(.body, design: .rounded).weight(.medium))
+                .foregroundStyle(Color.Theme.secondary)
         }
+        .listRowBackground(Color.Theme.appBackground)
     }
 }
 
 extension Text {
     func workoutDetailValueStyle() -> some View {
-        font(.system(.body, design: .rounded).weight(.semibold).scaled(by: 18.0 / 17.0))
-            .foregroundStyle(Color.Theme.darkGreen)
+        font(.system(.body, design: .rounded).weight(.bold))
+            .foregroundStyle(Color.Theme.primary)
     }
 }

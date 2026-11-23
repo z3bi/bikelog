@@ -30,13 +30,15 @@ struct WorkoutDetail: View {
             ? startTime : startTime.month().day().year()
 
         List {
-            Section("Overview") {
+            Section {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(workout.startDate, format: dateFormat.weekday(.wide).month(.wide).day().year())
                         .workoutDetailValueStyle()
-                    Text("\(workout.startDate.formatted(startTime))–\(workout.endDate.formatted(endTime))")
+                    Text("\(workout.startDate.formatted(startTime)) – \(workout.endDate.formatted(endTime))")
                         .workoutDetailValueStyle()
                 }
+                .listRowBackground(Color.Theme.appBackground)
+                
                 WorkoutDetailValueRow("Distance", value: model.formattedDistance)
                 WorkoutDetailValueRow("Duration", value: model.formattedDuration)
                 if workout.duration > 0 {
@@ -49,12 +51,17 @@ struct WorkoutDetail: View {
                         .components(style: .condensedAbbreviated, fields: [.hour, .minute])
                     ))
                 }
+            } header: {
+                Text("Overview")
+                    .font(.system(.body, design: .rounded).weight(.bold))
+                    .foregroundStyle(Color.Theme.accentSecondary)
             }
+            
 
             if let details {
                 let elevationUnit: UnitLength = workout.distance.unit == .miles ? .feet : .meters
                 if !details.route.isEmpty || details.elevationGain != nil {
-                    Section("Route & Elevation") {
+                    Section {
                         if let gain = details.elevationGain {
                             WorkoutDetailValueRow("Elevation Gain", value: gain.converted(to: elevationUnit)
                                 .formatted(LengthFormat.lengthFormat(fractions: 0)))
@@ -62,6 +69,10 @@ struct WorkoutDetail: View {
                         if !details.route.isEmpty {
                             WorkoutRouteMap(segments: details.route)
                         }
+                    } header: {
+                        Text("Route & Elevation")
+                            .font(.system(.body, design: .rounded).weight(.bold))
+                            .foregroundStyle(Color.Theme.accentSecondary)
                     }
                 }
                 WorkoutDetailCharts(details: details)
@@ -75,6 +86,8 @@ struct WorkoutDetail: View {
             }
         }
         .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+        .background(Color.Theme.appBackground)
         .navigationTitle(Text("\(workout.activity.name) Workout"))
         .task(id: attempt) { await load() }
     }

@@ -7,7 +7,7 @@ struct WorkoutDetailCharts: View {
     var body: some View {
         if !details.heartRate.isEmpty || details.averageHeartRate != nil ||
             details.peakHeartRate != nil || details.activeCalories != nil {
-            Section("Effort") {
+            Section {
                 if let peak = details.peakHeartRate {
                     WorkoutDetailValueRow("Peak Heart Rate", value: bpm(peak))
                 }
@@ -31,13 +31,17 @@ struct WorkoutDetailCharts: View {
                                 PointMark(x: .value("Time", reading.time), y: .value("BPM", reading.beatsPerMinute))
                             }
                         }
-                        .foregroundStyle(Color.Theme.red)
+                        .foregroundStyle(Color.Theme.primary)
                         .chartXAxisLabel("Time")
                         .chartYAxisLabel("BPM")
                         .frame(minHeight: 180)
-                        .accessibilityLabel("Heart rate over time")
                     }
+                    .listRowBackground(Color.Theme.appBackground)
                 }
+            } header: {
+                Text("Effort")
+                    .font(.system(.body, design: .rounded).weight(.bold))
+                    .foregroundStyle(Color.Theme.accentSecondary)
             }
         }
 
@@ -53,13 +57,13 @@ struct WorkoutDetailCharts: View {
                         .accessibilityLabel(Text("Mile \(split.mile)"))
                         .accessibilityValue(Text("\(split.milesPerHour, format: .number.precision(.fractionLength(1))) mph"))
                 }
-                .foregroundStyle(Color.Theme.teal)
+                .foregroundStyle(Color.Theme.primary)
                 .chartXAxis { AxisMarks(values: .automatic(desiredCount: 5)) }
                 .chartXAxisLabel("Mile")
                 .chartYAxisLabel("Average speed (mph)")
                 .frame(minHeight: 180)
-                .accessibilityLabel("Average speed by completed mile")
             }
+            .listRowBackground(Color.Theme.appBackground)
         }
     }
 
@@ -70,7 +74,7 @@ struct WorkoutDetailCharts: View {
 
 private extension Text {
     func workoutChartTitleStyle() -> some View {
-        font(.headline)
-            .accessibilityAddTraits(.isHeader)
+        font(.system(.body, design: .rounded).weight(.bold))
+        .foregroundStyle(Color.Theme.accentSecondary)
     }
 }

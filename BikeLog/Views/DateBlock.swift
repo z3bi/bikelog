@@ -16,20 +16,20 @@ struct DateBlock: View {
                 Text(date.formatted(.dateTime.month(.abbreviated)))
                     .textCase(.uppercase)
                     .font(.callout.bold())
-                    .foregroundStyle(Color.Theme.red)
+                    .foregroundStyle(Color.Theme.accent)
                 Text(date.formatted(.dateTime.year()))
                     .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(Color.Theme.darkGreen)
+                    .foregroundStyle(.white)
             }
 
             GridRow {
                 Text(date.formatted(.dateTime.day()))
                     .font(.title2.weight(.semibold))
-                    .foregroundStyle(Color.Theme.red)
+                    .foregroundStyle(.white)
                 Text(date.formatted(.dateTime.weekday(.abbreviated)))
                     .textCase(.uppercase)
                     .font(.headline)
-                    .foregroundStyle(Color.Theme.darkGreen)
+                    .foregroundStyle(Color.Theme.secondary)
             }
         }
     }

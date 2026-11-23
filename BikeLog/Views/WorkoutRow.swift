@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct WorkoutRow: View {
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
-
     let model: WorkoutViewModel
     
     init(workout: Workout) {
@@ -17,29 +15,19 @@ struct WorkoutRow: View {
     }
     
     var body: some View {
-        let rowLayout = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 8))
-            : AnyLayout(HStackLayout(spacing: 24))
-        let metricsLayout = dynamicTypeSize.isAccessibilitySize
-            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 4))
-            : AnyLayout(HStackLayout(spacing: 4))
-
-        rowLayout {
+        HStack(spacing: 24) {
             DateBlock(date: model.workout.startDate)
 
             VStack(alignment: .leading) {
                 Text(model.formattedDistance)
                     .font(.largeTitle.weight(.semibold))
-                    .foregroundStyle(Color.Theme.teal)
-                metricsLayout {
+                    .foregroundStyle(Color.Theme.primary)
+                HStack(spacing: 4) {
                     Text(model.formattedDuration)
-                    if !dynamicTypeSize.isAccessibilitySize {
-                        Text("•")
-                            .accessibilityHidden(true)
-                    }
+                    Text("•")                            
                     Text(model.formattedSpeed)
                 }
-                .foregroundStyle(Color.Theme.orange)
+                .foregroundStyle(Color.Theme.accentSecondary)
                 .font(.subheadline.weight(.semibold))
             }
         }

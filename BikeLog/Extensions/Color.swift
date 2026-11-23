@@ -9,11 +9,11 @@ import Foundation
 import SwiftUI
 
 extension Color {
-    enum Theme {
-        static let orange = Color("orange")
-        static let teal = Color("teal")
-        static let darkGreen = Color("darkGreen")
-        static let red = Color("red")
-        static let gray = Color("gray")
+    enum _Theme {
+        static let orange = Color("Colors/orange")
+        static let teal = Color("Colors/teal")
+        static let darkGreen = Color("Colors/darkGreen")
+        static let red = Color("Colors/red")
+        static let gray = Color("Colors/gray")
     }
 }

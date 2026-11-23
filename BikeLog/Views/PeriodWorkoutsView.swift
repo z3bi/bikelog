@@ -33,8 +33,11 @@ struct PeriodWorkoutsView: View {
                         WorkoutListStatus(manager: manager)
                     }
                     WorkoutRows(workouts: workouts)
+                        .listRowBackground(Color.Theme.appBackground)
                 }
                 .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .background(Color.Theme.appBackground)
             }
         }
         .navigationTitle(title)

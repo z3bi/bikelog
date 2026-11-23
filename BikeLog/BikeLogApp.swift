@@ -17,14 +17,23 @@ struct BikeLogApp: App {
 #endif
     
     init() {
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(.Theme.orange)]
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(.Theme.orange)]
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = UIColor(.Theme.orange)
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.configureWithDefaultBackground()
+        let titleAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor(resource: .Theme.primary)]
+        navBarAppearance.titleTextAttributes = titleAttributes
+        navBarAppearance.largeTitleTextAttributes = titleAttributes
+  
+        let navBarProxy = UINavigationBar.appearance()
+        navBarProxy.standardAppearance = navBarAppearance
+        navBarProxy.scrollEdgeAppearance = navBarAppearance
+        navBarProxy.compactAppearance = navBarAppearance
+        navBarProxy.compactScrollEdgeAppearance = navBarAppearance
     }
     
     var body: some Scene {
         WindowGroup {
             ExerciseLog(workoutManager: workoutManager)
+                .preferredColorScheme(.dark)
         }
     }
 }

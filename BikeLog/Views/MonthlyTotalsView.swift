@@ -26,8 +26,11 @@ struct MonthlyTotalsView: View {
                                               count: manager.activity.workoutCount(total.count))
                         }
                     }
+                    .listRowBackground(Color.Theme.appBackground)
                 }
                 .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .background(Color.Theme.appBackground)
             }
         }
         .navigationTitle(year.formatted(dateFormat.year()))

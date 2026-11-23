@@ -24,7 +24,6 @@ struct YearlyTotalsView: View {
                                       distance: miles,
                                       count: count,
                                       isAllTimeHeader: true)
-                        .accessibilityAddTraits(.isHeader)
 
                     ForEach(totals) { total in
                         NavigationLink(value: ExerciseLog.Destination.monthlyTotals(year: total.startDate)) {
@@ -33,8 +32,11 @@ struct YearlyTotalsView: View {
                                               count: manager.activity.workoutCount(total.count))
                         }
                     }
+                    .listRowBackground(Color.Theme.appBackground)
                 }
                 .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .background(Color.Theme.appBackground)
             }
         }
         .navigationTitle(Text("All \(manager.activity.name) Workouts"))
