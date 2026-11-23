@@ -35,9 +35,7 @@ struct PeriodWorkoutsView: View {
                     WorkoutRows(workouts: workouts)
                         .listRowBackground(Color.Theme.appBackground)
                 }
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
-                .background(Color.Theme.appBackground)
+                .themedList()
             }
         }
         .navigationTitle(title)

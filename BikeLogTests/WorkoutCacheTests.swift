@@ -30,11 +30,9 @@ final class WorkoutCacheTests: XCTestCase {
         try await cache.save(original.applying(added: [newWorkout], deleted: [oldWorkout.id],
                                                newAnchor: HKQueryAnchor(fromValue: 2)), for: .cycling)
         let latest = try await cache.load(for: .cycling)
-        let missing = try await cache.load(for: .running)
         XCTAssertEqual(latest?.workouts, [newWorkout])
         XCTAssertEqual(latest?.cached, true)
         XCTAssertNotNil(latest?.anchor)
-        XCTAssertNil(missing)
     }
 
     func testUnreadableAnchorRebuildsSnapshotThenAppliesDeltas() throws {

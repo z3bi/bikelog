@@ -46,8 +46,7 @@ struct WorkoutDetail: View {
                 WorkoutDetailValueRow("Distance", value: model.formattedDistance)
                 WorkoutDetailValueRow("Duration", value: model.formattedDuration)
                 if workout.duration > 0 {
-                    WorkoutDetailValueRow(workout.activity == .cycling ? "Average Speed" : "Average Pace",
-                                          value: model.formattedSpeed)
+                    WorkoutDetailValueRow("Average Speed", value: model.formattedSpeed)
                 }
                 if elapsed - workout.duration >= 60 {
                     let range = workout.startDate..<workout.endDate
@@ -85,9 +84,7 @@ struct WorkoutDetail: View {
                 Button("Retry") { attempt += 1 }
             }
         }
-        .listStyle(.plain)
-        .scrollContentBackground(.hidden)
-        .background(Color.Theme.appBackground)
+        .themedList()
         .navigationTitle(Text("\(workout.activity.name) Workout"))
         .navigationDestination(for: Destination.self) { destination in
             switch destination {

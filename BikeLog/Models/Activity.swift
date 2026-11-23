@@ -10,17 +10,11 @@ import HealthKit
 
 enum Activity: String, Codable, CaseIterable {
     case cycling
-    case running
-    case walking
     
     var name: String {
         switch self {
         case .cycling:
             return String(localized: "Cycling")
-        case .running:
-            return String(localized: "Running")
-        case .walking:
-            return String(localized: "Walking")
         }
     }
 
@@ -28,10 +22,6 @@ enum Activity: String, Codable, CaseIterable {
         switch self {
         case .cycling:
             return String.localizedStringWithFormat(String(localized: "%d rides"), count)
-        case .running:
-            return String.localizedStringWithFormat(String(localized: "%d runs"), count)
-        case .walking:
-            return String.localizedStringWithFormat(String(localized: "%d walks"), count)
         }
     }
     
@@ -39,8 +29,6 @@ enum Activity: String, Codable, CaseIterable {
         switch self {
         case .cycling:
             return lengthUnit.speedUnit
-        case .running, .walking:
-            return lengthUnit.paceUnit
         }
     }
     
@@ -48,10 +36,6 @@ enum Activity: String, Codable, CaseIterable {
         switch hkActivityType {
         case .cycling:
             self = .cycling
-        case .running:
-            self = .running
-        case .walking:
-            self = .walking
         default:
             return nil
         }
@@ -61,10 +45,6 @@ enum Activity: String, Codable, CaseIterable {
         switch self {
         case .cycling:
             return .cycling
-        case .running:
-            return .running
-        case .walking:
-            return .walking
         }
     }
 }

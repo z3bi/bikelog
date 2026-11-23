@@ -2,45 +2,7 @@ import XCTest
 @testable import BikeLog
 
 final class WorkoutManagerTests: XCTestCase {
-    @MainActor
-    func testSupersededLoadCannotReplaceWorkoutsOrStopCurrentLoad() async throws {
-        let cyclingStarted = expectation(description: "Cycling load suspended")
-        let runningStarted = expectation(description: "Running load suspended")
-        let provider = SuspendedHealthProvider { activity in
-            switch activity {
-            case .cycling: cyclingStarted.fulfill()
-            case .running: runningStarted.fulfill()
-            case .walking: XCTFail("Unexpected walking load")
-            }
-        }
-        let suite = UUID().uuidString
-        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
-        defer { defaults.removePersistentDomain(forName: suite) }
-        let manager = WorkoutManager(healthProvider: provider, defaults: defaults)
-
-        let cycling = Task { await manager.monitorWorkouts(for: .cycling) }
-        defer { cycling.cancel() }
-        await fulfillment(of: [cyclingStarted], timeout: 2)
-
-        manager.activity = .running
-        let running = Task { await manager.monitorWorkouts(for: .running) }
-        defer { running.cancel() }
-        await fulfillment(of: [runningStarted], timeout: 2)
-
-        let oldWorkout = makeWorkout(activity: .cycling)
-        try provider.complete(with: oldWorkout)
-        await cycling.value
-
-        XCTAssertTrue(manager.workouts.isEmpty)
-        XCTAssertTrue(manager.isLoading)
-
-        let selectedWorkout = makeWorkout(activity: .running)
-        try provider.complete(with: selectedWorkout)
-        await running.value
-
-        XCTAssertEqual(manager.workouts, [selectedWorkout])
-        XCTAssertFalse(manager.isLoading)
-    }
+   
 
     @MainActor
     func testCancelledLoadIgnoresLateWorkout() async throws {

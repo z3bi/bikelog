@@ -28,9 +28,7 @@ struct MonthlyTotalsView: View {
                     }
                     .listRowBackground(Color.Theme.appBackground)
                 }
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
-                .background(Color.Theme.appBackground)
+                .themedList()
             }
         }
         .navigationTitle(year.formatted(dateFormat.year()))

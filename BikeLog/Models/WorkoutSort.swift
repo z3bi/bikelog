@@ -30,11 +30,7 @@ enum WorkoutSort: CaseIterable {
         case .distance:
             return workouts.sorted(comparingKeyPath: \.distance, ascending: false)
         case .speed:
-            var ascending = false
-            if workouts.first?.activity != .cycling {
-                ascending = true
-            }
-            return workouts.sorted(comparingKeyPath: \.speed, ascending: ascending)
+            return workouts.sorted(comparingKeyPath: \.speed, ascending: false)
         }
     }
 }

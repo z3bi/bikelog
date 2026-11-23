@@ -27,12 +27,11 @@ struct ExerciseLog: View {
                 }
                 .listRowBackground(Color.Theme.appBackground)
                 .listRowSeparator(.hidden)
+                
                 WorkoutRows(workouts: workoutManager.workouts)
                     .listRowBackground(Color.Theme.appBackground)
             }
-            .scrollContentBackground(.hidden)
-            .background(Color.Theme.appBackground)
-            .listStyle(.plain)
+            .themedList()
             .navigationDestination(for: Workout.self) { workout in
                 WorkoutDetail(workout: workout, loadDetails: workoutManager.details(for:))
             }
@@ -46,18 +45,7 @@ struct ExerciseLog: View {
                     PeriodWorkoutsView(period: period, interval: interval, manager: workoutManager)
                 }
             }
-            .navigationTitle(activity.name)
-            .toolbar {
-                ToolbarItem {
-                    Menu("Activity") {
-                        Picker(selection: $workoutManager.activity, label: Text("Activity")) {
-                            ForEach(Activity.allCases, id: \.self) { activity in
-                                Text(activity.name)
-                            }
-                        }
-                    }
-                }
-            }
+            .navigationTitle("\(activity.name) Workouts")
         }
         .task(id: workoutManager.refreshRequestID) {
             await workoutManager.monitorWorkouts(for: activity)

@@ -34,7 +34,6 @@ struct LogHeader: View {
     
     var body: some View {
         let date = Date.now
-        let textScale = 1.08
 
         VStack(alignment: .leading, spacing: 8) {
             VStack(alignment: .leading, spacing: 0) {
@@ -46,8 +45,7 @@ struct LogHeader: View {
                         HStack(spacing: 12) {
                             WorkoutSummaryRow(title: model.title,
                                               distance: model.totalDistance(),
-                                              count: model.workoutCount(),
-                                              textScale: textScale)
+                                              count: model.workoutCount())
                             Image(systemName: "chevron.forward")
                                 .font(.footnote.weight(.semibold))
                                 .foregroundStyle(.tertiary)

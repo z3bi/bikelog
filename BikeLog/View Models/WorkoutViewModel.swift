@@ -15,15 +15,7 @@ struct WorkoutViewModel {
     }
     
     var formattedSpeed: String {
-        switch workout.activity {
-        case .cycling:
-            return workout.speed.formatted(SpeedFormat.speedFormat())
-        case .running, .walking:
-            let minutes = Int(workout.speed.value).formatted()
-            let secondsValue = round((workout.speed.value - floor(workout.speed.value)) * 60)
-            let seconds = Int(secondsValue).formatted()
-            return String(format: String(localized: "%@'%@\"/%@"), minutes, seconds, workout.distance.unit.symbol)
-        }
+        workout.speed.formatted(SpeedFormat.speedFormat())
     }
     
     var durationComponents: Set<Date.ComponentsFormatStyle.Field> {

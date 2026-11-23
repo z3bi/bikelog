@@ -34,9 +34,7 @@ struct YearlyTotalsView: View {
                     }
                     .listRowBackground(Color.Theme.appBackground)
                 }
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
-                .background(Color.Theme.appBackground)
+                .themedList()
             }
         }
         .navigationTitle(Text("All \(manager.activity.name) Workouts"))

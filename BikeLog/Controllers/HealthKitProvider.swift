@@ -17,7 +17,6 @@ final class HealthKitProvider: HealthProvider {
     
     let healthTypes: Set = [HKWorkoutType.workoutType(),
                             HKQuantityType.quantityType(forIdentifier: .distanceCycling)!,
-                            HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!,
                             HKQuantityType.quantityType(forIdentifier: .heartRate)!,
                             HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
                             HKQuantityType.quantityType(forIdentifier: .basalEnergyBurned)!]
@@ -57,7 +56,7 @@ final class HealthKitProvider: HealthProvider {
 
         try await store.requestAuthorization(toShare: [], read: healthTypes)
         try Task.checkCancellation()
-        let hkUnit = await preferredUnit(for: HKWorkout.distanceType(for: activity.hkActivityType))
+        let hkUnit = await preferredUnit(for: HKWorkout.cyclingDistanceType)
         try Task.checkCancellation()
         let unit = hkUnit.lengthUnit()
 

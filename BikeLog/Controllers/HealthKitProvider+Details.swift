@@ -14,13 +14,12 @@ extension HealthKitProvider {
         try Task.checkCancellation()
 
         let heartRateType = HKQuantityType(.heartRate)
-        let distanceType = HKWorkout.distanceType(for: workout.activity.hkActivityType)
         async let route = detailSection("route") { try await self.routeSegments(for: record) }
         async let heartRate = detailSection("heart rate") {
             try await self.heartRateSamples(of: heartRateType, for: record)
         }
         async let distance = detailSection("distance") {
-            try await self.distanceSamples(of: distanceType, for: record)
+            try await self.distanceSamples(of: HKWorkout.cyclingDistanceType, for: record)
         }
         let (routeResult, heartRateResult, distanceResult) = try await (route, heartRate, distance)
         try Task.checkCancellation()

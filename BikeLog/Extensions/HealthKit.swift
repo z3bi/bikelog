@@ -9,13 +9,8 @@ import Foundation
 import HealthKit
 
 extension HKWorkout {
-    static func distanceType(for activityType: HKWorkoutActivityType) -> HKQuantityType {
-        switch activityType {
-        case .cycling:
-            return HKQuantityType.quantityType(forIdentifier: .distanceCycling)!
-        default:
-            return HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
-        }
+    static var cyclingDistanceType: HKQuantityType {
+        HKQuantityType.quantityType(forIdentifier: .distanceCycling)!
     }
 }
 

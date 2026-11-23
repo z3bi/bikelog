@@ -31,20 +31,11 @@ struct WorkoutRow: View {
                 .font(.subheadline.weight(.semibold))
             }
         }
+        .listRowBackground(Color.Theme.appBackground)
     }
 }
 
 #Preview("Cycling", traits: .sizeThatFitsLayout) {
     WorkoutRow(workout: MockHealthProvider().generateWorkout(activity: .cycling))
-        .padding()
-}
-
-#Preview("Running", traits: .sizeThatFitsLayout) {
-    WorkoutRow(workout: MockHealthProvider().generateWorkout(activity: .running))
-        .padding()
-}
-
-#Preview("Walking", traits: .sizeThatFitsLayout) {
-    WorkoutRow(workout: MockHealthProvider().generateWorkout(activity: .walking))
         .padding()
 }
