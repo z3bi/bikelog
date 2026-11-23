@@ -7,7 +7,7 @@ BikeLog is an open source app exploring modern app development through the lens 
 Tap **All** above the workout log to see the selected activity's all-time mileage and workout count in the **Total** row above the yearly breakdown. Tap a year for monthly totals, then tap a month to see its workouts.
 The current year, month, and week summaries also open their corresponding breakdown or filtered workout list directly.
 
-Open a workout for its route, heart rate, active calories, and elevation gain when recorded. **Speed by Mile** uses elapsed time, including stops, and shows one point per completed mile when timed distance data is available.
+Open a workout for its heart rate, active calories, and elevation gain when recorded. If the workout has a recorded route, tap **Route** under **Overview** to open the interactive map. **Speed by Mile** uses elapsed time, including stops, and shows one point per completed mile when timed distance data is available.
 
 <img src="screenshot.png" height="500">
 

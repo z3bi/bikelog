@@ -9,6 +9,10 @@ import SwiftUI
 import OSLog
 
 struct WorkoutDetail: View {
+    private enum Destination: Hashable {
+        case route
+    }
+
     private static let logger = Logger(subsystem: "BikeLog", category: "Workout detail")
 
     @Environment(\.calendar) private var calendar
@@ -51,30 +55,26 @@ struct WorkoutDetail: View {
                         .components(style: .condensedAbbreviated, fields: [.hour, .minute])
                     ))
                 }
+                if let details {
+                    if let gain = details.elevationGain {
+                        let elevationUnit: UnitLength = workout.distance.unit == .miles ? .feet : .meters
+                        WorkoutDetailValueRow("Elevation Gain", value: gain.converted(to: elevationUnit)
+                            .formatted(LengthFormat.lengthFormat(fractions: 0)))
+                    }
+                    if !details.route.isEmpty {
+                        NavigationLink(value: Destination.route) {
+                            Text("Route").workoutDetailValueStyle()
+                        }
+                        .listRowBackground(Color.Theme.appBackground)
+                    }
+                }
             } header: {
                 Text("Overview")
                     .font(.system(.body, design: .rounded).weight(.bold))
                     .foregroundStyle(Color.Theme.accentSecondary)
             }
-            
 
             if let details {
-                let elevationUnit: UnitLength = workout.distance.unit == .miles ? .feet : .meters
-                if !details.route.isEmpty || details.elevationGain != nil {
-                    Section {
-                        if let gain = details.elevationGain {
-                            WorkoutDetailValueRow("Elevation Gain", value: gain.converted(to: elevationUnit)
-                                .formatted(LengthFormat.lengthFormat(fractions: 0)))
-                        }
-                        if !details.route.isEmpty {
-                            WorkoutRouteMap(segments: details.route)
-                        }
-                    } header: {
-                        Text("Route & Elevation")
-                            .font(.system(.body, design: .rounded).weight(.bold))
-                            .foregroundStyle(Color.Theme.accentSecondary)
-                    }
-                }
                 WorkoutDetailCharts(details: details)
             }
 
@@ -89,6 +89,16 @@ struct WorkoutDetail: View {
         .scrollContentBackground(.hidden)
         .background(Color.Theme.appBackground)
         .navigationTitle(Text("\(workout.activity.name) Workout"))
+        .navigationDestination(for: Destination.self) { destination in
+            switch destination {
+            case .route:
+                if let details, !details.route.isEmpty {
+                    WorkoutRouteMap(segments: details.route)
+                } else {
+                    ContentUnavailableView("Route Unavailable", systemImage: "map")
+                }
+            }
+        }
         .task(id: attempt) { await load() }
     }
 
