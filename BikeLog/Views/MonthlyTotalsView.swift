@@ -7,7 +7,7 @@ struct MonthlyTotalsView: View {
     let manager: WorkoutManager
 
     var body: some View {
-        let totals = WorkoutPeriodTotal.monthly(manager.workouts, in: year, calendar: calendar)
+        let totals = WorkoutPeriodTotal.monthly(manager.workouts, in: year, unit: manager.unit, calendar: calendar)
         let dateFormat = Date.FormatStyle(locale: locale, calendar: calendar, timeZone: calendar.timeZone)
 
         Group {
@@ -22,8 +22,8 @@ struct MonthlyTotalsView: View {
                         let interval = StatisticalPeriod.month.dateInterval(from: total.startDate, calendar: calendar)
                         NavigationLink(value: ExerciseLog.Destination.periodWorkouts(period: .month, interval: interval)) {
                             WorkoutSummaryRow(title: total.startDate.formatted(dateFormat.month(.wide)),
-                                              distance: total.formattedMiles,
-                                              count: manager.activity.workoutCount(total.count))
+                                              distance: total.formattedDistance,
+                                              count: Workout.countDescription(total.count))
                         }
                     }
                     .listRowBackground(Color.Theme.appBackground)

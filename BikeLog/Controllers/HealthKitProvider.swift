@@ -9,75 +9,93 @@ import Foundation
 import HealthKit
 import OSLog
 
-@MainActor
 final class HealthKitProvider: HealthProvider {
-    private static let logger = Logger(subsystem: "BikeLog", category: "HealthKit")
-    private let cache = WorkoutCache()
-    let store = HKHealthStore()
-    
-    let healthTypes: Set = [HKWorkoutType.workoutType(),
-                            HKQuantityType.quantityType(forIdentifier: .distanceCycling)!,
-                            HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-                            HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-                            HKQuantityType.quantityType(forIdentifier: .basalEnergyBurned)!]
-    
-    private func applying(_ result: HKAnchoredObjectQueryDescriptor<HKWorkout>.Result, to state: HealthResult) -> HealthResult {
-        let unit = state.unit.hkUnit()
-        return state.applying(added: result.addedSamples.compactMap { Workout(hkWorkout: $0, hkUnit: unit) },
-                              deleted: result.deletedObjects.map(\.uuid),
-                              newAnchor: result.newAnchor)
+    enum ProviderError: LocalizedError {
+        case healthDataUnavailable
+
+        var errorDescription: String? {
+            String(localized: "Health data is not available on this device.")
+        }
     }
-    
-    func preferredUnit(for type: HKQuantityType) async -> HKUnit {
+
+    let store: HKHealthStore
+    private let cache = WorkoutCache()
+    private let authorization: HealthAuthorization
+
+    init() {
+        let store = HKHealthStore()
+        self.store = store
+        authorization = HealthAuthorization {
+            guard HKHealthStore.isHealthDataAvailable() else { throw ProviderError.healthDataUnavailable }
+            try await store.requestAuthorization(toShare: [], read: HealthTypes.read)
+        }
+    }
+
+    func authorize() async throws {
+        try await authorization.authorize()
+    }
+
+    func workoutUpdates() -> AsyncThrowingStream<HealthResult, Error> {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(of: HealthResult.self,
+                                                                    bufferingPolicy: .bufferingNewest(1))
+        let task = Task {
+            do {
+                try await monitorWorkouts { continuation.yield($0) }
+                continuation.finish()
+            } catch {
+                continuation.finish(throwing: error)
+            }
+        }
+        continuation.onTermination = { _ in task.cancel() }
+        return stream
+    }
+
+    private func monitorWorkouts(_ send: (HealthResult) -> Void) async throws {
+        var state: HealthResult
         do {
-            let units = try await store.preferredUnits(for: [type])
-            if let unit = units[type] {
+            state = try await cache.load() ?? .empty
+        } catch {
+            Logger.healthKit.error("Could not read the workout cache; will rebuild: \(error.localizedDescription, privacy: .private)")
+            state = .empty
+        }
+        try Task.checkCancellation()
+        send(state)
+
+        try await authorize()
+        let unit = await preferredUnit()
+        try Task.checkCancellation()
+        if unit != state.unit {
+            state.unit = unit
+            send(state)
+        }
+
+        let predicate = HKSamplePredicate.workout(HKQuery.predicateForWorkouts(with: .cycling))
+        let query = HKAnchoredObjectQueryDescriptor(predicates: [predicate], anchor: state.anchor)
+        for try await result in query.results(for: store) {
+            try Task.checkCancellation()
+            state = state.applying(added: result.addedSamples.compactMap(Workout.init(hkWorkout:)),
+                                   deleted: result.deletedObjects.map(\.uuid),
+                                   newAnchor: result.newAnchor)
+            send(state)
+            do {
+                try await cache.save(state)
+            } catch {
+                Logger.healthKit.error("Could not save the workout cache: \(error.localizedDescription, privacy: .private)")
+            }
+        }
+    }
+
+    private func preferredUnit() async -> UnitLength {
+        do {
+            let units = try await store.preferredUnits(for: [HealthTypes.cyclingDistance])
+            if let unit = units[HealthTypes.cyclingDistance]?.lengthUnit {
                 return unit
             }
         } catch {
             if !Task.isCancelled {
-                Self.logger.error("Could not read the preferred unit: \(error.localizedDescription, privacy: .private)")
+                Logger.healthKit.error("Could not read the preferred unit: \(error.localizedDescription, privacy: .private)")
             }
         }
-        
-        return Locale.current.distanceUnit().hkUnit()
-    }
-    
-    func monitorWorkouts(activity: Activity, onResult: @MainActor (HealthResult) -> Void) async throws {
-        var state: HealthResult
-        do {
-            state = try await cache.load(for: activity) ?? .empty
-        } catch {
-            Self.logger.error("Could not read the workout cache; will rebuild: \(error.localizedDescription, privacy: .private)")
-            state = .empty
-        }
-        try Task.checkCancellation()
-        onResult(state)
-
-        try await store.requestAuthorization(toShare: [], read: healthTypes)
-        try Task.checkCancellation()
-        let hkUnit = await preferredUnit(for: HKWorkout.cyclingDistanceType)
-        try Task.checkCancellation()
-        let unit = hkUnit.lengthUnit()
-
-        if unit != state.unit {
-            state.workouts = Workout.updateWorkouts(state.workouts, unit: unit)
-            state.unit = unit
-            onResult(state)
-        }
-
-        let predicate = HKSamplePredicate.workout(HKQuery.predicateForWorkouts(with: activity.hkActivityType))
-        let query = HKAnchoredObjectQueryDescriptor(predicates: [predicate], anchor: state.anchor)
-        for try await result in query.results(for: store) {
-            try Task.checkCancellation()
-            state = applying(result, to: state)
-            onResult(state)
-            do {
-                try await cache.save(state, for: activity)
-            } catch {
-                Self.logger.error("Could not save the workout cache: \(error.localizedDescription, privacy: .private)")
-            }
-        }
+        return Locale.current.distanceUnit
     }
 }
-

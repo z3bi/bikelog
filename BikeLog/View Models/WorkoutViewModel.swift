@@ -9,13 +9,14 @@ import Foundation
 
 struct WorkoutViewModel {
     let workout: Workout
-    
+    let unit: UnitLength
+
     var formattedDistance: String {
-        workout.distance.formatted(LengthFormat.lengthFormat())
+        workout.distance.converted(to: unit).formatted(LengthFormat.lengthFormat())
     }
-    
+
     var formattedSpeed: String {
-        workout.speed.formatted(SpeedFormat.speedFormat())
+        workout.speed.converted(to: unit.speedUnit).formatted(SpeedFormat.speedFormat())
     }
     
     var durationComponents: Set<Date.ComponentsFormatStyle.Field> {

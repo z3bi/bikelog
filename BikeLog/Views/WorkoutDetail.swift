@@ -13,8 +13,6 @@ struct WorkoutDetail: View {
         case route
     }
 
-    private static let logger = Logger(subsystem: "BikeLog", category: "Workout detail")
-
     @Environment(\.calendar) private var calendar
     @Environment(\.locale) private var locale
     @State private var details: WorkoutDetails?
@@ -23,10 +21,11 @@ struct WorkoutDetail: View {
     @State private var attempt = 0
 
     let workout: Workout
+    let unit: UnitLength
     let loadDetails: @MainActor (Workout) async throws -> WorkoutDetails
 
     var body: some View {
-        let model = WorkoutViewModel(workout: workout)
+        let model = WorkoutViewModel(workout: workout, unit: unit)
         let elapsed = workout.endDate.timeIntervalSince(workout.startDate)
         let dateFormat = Date.FormatStyle(locale: locale, calendar: calendar, timeZone: calendar.timeZone)
         let startTime = dateFormat.hour().minute()
@@ -56,7 +55,7 @@ struct WorkoutDetail: View {
                 }
                 if let details {
                     if let gain = details.elevationGain {
-                        let elevationUnit: UnitLength = workout.distance.unit == .miles ? .feet : .meters
+                        let elevationUnit: UnitLength = unit == .miles ? .feet : .meters
                         WorkoutDetailValueRow("Elevation Gain", value: gain.converted(to: elevationUnit)
                             .formatted(LengthFormat.lengthFormat(fractions: 0)))
                     }
@@ -74,7 +73,9 @@ struct WorkoutDetail: View {
             }
 
             if let details {
-                WorkoutDetailCharts(details: details)
+                let splits = SpeedSplit.calculate(samples: details.distanceSamples, splitLength: unit.splitLength,
+                                                  workoutStart: workout.startDate, workoutEnd: workout.endDate)
+                WorkoutDetailCharts(details: details, speedSplits: splits, unit: unit)
             }
 
             if isLoading {
@@ -85,7 +86,7 @@ struct WorkoutDetail: View {
             }
         }
         .themedList()
-        .navigationTitle(Text("\(workout.activity.name) Workout"))
+        .navigationTitle(Text("Cycling Workout"))
         .navigationDestination(for: Destination.self) { destination in
             switch destination {
             case .route:
@@ -108,7 +109,7 @@ struct WorkoutDetail: View {
             details = result
         } catch {
             guard !Task.isCancelled else { return }
-            Self.logger.error("Could not load workout details: \(error.localizedDescription, privacy: .private)")
+            Logger.workoutDetail.error("Could not load workout details: \(error.localizedDescription, privacy: .private)")
             loadFailed = true
         }
         isLoading = false
@@ -118,6 +119,6 @@ struct WorkoutDetail: View {
 #Preview {
     let provider = MockHealthProvider()
     NavigationStack {
-        WorkoutDetail(workout: provider.generateWorkout(activity: .cycling), loadDetails: provider.details(for:))
+        WorkoutDetail(workout: provider.generateWorkout(), unit: .miles, loadDetails: provider.details(for:))
     }
 }

@@ -2,10 +2,10 @@ import Foundation
 import OSLog
 
 struct WorkoutCache: Sendable {
-    private static let logger = Logger(subsystem: "BikeLog", category: "Workout cache")
     private let directory: URL
     private let legacyDirectory: URL?
     private let queue = DispatchQueue(label: "BikeLog.WorkoutCache", qos: .utility)
+    private static let name = "cycling"
 
     init(directory: URL = URL.cachesDirectory.appending(path: "WorkoutCache", directoryHint: .isDirectory),
          legacyDirectory: URL? = .documentsDirectory) {
@@ -13,14 +13,13 @@ struct WorkoutCache: Sendable {
         self.legacyDirectory = legacyDirectory
     }
 
-    // Submit from the main actor in query order; perform synchronous file I/O on the serial queue.
-    @MainActor
-    func load(for activity: Activity) async throws -> HealthResult? {
+    // Synchronous file I/O runs on a serial queue; each snapshot is complete, so late writes are harmless.
+    func load() async throws -> HealthResult? {
         try await withCheckedThrowingContinuation { continuation in
             queue.async {
                 migrateLegacyCaches()
                 continuation.resume(with: Result {
-                    guard let data = try readIfPresent(at: file(for: activity)) else { return nil }
+                    guard let data = try readIfPresent(at: file) else { return nil }
                     var snapshot = try JSONDecoder().decode(HealthResult.self, from: data)
                     snapshot.cached = true
                     return snapshot
@@ -29,19 +28,18 @@ struct WorkoutCache: Sendable {
         }
     }
 
-    @MainActor
-    func save(_ snapshot: HealthResult, for activity: Activity) async throws {
+    func save(_ snapshot: HealthResult) async throws {
         try await withCheckedThrowingContinuation { continuation in
             queue.async {
                 continuation.resume(with: Result {
-                    try write(JSONEncoder().encode(snapshot), for: activity)
+                    try write(JSONEncoder().encode(snapshot))
                 })
             }
         }
     }
 
-    private func file(for activity: Activity) -> URL {
-        directory.appending(path: "\(activity.rawValue).json")
+    private var file: URL {
+        directory.appending(path: "\(Self.name).json")
     }
 
     private func readIfPresent(at url: URL) throws -> Data? {
@@ -52,32 +50,30 @@ struct WorkoutCache: Sendable {
         }
     }
 
-    private func write(_ data: Data, for activity: Activity) throws {
+    private func write(_ data: Data) throws {
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        try data.write(to: file(for: activity), options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
+        try data.write(to: file, options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
     }
 
     private func migrateLegacyCaches() {
         guard let legacyDirectory else { return }
-        for activity in Activity.allCases {
-            var legacyFile = legacyDirectory.appending(path: activity.rawValue)
-            do {
-                let values = try legacyFile.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
-                guard values.isRegularFile == true, values.isSymbolicLink != true,
-                      let data = try readIfPresent(at: legacyFile) else { continue }
-                _ = try JSONDecoder().decode(HealthResult.self, from: data)
-                var backup = URLResourceValues()
-                backup.isExcludedFromBackup = true
-                try legacyFile.setResourceValues(backup)
-                if try readIfPresent(at: file(for: activity)) == nil {
-                    try write(data, for: activity)
-                }
-                try FileManager.default.removeItem(at: legacyFile)
-            } catch let error as CocoaError where Self.isMissing(error) {
-                continue
-            } catch {
-                Self.logger.error("Could not migrate the \(activity.rawValue) cache: \(error.localizedDescription, privacy: .private)")
+        var legacyFile = legacyDirectory.appending(path: Self.name)
+        do {
+            let values = try legacyFile.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
+            guard values.isRegularFile == true, values.isSymbolicLink != true,
+                  let data = try readIfPresent(at: legacyFile) else { return }
+            _ = try JSONDecoder().decode(HealthResult.self, from: data)
+            var backup = URLResourceValues()
+            backup.isExcludedFromBackup = true
+            try legacyFile.setResourceValues(backup)
+            if try readIfPresent(at: file) == nil {
+                try write(data)
             }
+            try FileManager.default.removeItem(at: legacyFile)
+        } catch let error as CocoaError where Self.isMissing(error) {
+            return
+        } catch {
+            Logger.workoutCache.error("Could not migrate the legacy cache: \(error.localizedDescription, privacy: .private)")
         }
     }
 

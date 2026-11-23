@@ -8,15 +8,12 @@
 import Foundation
 
 extension Locale {
-    var measurementSystem: String {
-        (self as NSLocale).object(forKey: .measurementSystem) as? String ?? ""
-    }
-    
-    func distanceUnit() -> UnitLength {
-        if measurementSystem == Locale(identifier: "fr_FR").measurementSystem {
-            return .kilometers
-        } else {
+    var distanceUnit: UnitLength {
+        switch measurementSystem {
+        case .us, .uk:
             return .miles
+        default:
+            return .kilometers
         }
     }
 }

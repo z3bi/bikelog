@@ -3,9 +3,8 @@ import HealthKit
 import OSLog
 
 extension HealthKitProvider {
-    private static let detailLogger = Logger(subsystem: "BikeLog", category: "Workout detail")
-
     func details(for workout: Workout) async throws -> WorkoutDetails {
+        try await authorize()
         let match = HKQuery.predicateForObject(with: workout.id)
         let query = HKSampleQueryDescriptor(predicates: [.workout(match)], sortDescriptors: [], limit: 1)
         guard let record = try await query.result(for: store).first else {
@@ -13,13 +12,13 @@ extension HealthKitProvider {
         }
         try Task.checkCancellation()
 
-        let heartRateType = HKQuantityType(.heartRate)
+        let heartRateType = HealthTypes.heartRate
         async let route = detailSection("route") { try await self.routeSegments(for: record) }
         async let heartRate = detailSection("heart rate") {
             try await self.heartRateSamples(of: heartRateType, for: record)
         }
         async let distance = detailSection("distance") {
-            try await self.distanceSamples(of: HKWorkout.cyclingDistanceType, for: record)
+            try await self.distanceSamples(of: HealthTypes.cyclingDistance, for: record)
         }
         let (routeResult, heartRateResult, distanceResult) = try await (route, heartRate, distance)
         try Task.checkCancellation()
@@ -41,11 +40,10 @@ extension HealthKitProvider {
             heartRate: readings,
             averageHeartRate: measuredAverage ?? sampledAverage,
             peakHeartRate: measuredPeak ?? readings.map(\.beatsPerMinute).max(),
-            activeCalories: record.statistics(for: HKQuantityType(.activeEnergyBurned))?
+            activeCalories: record.statistics(for: HealthTypes.activeEnergy)?
                 .sumQuantity()?.doubleValue(for: .kilocalorie()),
             elevationGain: meters.map { Measurement(value: $0, unit: .meters) },
-            mileSpeeds: MileSpeedSplit.calculate(samples: distanceResult ?? [], workoutStart: record.startDate,
-                                                 workoutEnd: record.endDate),
+            distanceSamples: distanceResult ?? [],
             hasPartialFailure: routeResult == nil || heartRateResult == nil || distanceResult == nil
         )
     }
@@ -57,10 +55,10 @@ extension HealthKitProvider {
         return try await query.result(for: store)
     }
 
-    private func distanceSamples(of type: HKQuantityType, for workout: HKWorkout) async throws -> [MileSpeedSplit.DistanceSample] {
+    private func distanceSamples(of type: HKQuantityType, for workout: HKWorkout) async throws -> [SpeedSplit.DistanceSample] {
         let predicate = HKQuery.predicateForObjects(from: workout)
         let query = HKQuantitySeriesSampleQueryDescriptor(predicate: .quantitySample(type: type, predicate: predicate))
-        var samples: [MileSpeedSplit.DistanceSample] = []
+        var samples: [SpeedSplit.DistanceSample] = []
         for try await result in query.results(for: store) {
             try Task.checkCancellation()
             samples.append(.init(start: result.dateInterval.start, end: result.dateInterval.end,
@@ -70,8 +68,6 @@ extension HealthKitProvider {
     }
 
     private func routeSegments(for workout: HKWorkout) async throws -> [[CLLocationCoordinate2D]] {
-        try await store.requestAuthorization(toShare: [], read: [HKWorkoutType.workoutType(), HKSeriesType.workoutRoute()])
-        try Task.checkCancellation()
         let predicate = HKQuery.predicateForObjects(from: workout)
         let query = HKSampleQueryDescriptor(predicates: [.workoutRoute(predicate)],
                                             sortDescriptors: [SortDescriptor(\.startDate)])
@@ -89,12 +85,12 @@ extension HealthKitProvider {
         return segments
     }
 
-    private func detailSection<Value: Sendable>(_ name: String, load: @MainActor @Sendable () async throws -> Value) async throws -> Value? {
+    private func detailSection<Value: Sendable>(_ name: String, load: @Sendable () async throws -> Value) async throws -> Value? {
         do {
             return try await load()
         } catch {
             try Task.checkCancellation()
-            Self.detailLogger.error("Could not load \(name) for workout detail: \(error.localizedDescription, privacy: .private)")
+            Logger.workoutDetail.error("Could not load \(name) for workout detail: \(error.localizedDescription, privacy: .private)")
             return nil
         }
     }

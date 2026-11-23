@@ -18,8 +18,6 @@ struct ExerciseLog: View {
     @Bindable var workoutManager: WorkoutManager
 
     var body: some View {
-        let activity = workoutManager.activity
-
         NavigationStack(path: $path) {
             List {
                 LogHeader(manager: workoutManager) { destination in
@@ -28,12 +26,12 @@ struct ExerciseLog: View {
                 .listRowBackground(Color.Theme.appBackground)
                 .listRowSeparator(.hidden)
                 
-                WorkoutRows(workouts: workoutManager.workouts)
+                WorkoutRows(workouts: workoutManager.workouts, unit: workoutManager.unit)
                     .listRowBackground(Color.Theme.appBackground)
             }
             .themedList()
             .navigationDestination(for: Workout.self) { workout in
-                WorkoutDetail(workout: workout, loadDetails: workoutManager.details(for:))
+                WorkoutDetail(workout: workout, unit: workoutManager.unit, loadDetails: workoutManager.details(for:))
             }
             .navigationDestination(for: Destination.self) { destination in
                 switch destination {
@@ -45,10 +43,10 @@ struct ExerciseLog: View {
                     PeriodWorkoutsView(period: period, interval: interval, manager: workoutManager)
                 }
             }
-            .navigationTitle("\(activity.name) Workouts")
+            .navigationTitle("Cycling Workouts")
         }
         .task(id: workoutManager.refreshRequestID) {
-            await workoutManager.monitorWorkouts(for: activity)
+            await workoutManager.monitorWorkouts()
         }
     }
 }

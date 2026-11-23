@@ -9,18 +9,16 @@ import Foundation
 import HealthKit
 import OSLog
 
-struct HealthResult {
+struct HealthResult: Sendable {
     var workouts: [Workout]
     var unit: UnitLength
     var cached: Bool
     var anchor: HKQueryAnchor?
     
     static var empty: HealthResult {
-        HealthResult(workouts: [], unit: Locale.current.distanceUnit(), cached: true, anchor: nil)
+        HealthResult(workouts: [], unit: Locale.current.distanceUnit, cached: true, anchor: nil)
     }
     
-    private static let logger = Logger(subsystem: "BikeLog", category: "Workout cache")
-
     func applying(added: [Workout], deleted: [UUID], newAnchor: HKQueryAnchor) -> Self {
         var byID: [UUID: Workout] = [:]
         // An unanchored query starts a new snapshot, not a delta against the cache.
@@ -55,12 +53,12 @@ extension HealthResult: Codable {
         do {
             if let data = try container.decodeIfPresent(Data.self, forKey: .anchor) {
                 anchor = try NSKeyedUnarchiver.unarchivedObject(ofClass: HKQueryAnchor.self, from: data)
-                if anchor == nil { Self.logger.error("Cached query anchor was unreadable; will rebuild.") }
+                if anchor == nil { Logger.workoutCache.error("Cached query anchor was unreadable; will rebuild.") }
             } else {
                 anchor = nil
             }
         } catch {
-            Self.logger.error("Cached query anchor was unreadable; will rebuild.")
+            Logger.workoutCache.error("Cached query anchor was unreadable; will rebuild.")
             anchor = nil
         }
     }

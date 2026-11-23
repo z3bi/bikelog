@@ -8,7 +8,7 @@
 import CoreLocation
 import Foundation
 
-class MockHealthProvider: HealthProvider {
+final class MockHealthProvider: HealthProvider {
     
     init(unit: UnitLength = .miles) {
         self.unit = unit
@@ -16,7 +16,7 @@ class MockHealthProvider: HealthProvider {
     
     let unit: UnitLength
     
-    func generateWorkout(activity: Activity, dayOffset: Int = 1) -> Workout {
+    func generateWorkout(dayOffset: Int = 1) -> Workout {
         let distance: Measurement<UnitLength> = Measurement(value: Double.random(in: 15...30), unit: unit)
         let mph = Double.random(in: 10...20)
         let duration: TimeInterval = (distance.value / mph) * 60 * 60
@@ -28,13 +28,12 @@ class MockHealthProvider: HealthProvider {
         return Workout(id: UUID(),
                        startDate: start,
                        endDate: end,
-                       activity: activity,
                        duration: duration,
                        distance: distance)
     }
     
-    func generateWorkouts(activity: Activity, range: ClosedRange<Int>) -> [Workout] {
-        range.map { generateWorkout(activity: activity, dayOffset: $0) }
+    func generateWorkouts(range: ClosedRange<Int>) -> [Workout] {
+        range.map { generateWorkout(dayOffset: $0) }
     }
 
     func details(for workout: Workout) async throws -> WorkoutDetails {
@@ -45,7 +44,7 @@ class MockHealthProvider: HealthProvider {
         let samples = zip(distances, weights).map { meters, weight in
             let end = min(start + workout.duration * weight / weightSum, workout.endDate)
             defer { start = end }
-            return MileSpeedSplit.DistanceSample(start: start, end: end, meters: meters)
+            return SpeedSplit.DistanceSample(start: start, end: end, meters: meters)
         }
         let readings = (0..<24).map { index in
             WorkoutDetails.HeartRateReading(id: UUID(),
@@ -63,17 +62,25 @@ class MockHealthProvider: HealthProvider {
                               peakHeartRate: readings.map(\.beatsPerMinute).max(),
                               activeCalories: workout.duration / 60 * 6,
                               elevationGain: Measurement(value: 85, unit: .meters),
-                              mileSpeeds: MileSpeedSplit.calculate(samples: samples, workoutStart: workout.startDate,
-                                                                   workoutEnd: workout.endDate))
+                              distanceSamples: samples)
     }
     
-    func monitorWorkouts(activity: Activity, onResult: @MainActor (HealthResult) -> Void) async throws {
-        let initialWorkouts = generateWorkouts(activity: activity, range: 50...100)
-        onResult(HealthResult(workouts: initialWorkouts, unit: unit, cached: true))
-
-        try await Task.sleep(for: .seconds(2))
-        let newWorkouts = generateWorkouts(activity: activity, range: 10...13)
-        onResult(HealthResult(workouts: initialWorkouts + newWorkouts, unit: unit, cached: false))
+    func workoutUpdates() -> AsyncThrowingStream<HealthResult, Error> {
+        AsyncThrowingStream { continuation in
+            let task = Task {
+                let initialWorkouts = generateWorkouts(range: 50...100)
+                continuation.yield(HealthResult(workouts: initialWorkouts, unit: unit, cached: true))
+                do {
+                    try await Task.sleep(for: .seconds(2))
+                    let newWorkouts = generateWorkouts(range: 10...13)
+                    continuation.yield(HealthResult(workouts: initialWorkouts + newWorkouts, unit: unit, cached: false))
+                    continuation.finish()
+                } catch {
+                    continuation.finish(throwing: error)
+                }
+            }
+            continuation.onTermination = { _ in task.cancel() }
+        }
     }
 }
 

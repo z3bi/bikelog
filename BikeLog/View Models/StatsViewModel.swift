@@ -10,16 +10,14 @@ import Foundation
 struct StatsViewModel {
     let dateInterval: DateInterval
     let period: StatisticalPeriod
-    let activity: Activity
     let unit: UnitLength
     let workouts: [Workout]
     private let calendar: Calendar
     
-    init(date: Date, period: StatisticalPeriod, activity: Activity, unit: UnitLength, workouts: [Workout], calendar: Calendar = .current) {
+    init(date: Date, period: StatisticalPeriod, unit: UnitLength, workouts: [Workout], calendar: Calendar = .current) {
         let interval = period.dateInterval(from: date, calendar: calendar)
         self.dateInterval = interval
         self.period = period
-        self.activity = activity
         self.unit = unit
         self.workouts = WorkoutPeriodTotal.workouts(workouts, in: interval)
         self.calendar = calendar
@@ -44,7 +42,7 @@ struct StatsViewModel {
     }
     
     func workoutCount() -> String {
-        activity.workoutCount(workouts.count)
+        Workout.countDescription(workouts.count)
     }
 }
 

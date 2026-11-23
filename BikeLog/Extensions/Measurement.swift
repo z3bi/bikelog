@@ -31,6 +31,10 @@ extension UnitLength {
         }
     }
     
+    var splitLength: Measurement<UnitLength> {
+        Measurement(value: 1, unit: self == .miles ? .miles : .kilometers)
+    }
+
     var paceUnit: UnitSpeed {
         switch self {
         case .miles:

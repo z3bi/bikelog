@@ -2,32 +2,29 @@ import Foundation
 import OSLog
 
 struct WorkoutPeriodTotal: Identifiable {
-    private static let logger = Logger(subsystem: "BikeLog", category: "Workout totals")
-
     let startDate: Date
     let count: Int
-    let miles: Double
+    let distance: Measurement<UnitLength>
 
     var id: Date { startDate }
 
-    var formattedMiles: String {
-        Self.formatMiles(miles)
+    var formattedDistance: String {
+        Self.format(distance)
     }
 
-    static func formatMiles(_ miles: Double, width: LengthFormat.UnitWidth = .abbreviated) -> String {
-        Measurement(value: miles, unit: UnitLength.miles)
-            .formatted(LengthFormat.lengthFormat(fractions: 1, width: width))
+    static func format(_ distance: Measurement<UnitLength>, width: LengthFormat.UnitWidth = .abbreviated) -> String {
+        distance.formatted(LengthFormat.lengthFormat(fractions: 1, width: width))
     }
 
-    static func yearly(_ workouts: [Workout], calendar: Calendar) -> [Self] {
-        summarize(workouts, by: .year, calendar: calendar)
+    static func yearly(_ workouts: [Workout], unit: UnitLength, calendar: Calendar) -> [Self] {
+        summarize(workouts, by: .year, unit: unit, calendar: calendar)
     }
 
-    static func monthly(_ workouts: [Workout], in year: Date, calendar: Calendar) -> [Self] {
+    static func monthly(_ workouts: [Workout], in year: Date, unit: UnitLength, calendar: Calendar) -> [Self] {
         let workoutsInYear = workouts.filter {
             calendar.isDate($0.startDate, equalTo: year, toGranularity: .year)
         }
-        return summarize(workoutsInYear, by: .month, calendar: calendar)
+        return summarize(workoutsInYear, by: .month, unit: unit, calendar: calendar)
     }
 
     static func workouts(_ workouts: [Workout], in interval: DateInterval) -> [Workout] {
@@ -39,18 +36,19 @@ struct WorkoutPeriodTotal: Identifiable {
         return Measurement(value: distance, unit: unit)
     }
 
-    private static func summarize(_ workouts: [Workout], by component: Calendar.Component, calendar: Calendar) -> [Self] {
+    private static func summarize(_ workouts: [Workout], by component: Calendar.Component, unit: UnitLength,
+                                  calendar: Calendar) -> [Self] {
         let groups = Dictionary(grouping: workouts) { workout in
             calendar.dateInterval(of: component, for: workout.startDate)?.start
         }
         return groups.compactMap { start, periodWorkouts -> Self? in
             guard let start else {
-                logger.error("Could not determine the calendar period for \(periodWorkouts.count) workouts.")
+                Logger.workoutTotals.error("Could not determine the calendar period for \(periodWorkouts.count) workouts.")
                 return nil
             }
             return Self(startDate: start,
                         count: periodWorkouts.count,
-                        miles: distance(of: periodWorkouts, in: .miles).value)
+                        distance: distance(of: periodWorkouts, in: unit))
         }
         .sorted { $0.startDate > $1.startDate }
     }

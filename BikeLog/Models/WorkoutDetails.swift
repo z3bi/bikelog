@@ -14,6 +14,6 @@ struct WorkoutDetails: Sendable {
     var peakHeartRate: Double?
     var activeCalories: Double?
     var elevationGain: Measurement<UnitLength>?
-    var mileSpeeds: [MileSpeedSplit] = []
+    var distanceSamples: [SpeedSplit.DistanceSample] = []
     var hasPartialFailure = false
 }

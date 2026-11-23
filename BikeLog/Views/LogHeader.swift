@@ -15,7 +15,6 @@ struct LogHeader: View {
     private func summary(for period: StatisticalPeriod, at date: Date) -> StatsViewModel {
         StatsViewModel(date: date,
                        period: period,
-                       activity: manager.activity,
                        unit: manager.unit,
                        workouts: manager.workouts,
                        calendar: calendar)

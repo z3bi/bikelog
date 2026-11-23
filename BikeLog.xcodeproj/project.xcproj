@@ -46,6 +46,7 @@
             { "path": "HealthKitProvider.swift", "target-membership": [ "BikeLog/compile-sources" ] },
             { "path": "HealthKitProvider+Details.swift", "target-membership": [ "BikeLog/compile-sources" ] },
             { "path": "WorkoutCache.swift", "target-membership": [ "BikeLog/compile-sources" ] },
+            { "path": "HealthAuthorization.swift", "target-membership": [ "BikeLog/compile-sources" ] },
           ],
         }, {
           "kind": "group",
@@ -53,12 +54,10 @@
           "children": [
             { "path": "Workout.swift", "target-membership": [ "BikeLog/compile-sources" ] },
             { "path": "WorkoutDetails.swift", "target-membership": [ "BikeLog/compile-sources" ] },
-            { "path": "MileSpeedSplit.swift", "target-membership": [ "BikeLog/compile-sources" ] },
-            { "path": "Activity.swift", "target-membership": [ "BikeLog/compile-sources" ] },
+            { "path": "SpeedSplit.swift", "target-membership": [ "BikeLog/compile-sources" ] },
             { "path": "WorkoutSort.swift", "target-membership": [ "BikeLog/compile-sources" ] },
             { "path": "StatisticalPeriod.swift", "target-membership": [ "BikeLog/compile-sources" ] },
             { "path": "WorkoutPeriodTotal.swift", "target-membership": [ "BikeLog/compile-sources" ] },
-            { "path": "DefaultKey.swift", "target-membership": [ "BikeLog/compile-sources" ] },
             { "path": "HealthResult.swift", "target-membership": [ "BikeLog/compile-sources" ] },
           ],
         }, {
@@ -77,6 +76,7 @@
             { "path": "Sequence.swift", "target-membership": [ "BikeLog/compile-sources" ] },
             { "path": "Color.swift", "target-membership": [ "BikeLog/compile-sources" ] },
             { "path": "Locale.swift", "target-membership": [ "BikeLog/compile-sources" ] },
+            { "path": "Logger.swift", "target-membership": [ "BikeLog/compile-sources" ] },
           ],
         }, {
           "kind": "group",
@@ -108,8 +108,9 @@
       "children": [
         { "path": "DatePeriodTests.swift", "target-membership": [ "BikeLogTests/compile-sources" ] },
         { "path": "WorkoutManagerTests.swift", "target-membership": [ "BikeLogTests/compile-sources" ] },
-        { "path": "MileSpeedSplitTests.swift", "target-membership": [ "BikeLogTests/compile-sources" ] },
+        { "path": "SpeedSplitTests.swift", "target-membership": [ "BikeLogTests/compile-sources" ] },
         { "path": "WorkoutCacheTests.swift", "target-membership": [ "BikeLogTests/compile-sources" ] },
+        { "path": "HealthAuthorizationTests.swift", "target-membership": [ "BikeLogTests/compile-sources" ] },
       ],
     }, {
       "kind": "group",
@@ -148,8 +149,7 @@
         "GENERATE_INFOPLIST_FILE": "YES",
         "INFOPLIST_KEY_CFBundleDisplayName": "Bike Log",
         "INFOPLIST_KEY_LSApplicationCategoryType": "public.app-category.healthcare-fitness",
-        "INFOPLIST_KEY_NSHealthShareUsageDescription": "Display Workouts",
-        "INFOPLIST_KEY_NSHealthUpdateUsageDescription": "Import Workouts",
+        "INFOPLIST_KEY_NSHealthShareUsageDescription": "Bike Log reads your cycling workouts, routes, heart rate, and active energy to show your ride history and stats.",
         "INFOPLIST_KEY_UIApplicationSceneManifest_Generation": "YES",
         "INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents": "YES",
         "INFOPLIST_KEY_UILaunchScreen_Generation": "YES",

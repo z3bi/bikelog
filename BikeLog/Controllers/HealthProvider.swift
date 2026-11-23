@@ -5,10 +5,9 @@
 //  Created by Ameir Al-Zoubi on 1/11/22.
 //
 
-protocol HealthProvider {
-    @MainActor
-    func monitorWorkouts(activity: Activity, onResult: @MainActor (HealthResult) -> Void) async throws
+protocol HealthProvider: Sendable {
+    /// Emits complete workout snapshots: the cached copy first, then live updates until cancelled.
+    func workoutUpdates() -> AsyncThrowingStream<HealthResult, Error>
 
-    @MainActor
     func details(for workout: Workout) async throws -> WorkoutDetails
 }

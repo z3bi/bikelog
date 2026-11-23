@@ -8,34 +8,30 @@
 import Foundation
 import HealthKit
 
-extension HKWorkout {
-    static var cyclingDistanceType: HKQuantityType {
-        HKQuantityType.quantityType(forIdentifier: .distanceCycling)!
-    }
-}
+enum HealthTypes {
+    static let cyclingDistance = HKQuantityType(.distanceCycling)
+    static let heartRate = HKQuantityType(.heartRate)
+    static let activeEnergy = HKQuantityType(.activeEnergyBurned)
 
-extension UnitLength {
-    func hkUnit() -> HKUnit {
-        switch self {
-        case .miles:
-            return .mile()
-        case .kilometers:
-            return .meterUnit(with: .kilo)
-        default:
-            return .meter()
-        }
-    }
+    /// Everything the app reads, requested together so the user sees a single prompt.
+    static let read: Set<HKObjectType> = [
+        .workoutType(),
+        HKSeriesType.workoutRoute(),
+        cyclingDistance,
+        heartRate,
+        activeEnergy,
+    ]
 }
 
 extension HKUnit {
-    func lengthUnit() -> UnitLength {
-        switch self.unitString {
-        case "mi":
-            return UnitLength.miles
-        case "km":
-            return UnitLength.kilometers
+    var lengthUnit: UnitLength? {
+        switch self {
+        case .mile():
+            return .miles
+        case .meterUnit(with: .kilo):
+            return .kilometers
         default:
-            return UnitLength.meters
+            return nil
         }
     }
 }

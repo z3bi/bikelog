@@ -9,8 +9,6 @@ import Foundation
 import OSLog
 
 enum StatisticalPeriod: String, CaseIterable {
-    private static let logger = Logger(subsystem: "BikeLog", category: "Workout totals")
-
     case all
     case year
     case month
@@ -45,7 +43,7 @@ enum StatisticalPeriod: String, CaseIterable {
         }
 
         guard let interval = calendar.dateInterval(of: component, for: date) else {
-            Self.logger.error("Could not determine the date interval for \(self.rawValue).")
+            Logger.workoutTotals.error("Could not determine the date interval for \(self.rawValue).")
             return DateInterval(start: date, end: date)
         }
         return interval

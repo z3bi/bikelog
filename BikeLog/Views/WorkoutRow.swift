@@ -10,8 +10,8 @@ import SwiftUI
 struct WorkoutRow: View {
     let model: WorkoutViewModel
     
-    init(workout: Workout) {
-        self.model = WorkoutViewModel(workout: workout)
+    init(workout: Workout, unit: UnitLength) {
+        self.model = WorkoutViewModel(workout: workout, unit: unit)
     }
     
     var body: some View {
@@ -36,6 +36,6 @@ struct WorkoutRow: View {
 }
 
 #Preview("Cycling", traits: .sizeThatFitsLayout) {
-    WorkoutRow(workout: MockHealthProvider().generateWorkout(activity: .cycling))
+    WorkoutRow(workout: MockHealthProvider().generateWorkout(), unit: .miles)
         .padding()
 }

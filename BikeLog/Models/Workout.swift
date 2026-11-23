@@ -8,21 +8,19 @@
 import Foundation
 import HealthKit
 
-struct Workout: Hashable, Equatable, Identifiable, Codable {
+struct Workout: Hashable, Equatable, Identifiable, Codable, Sendable {
     let id: UUID
     let startDate: Date
     let endDate: Date
-    let activity: Activity
     let duration: TimeInterval
-    private(set) var distance: Measurement<UnitLength>
-    
+    let distance: Measurement<UnitLength>
+
     var speed: Measurement<UnitSpeed> {
-        (distance / Measurement(value: duration, unit: .seconds)).converted(to: activity.speedUnit(for: distance.unit))
+        distance / Measurement(value: duration, unit: .seconds)
     }
-    
-    mutating func updateUnit(_ unit: UnitLength) {
-        guard distance.unit != unit else { return }
-        distance = distance.converted(to: unit)
+
+    static func countDescription(_ count: Int) -> String {
+        String.localizedStringWithFormat(String(localized: "%d rides"), count)
     }
     
     func hash(into hasher: inout Hasher) {
@@ -32,31 +30,22 @@ struct Workout: Hashable, Equatable, Identifiable, Codable {
     static func ==(lhs: Workout, rhs: Workout) -> Bool {
         lhs.id == rhs.id
     }
-    
-    static func updateWorkouts(_ workouts: [Workout], unit: UnitLength) -> [Workout] {
-        workouts.map { workout in
-            var mutableWorkout = workout
-            mutableWorkout.updateUnit(unit)
-            return mutableWorkout
-        }
-    }
 }
 
 extension Workout {
-    init?(hkWorkout: HKWorkout, hkUnit: HKUnit) {
-        guard let activity = Activity(hkActivityType: hkWorkout.workoutActivityType) else { return nil }
+    /// Distances are stored in meters and converted to the preferred unit only for display.
+    init?(hkWorkout: HKWorkout) {
+        guard hkWorkout.workoutActivityType == .cycling else { return nil }
 
-        let distanceQuantity = hkWorkout.statistics(for: HKWorkout.cyclingDistanceType)?.sumQuantity() ?? hkWorkout.totalDistance
-        guard let distance = distanceQuantity?.doubleValue(for: hkUnit),
-              distance > 0.01 else {
+        let distanceQuantity = hkWorkout.statistics(for: HealthTypes.cyclingDistance)?.sumQuantity() ?? hkWorkout.totalDistance
+        guard let meters = distanceQuantity?.doubleValue(for: .meter()), meters > 10 else {
             return nil
         }
         
         self.init(id: hkWorkout.uuid,
                   startDate: hkWorkout.startDate,
                   endDate: hkWorkout.endDate,
-                  activity: activity,
                   duration: hkWorkout.duration,
-                  distance: Measurement(value: distance, unit: hkUnit.lengthUnit()))
+                  distance: Measurement(value: meters, unit: .meters))
     }
 }

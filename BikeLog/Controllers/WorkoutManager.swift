@@ -18,9 +18,7 @@ final class WorkoutManager {
         case failed
     }
 
-    private static let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "BikeLog", category: "Workouts")
     private let healthProvider: HealthProvider
-    private let defaults: UserDefaults
     @ObservationIgnored private var activeLoad: UUID?
     @ObservationIgnored private var hasLiveSnapshot = false
 
@@ -35,25 +33,10 @@ final class WorkoutManager {
             setWorkouts(workouts)
         }
     }
-    
-    var activity: Activity {
-        didSet {
-            guard activity != oldValue else { return }
-            activeLoad = nil
-            hasLiveSnapshot = false
-            workouts = []
-            refreshState = .loading
-            refreshRequestID = UUID()
-            defaults.set(activity.rawValue, forKey: DefaultKey.activity.rawValue)
-        }
-    }
 
-    init(healthProvider: HealthProvider, defaults: UserDefaults = .standard) {
+    init(healthProvider: HealthProvider) {
         self.healthProvider = healthProvider
-        self.defaults = defaults
-        self.unit = Locale.current.distanceUnit()
-        self.activity = defaults.string(forKey: DefaultKey.activity.rawValue)
-            .flatMap(Activity.init(rawValue:)) ?? .cycling
+        self.unit = Locale.current.distanceUnit
     }
 
     func retryRefresh() {
@@ -66,8 +49,8 @@ final class WorkoutManager {
         try await healthProvider.details(for: workout)
     }
 
-    func monitorWorkouts(for activity: Activity) async {
-        guard !Task.isCancelled, activity == self.activity else { return }
+    func monitorWorkouts() async {
+        guard !Task.isCancelled else { return }
         let load = UUID()
         activeLoad = load
         let preserveDisplayedWorkouts = hasLiveSnapshot || !workouts.isEmpty
@@ -80,20 +63,20 @@ final class WorkoutManager {
         }
 
         do {
-            try await healthProvider.monitorWorkouts(activity: activity) { result in
-                guard !Task.isCancelled, self.activeLoad == load else { return }
-                if result.cached && preserveDisplayedWorkouts { return }
-                self.unit = result.unit
-                self.setWorkouts(result.workouts)
+            for try await result in healthProvider.workoutUpdates() {
+                guard !Task.isCancelled, activeLoad == load else { break }
+                if result.cached && preserveDisplayedWorkouts { continue }
+                unit = result.unit
+                setWorkouts(result.workouts)
                 if !result.cached {
-                    self.hasLiveSnapshot = true
-                    self.refreshState = .ready
+                    hasLiveSnapshot = true
+                    refreshState = .ready
                 }
             }
         } catch {
             guard !Task.isCancelled, activeLoad == load else { return }
             refreshState = .failed
-            Self.logger.error("Workout monitoring failed: \(error.localizedDescription, privacy: .private)")
+            Logger.workouts.error("Workout monitoring failed: \(error.localizedDescription, privacy: .private)")
         }
     }
     

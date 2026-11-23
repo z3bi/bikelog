@@ -3,6 +3,8 @@ import SwiftUI
 
 struct WorkoutDetailCharts: View {
     let details: WorkoutDetails
+    let speedSplits: [SpeedSplit]
+    let unit: UnitLength
 
     var body: some View {
         if !details.heartRate.isEmpty || details.averageHeartRate != nil ||
@@ -45,22 +47,27 @@ struct WorkoutDetailCharts: View {
             }
         }
 
-        if !details.mileSpeeds.isEmpty {
+        if !speedSplits.isEmpty {
+            let isMiles = unit == .miles
+            let splitName: LocalizedStringKey = isMiles ? "Mile" : "Kilometer"
+            let speedUnit = unit.speedUnit
+
             VStack(alignment: .leading, spacing: 8) {
-                Text("Speed by Mile")
+                Text(isMiles ? "Speed by Mile" : "Speed by Kilometer")
                     .workoutChartTitleStyle()
 
-                Chart(details.mileSpeeds) { split in
-                    LineMark(x: .value("Mile", split.mile), y: .value("Average speed", split.milesPerHour))
+                Chart(speedSplits) { split in
+                    let speed = split.speed(in: speedUnit)
+                    LineMark(x: .value(splitName, split.index), y: .value("Average speed", speed.value))
                         .accessibilityHidden(true)
-                    PointMark(x: .value("Mile", split.mile), y: .value("Average speed", split.milesPerHour))
-                        .accessibilityLabel(Text("Mile \(split.mile)"))
-                        .accessibilityValue(Text("\(split.milesPerHour, format: .number.precision(.fractionLength(1))) mph"))
+                    PointMark(x: .value(splitName, split.index), y: .value("Average speed", speed.value))
+                        .accessibilityLabel(isMiles ? Text("Mile \(split.index)") : Text("Kilometer \(split.index)"))
+                        .accessibilityValue(Text(speed.formatted(SpeedFormat.speedFormat())))
                 }
                 .foregroundStyle(Color.Theme.primary)
                 .chartXAxis { AxisMarks(values: .automatic(desiredCount: 5)) }
-                .chartXAxisLabel("Mile")
-                .chartYAxisLabel("Average speed (mph)")
+                .chartXAxisLabel(splitName)
+                .chartYAxisLabel("Average speed (\(speedUnit.symbol))")
                 .frame(minHeight: 180)
             }
             .listRowBackground(Color.Theme.appBackground)

@@ -81,18 +81,18 @@ class DatePeriodTests: XCTestCase {
             ride(start: "2020-06-01T00:00:00Z", distance: Measurement(value: 20, unit: .miles)),
         ]
 
-        let totals = WorkoutPeriodTotal.yearly(workouts, calendar: calendar)
+        let totals = WorkoutPeriodTotal.yearly(workouts, unit: .miles, calendar: calendar)
 
         XCTAssertEqual(totals.map { calendar.component(.year, from: $0.startDate) }, [2023, 2022, 2020])
         XCTAssertEqual(totals.map(\.count), [2, 1, 1])
-        XCTAssertEqual(try XCTUnwrap(totals.first).miles, 15, accuracy: 0.001)
+        XCTAssertEqual(try XCTUnwrap(totals.first).distance.value, 15, accuracy: 0.001)
     }
 
     func testYearlyTotalsAreEmptyWhenThereAreNoWorkouts() {
-        XCTAssertTrue(WorkoutPeriodTotal.yearly([], calendar: cal).isEmpty)
+        XCTAssertTrue(WorkoutPeriodTotal.yearly([], unit: .miles, calendar: cal).isEmpty)
     }
 
-    func testMonthlyTotalsIncludeOnlyMonthsWithWorkoutsInSelectedLocalYear() throws {
+    func testMonthlyTotalsIncludeOnlyMonthsWithWorkoutsInSelectedLocalYearInPreferredUnit() throws {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = try XCTUnwrap(TimeZone(identifier: "America/Los_Angeles"))
         let year = try Date("2023-01-01T08:00:00Z", strategy: .iso8601)
@@ -104,12 +104,13 @@ class DatePeriodTests: XCTestCase {
             ride(start: "2024-01-01T08:00:00Z", distance: Measurement(value: 8, unit: .miles)),
         ]
 
-        let totals = WorkoutPeriodTotal.monthly(workouts, in: year, calendar: calendar)
+        let totals = WorkoutPeriodTotal.monthly(workouts, in: year, unit: .kilometers, calendar: calendar)
 
         XCTAssertEqual(totals.map { calendar.component(.month, from: $0.startDate) }, [12, 1])
         XCTAssertEqual(totals.map(\.count), [2, 1])
-        XCTAssertEqual(try XCTUnwrap(totals.first).miles, 15, accuracy: 0.001)
-        XCTAssertEqual(totals.last?.miles, 5)
+        XCTAssertEqual(totals.map(\.distance.unit), [.kilometers, .kilometers])
+        XCTAssertEqual(try XCTUnwrap(totals.first).distance.value, 24.14016, accuracy: 0.001)
+        XCTAssertEqual(try XCTUnwrap(totals.last).distance.value, 8.04672, accuracy: 0.001)
     }
 
     func testWorkoutListFiltersToSelectedLocalMonthAndKeepsInputOrder() throws {
@@ -141,7 +142,7 @@ class DatePeriodTests: XCTestCase {
         let previous = try ride(start: "2024-03-04T07:59:59Z", distance: distance)
         let next = try ride(start: "2024-03-11T07:00:00Z", distance: distance)
         let workouts = [next, last, first, previous]
-        let summary = StatsViewModel(date: sunday, period: .week, activity: .cycling,
+        let summary = StatsViewModel(date: sunday, period: .week,
                                      unit: .miles, workouts: workouts, calendar: calendar)
 
         XCTAssertEqual(summary.workouts, [last, first])
@@ -155,7 +156,7 @@ class DatePeriodTests: XCTestCase {
             ride(start: date, distance: Measurement(value: 2, unit: .kilometers)),
         ]
         let summary = StatsViewModel(date: try Date(date, strategy: .iso8601), period: .all,
-                                     activity: .cycling, unit: .kilometers, workouts: workouts)
+                                     unit: .kilometers, workouts: workouts)
         let expected = Measurement(value: 3.609344, unit: UnitLength.kilometers)
             .formatted(LengthFormat.lengthFormat(fractions: 1))
 
@@ -167,7 +168,6 @@ class DatePeriodTests: XCTestCase {
         return Workout(id: UUID(),
                        startDate: startDate,
                        endDate: startDate.addingTimeInterval(600),
-                       activity: .cycling,
                        duration: 600,
                        distance: distance)
     }

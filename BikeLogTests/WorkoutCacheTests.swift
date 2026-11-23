@@ -11,7 +11,7 @@ final class WorkoutCacheTests: XCTestCase {
         try FileManager.default.createDirectory(at: documents, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: root) }
 
-        let legacy = documents.appending(path: Activity.cycling.rawValue)
+        let legacy = documents.appending(path: "cycling")
         let unrelated = documents.appending(path: "notes.txt")
         let oldWorkout = makeWorkout()
         let original = HealthResult(workouts: [oldWorkout], unit: .miles, cached: true,
@@ -20,7 +20,7 @@ final class WorkoutCacheTests: XCTestCase {
         try Data("leave this alone".utf8).write(to: unrelated)
 
         let cache = WorkoutCache(directory: directory, legacyDirectory: documents)
-        let migrated = try await cache.load(for: .cycling)
+        let migrated = try await cache.load()
         XCTAssertEqual(migrated?.workouts, [oldWorkout])
         XCTAssertNotNil(migrated?.anchor)
         XCTAssertFalse(FileManager.default.fileExists(atPath: legacy.path))
@@ -28,8 +28,8 @@ final class WorkoutCacheTests: XCTestCase {
 
         let newWorkout = makeWorkout()
         try await cache.save(original.applying(added: [newWorkout], deleted: [oldWorkout.id],
-                                               newAnchor: HKQueryAnchor(fromValue: 2)), for: .cycling)
-        let latest = try await cache.load(for: .cycling)
+                                               newAnchor: HKQueryAnchor(fromValue: 2)))
+        let latest = try await cache.load()
         XCTAssertEqual(latest?.workouts, [newWorkout])
         XCTAssertEqual(latest?.cached, true)
         XCTAssertNotNil(latest?.anchor)
@@ -60,7 +60,7 @@ final class WorkoutCacheTests: XCTestCase {
     }
 
     private func makeWorkout() -> Workout {
-        Workout(id: UUID(), startDate: .distantPast, endDate: .distantPast, activity: .cycling,
+        Workout(id: UUID(), startDate: .distantPast, endDate: .distantPast,
                 duration: 600, distance: Measurement(value: 2, unit: .miles))
     }
 }
