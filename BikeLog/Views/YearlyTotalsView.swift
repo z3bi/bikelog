@@ -41,3 +41,39 @@ struct YearlyTotalsView: View {
         .navigationTitle(Text("All Cycling Workouts"))
     }
 }
+
+#Preview("Loaded", traits: .app) {
+    let manager = WorkoutManager.preview(.loaded)
+    NavigationStack { YearlyTotalsView(manager: manager) }
+        .monitoring(manager)
+}
+
+#Preview("Loading", traits: .app) {
+    let manager = WorkoutManager.preview(.firstLaunch)
+    NavigationStack { YearlyTotalsView(manager: manager) }
+        .monitoring(manager)
+}
+
+#Preview("Empty", traits: .app) {
+    let manager = WorkoutManager.preview(.empty)
+    NavigationStack { YearlyTotalsView(manager: manager) }
+        .monitoring(manager)
+}
+
+#Preview("Error", traits: .app) {
+    let manager = WorkoutManager.preview(.failed)
+    NavigationStack { YearlyTotalsView(manager: manager) }
+        .monitoring(manager)
+}
+
+#Preview("Error with Cache", traits: .app) {
+    let manager = WorkoutManager.preview(.failedWithCache)
+    NavigationStack { YearlyTotalsView(manager: manager) }
+        .monitoring(manager)
+}
+
+#Preview("Metric", traits: .app) {
+    let manager = WorkoutManager.preview(.loaded, unit: .kilometers)
+    NavigationStack { YearlyTotalsView(manager: manager) }
+        .monitoring(manager)
+}

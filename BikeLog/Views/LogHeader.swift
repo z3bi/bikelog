@@ -78,3 +78,36 @@ struct LogHeader: View {
         }
     }
 }
+
+#Preview("Loaded", traits: .app) {
+    let manager = WorkoutManager.preview(.loaded)
+    List {
+        LogHeader(manager: manager) { _ in }
+            .listRowBackground(Color.Theme.appBackground)
+            .listRowSeparator(.hidden)
+    }
+    .themedList()
+    .monitoring(manager)
+}
+
+#Preview("Loading", traits: .app) {
+    let manager = WorkoutManager.preview(.firstLaunch)
+    List {
+        LogHeader(manager: manager) { _ in }
+            .listRowBackground(Color.Theme.appBackground)
+            .listRowSeparator(.hidden)
+    }
+    .themedList()
+    .monitoring(manager)
+}
+
+#Preview("Error", traits: .app) {
+    let manager = WorkoutManager.preview(.failed)
+    List {
+        LogHeader(manager: manager) { _ in }
+            .listRowBackground(Color.Theme.appBackground)
+            .listRowSeparator(.hidden)
+    }
+    .themedList()
+    .monitoring(manager)
+}

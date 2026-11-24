@@ -35,14 +35,16 @@ struct DateBlock: View {
     }
 }
 
-#Preview("January 9", traits: .sizeThatFitsLayout) {
+#Preview("January 9", traits: .app, .sizeThatFitsLayout) {
     let date = DateComponents(calendar: Calendar(identifier: .gregorian), year: 2022, month: 1, day: 9)
     DateBlock(date: date.date ?? .now)
         .padding()
+        .background(Color.Theme.appBackground)
 }
 
-#Preview("December 1", traits: .sizeThatFitsLayout) {
+#Preview("December 1", traits: .app, .sizeThatFitsLayout) {
     let date = DateComponents(calendar: Calendar(identifier: .gregorian), year: 2021, month: 12, day: 1)
     DateBlock(date: date.date ?? .now)
         .padding()
+        .background(Color.Theme.appBackground)
 }

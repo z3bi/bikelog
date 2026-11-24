@@ -116,9 +116,44 @@ struct WorkoutDetail: View {
     }
 }
 
-#Preview {
+#Preview("Loaded", traits: .app) {
     let provider = MockHealthProvider()
     NavigationStack {
-        WorkoutDetail(workout: provider.generateWorkout(), unit: .miles, loadDetails: provider.details(for:))
+        WorkoutDetail(workout: MockHealthProvider.sampleWorkout, unit: .miles, loadDetails: provider.details(for:))
+    }
+}
+
+#Preview("Loading Details", traits: .app) {
+    let provider = MockHealthProvider(detailsScenario: .loading)
+    NavigationStack {
+        WorkoutDetail(workout: MockHealthProvider.sampleWorkout, unit: .miles, loadDetails: provider.details(for:))
+    }
+}
+
+#Preview("Load Failed", traits: .app) {
+    let provider = MockHealthProvider(detailsScenario: .failed)
+    NavigationStack {
+        WorkoutDetail(workout: MockHealthProvider.sampleWorkout, unit: .miles, loadDetails: provider.details(for:))
+    }
+}
+
+#Preview("Partial Failure", traits: .app) {
+    let provider = MockHealthProvider(detailsScenario: .partial)
+    NavigationStack {
+        WorkoutDetail(workout: MockHealthProvider.sampleWorkout, unit: .miles, loadDetails: provider.details(for:))
+    }
+}
+
+#Preview("Minimal Ride", traits: .app) {
+    let provider = MockHealthProvider(detailsScenario: .minimal)
+    NavigationStack {
+        WorkoutDetail(workout: MockHealthProvider.sampleWorkout, unit: .miles, loadDetails: provider.details(for:))
+    }
+}
+
+#Preview("Metric", traits: .app) {
+    let provider = MockHealthProvider(unit: .kilometers)
+    NavigationStack {
+        WorkoutDetail(workout: MockHealthProvider.sampleWorkout, unit: .kilometers, loadDetails: provider.details(for:))
     }
 }

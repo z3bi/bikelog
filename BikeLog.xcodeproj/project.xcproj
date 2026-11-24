@@ -21,7 +21,7 @@
           "path": "Views",
           "children": [
             { "path": "ExerciseLog.swift", "target-membership": [ "BikeLog/compile-sources" ] },
-            { "path": "AppScreen.swift", "target-membership": [ "BikeLog/compile-sources" ] },
+            { "path": "AppAppearance.swift", "target-membership": [ "BikeLog/compile-sources" ] },
             { "path": "ThemedListModifier.swift", "target-membership": [ "BikeLog/compile-sources" ] },
             { "path": "WorkoutRow.swift", "target-membership": [ "BikeLog/compile-sources" ] },
             { "path": "DateBlock.swift", "target-membership": [ "BikeLog/compile-sources" ] },
@@ -83,6 +83,7 @@
           "path": "Mocks",
           "children": [
             { "path": "MockHealthProvider.swift", "target-membership": [ "BikeLog/compile-sources" ] },
+            { "path": "AppPreview.swift", "target-membership": [ "BikeLog/compile-sources" ] },
           ],
         }, {
           "kind": "group",

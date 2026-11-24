@@ -23,3 +23,15 @@ struct WorkoutRouteMap: View {
         .toolbarTitleDisplayMode(.inline)
     }
 }
+
+#Preview("Route", traits: .app) {
+    NavigationStack {
+        WorkoutRouteMap(segments: [MockHealthProvider.sampleRoute])
+    }
+}
+
+#Preview("Interrupted Route", traits: .app) {
+    NavigationStack {
+        WorkoutRouteMap(segments: MockHealthProvider.sampleRouteSegments)
+    }
+}

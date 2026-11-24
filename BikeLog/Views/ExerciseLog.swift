@@ -51,6 +51,30 @@ struct ExerciseLog: View {
     }
 }
 
-#Preview {
-    ExerciseLog(workoutManager: WorkoutManager.mock())
+#Preview("Loaded", traits: .app) {
+    ExerciseLog(workoutManager: .preview(.loaded))
+}
+
+#Preview("First Launch", traits: .app) {
+    ExerciseLog(workoutManager: .preview(.firstLaunch))
+}
+
+#Preview("Refreshing Cached", traits: .app) {
+    ExerciseLog(workoutManager: .preview(.refreshing))
+}
+
+#Preview("Empty", traits: .app) {
+    ExerciseLog(workoutManager: .preview(.empty))
+}
+
+#Preview("Error", traits: .app) {
+    ExerciseLog(workoutManager: .preview(.failed))
+}
+
+#Preview("Error with Cache", traits: .app) {
+    ExerciseLog(workoutManager: .preview(.failedWithCache))
+}
+
+#Preview("Metric", traits: .app) {
+    ExerciseLog(workoutManager: .preview(.loaded, unit: .kilometers))
 }

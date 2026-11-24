@@ -34,3 +34,27 @@ struct MonthlyTotalsView: View {
         .navigationTitle(year.formatted(dateFormat.year()))
     }
 }
+
+#Preview("Loaded", traits: .app) {
+    let manager = WorkoutManager.preview(.loaded)
+    NavigationStack { MonthlyTotalsView(year: .now, manager: manager) }
+        .monitoring(manager)
+}
+
+#Preview("Loading", traits: .app) {
+    let manager = WorkoutManager.preview(.firstLaunch)
+    NavigationStack { MonthlyTotalsView(year: .now, manager: manager) }
+        .monitoring(manager)
+}
+
+#Preview("Error with Cache", traits: .app) {
+    let manager = WorkoutManager.preview(.failedWithCache)
+    NavigationStack { MonthlyTotalsView(year: .now, manager: manager) }
+        .monitoring(manager)
+}
+
+#Preview("Metric", traits: .app) {
+    let manager = WorkoutManager.preview(.loaded, unit: .kilometers)
+    NavigationStack { MonthlyTotalsView(year: .now, manager: manager) }
+        .monitoring(manager)
+}

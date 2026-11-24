@@ -22,3 +22,18 @@ struct WorkoutSummaryRow: View {
         .listRowBackground(Color.Theme.appBackground)
     }
 }
+
+#Preview("Period", traits: .app, .sizeThatFitsLayout) {
+    List {
+        WorkoutSummaryRow(title: "Nov", distance: "87.7 mi", count: Workout.countDescription(4))
+    }
+    .themedList()
+}
+
+#Preview("All-Time Header", traits: .app, .sizeThatFitsLayout) {
+    List {
+        WorkoutSummaryRow(title: "Total", distance: "1,241.5 miles", count: Workout.countDescription(55),
+                          isAllTimeHeader: true)
+    }
+    .themedList()
+}

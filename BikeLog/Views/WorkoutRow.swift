@@ -35,7 +35,16 @@ struct WorkoutRow: View {
     }
 }
 
-#Preview("Cycling", traits: .sizeThatFitsLayout) {
-    WorkoutRow(workout: MockHealthProvider().generateWorkout(), unit: .miles)
-        .padding()
+#Preview("Miles", traits: .app, .sizeThatFitsLayout) {
+    List {
+        WorkoutRow(workout: MockHealthProvider.sampleWorkout, unit: .miles)
+    }
+    .themedList()
+}
+
+#Preview("Kilometers", traits: .app, .sizeThatFitsLayout) {
+    List {
+        WorkoutRow(workout: MockHealthProvider.sampleWorkout, unit: .kilometers)
+    }
+    .themedList()
 }

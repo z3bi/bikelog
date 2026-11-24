@@ -41,3 +41,36 @@ struct PeriodWorkoutsView: View {
         .navigationTitle(title)
     }
 }
+
+#Preview("Week", traits: .app) {
+    let manager = WorkoutManager.preview(.loaded)
+    NavigationStack {
+        PeriodWorkoutsView(period: .week, interval: StatisticalPeriod.week.dateInterval(), manager: manager)
+    }
+    .monitoring(manager)
+}
+
+#Preview("Month", traits: .app) {
+    let manager = WorkoutManager.preview(.loaded)
+    NavigationStack {
+        PeriodWorkoutsView(period: .month, interval: StatisticalPeriod.month.dateInterval(), manager: manager)
+    }
+    .monitoring(manager)
+}
+
+#Preview("Empty Period", traits: .app) {
+    let manager = WorkoutManager.preview(.loaded)
+    let interval = StatisticalPeriod.month.dateInterval(from: .now.addingTimeInterval(-5 * 365 * 86_400))
+    NavigationStack {
+        PeriodWorkoutsView(period: .month, interval: interval, manager: manager)
+    }
+    .monitoring(manager)
+}
+
+#Preview("Error with Cache", traits: .app) {
+    let manager = WorkoutManager.preview(.failedWithCache)
+    NavigationStack {
+        PeriodWorkoutsView(period: .month, interval: StatisticalPeriod.month.dateInterval(), manager: manager)
+    }
+    .monitoring(manager)
+}

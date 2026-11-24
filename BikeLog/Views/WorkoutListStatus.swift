@@ -18,3 +18,21 @@ struct WorkoutListStatus: View {
         }
     }
 }
+
+#Preview("Loading", traits: .app) {
+    let manager = WorkoutManager.preview(.firstLaunch)
+    WorkoutListStatus(manager: manager)
+        .monitoring(manager)
+}
+
+#Preview("Empty", traits: .app) {
+    let manager = WorkoutManager.preview(.empty)
+    WorkoutListStatus(manager: manager)
+        .monitoring(manager)
+}
+
+#Preview("Error", traits: .app) {
+    let manager = WorkoutManager.preview(.failed)
+    WorkoutListStatus(manager: manager)
+        .monitoring(manager)
+}
