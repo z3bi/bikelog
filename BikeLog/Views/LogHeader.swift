@@ -58,7 +58,7 @@ struct LogHeader: View {
                 }
             }
             
-            if manager.isLoading {
+            if manager.refreshState == .loading {
                 HStack(spacing: 8) {
                     ProgressView()
                         .tint(Color.Theme.accentSecondary)

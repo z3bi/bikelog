@@ -15,6 +15,7 @@
       "kind": "group",
       "path": "BikeLog",
       "children": [
+        { "path": "Info.plist" },
         { "path": "BikeLogApp.swift", "target-membership": [ "BikeLog/compile-sources" ] },
         {
           "kind": "group",
@@ -148,12 +149,12 @@
         "DEVELOPMENT_ASSET_PATHS": "\"BikeLog/Preview Content\"",
         "ENABLE_PREVIEWS": "YES",
         "GENERATE_INFOPLIST_FILE": "YES",
+        "INFOPLIST_FILE": "BikeLog/Info.plist",
         "INFOPLIST_KEY_CFBundleDisplayName": "Bike Log",
         "INFOPLIST_KEY_LSApplicationCategoryType": "public.app-category.healthcare-fitness",
         "INFOPLIST_KEY_NSHealthShareUsageDescription": "Bike Log reads your cycling workouts, routes, heart rate, and active energy to show your ride history and stats.",
         "INFOPLIST_KEY_UIApplicationSceneManifest_Generation": "YES",
         "INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents": "YES",
-        "INFOPLIST_KEY_UILaunchScreen_Generation": "YES",
         "INFOPLIST_KEY_UISupportedInterfaceOrientations": "UIInterfaceOrientationPortrait",
         "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad": "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown",
         "IPHONEOS_DEPLOYMENT_TARGET": "26.6",
