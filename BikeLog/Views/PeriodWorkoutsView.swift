@@ -31,6 +31,7 @@ struct PeriodWorkoutsView: View {
                 List {
                     if manager.refreshState == .failed {
                         WorkoutListStatus(manager: manager)
+                            .listRowBackground(Color.Theme.appBackground)
                     }
                     WorkoutRows(workouts: workouts, unit: manager.unit)
                         .listRowBackground(Color.Theme.appBackground)

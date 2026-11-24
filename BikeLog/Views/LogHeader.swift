@@ -57,6 +57,18 @@ struct LogHeader: View {
                     .buttonStyle(.plain)
                 }
             }
+            
+            if manager.isLoading {
+                HStack(spacing: 8) {
+                    ProgressView()
+                        .tint(Color.Theme.accentSecondary)
+                    Text("Fetching workouts...")
+                        .foregroundStyle(Color.Theme.accentSecondary)
+                }
+                .padding(.vertical, 8)
+            } else if manager.refreshState == .failed {
+                WorkoutListStatus(manager: manager)
+            }
 
             Picker("Sort", selection: $manager.sort) {
                 ForEach(WorkoutSort.allCases, id: \.self) {
@@ -65,16 +77,7 @@ struct LogHeader: View {
             }
             .pickerStyle(.segmented)
             .padding(.top, 8)
-            if manager.isLoading {
-                HStack(spacing: 8) {
-                    ProgressView()
-                    Text("Fetching workouts...")
-                        .foregroundStyle(.gray)
-                }
-                .padding(.top, 22)
-            } else if manager.refreshState == .failed {
-                WorkoutListStatus(manager: manager)
-            }
+            .opacity(manager.workouts.isEmpty ? 0 : 1)
         }
     }
 }

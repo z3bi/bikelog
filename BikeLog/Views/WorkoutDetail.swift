@@ -79,10 +79,21 @@ struct WorkoutDetail: View {
             }
 
             if isLoading {
-                ProgressView("Loading workout details...")
+                HStack(spacing: 8) {
+                    ProgressView()
+                        .tint(Color.Theme.accentSecondary)
+                    Text("Loading workout...")
+                        .foregroundStyle(Color.Theme.accentSecondary)
+                }
+                .listRowBackground(Color.Theme.appBackground)
             } else if loadFailed || details?.hasPartialFailure == true {
-                Label("Some workout details couldn’t load", systemImage: "exclamationmark.circle")
-                Button("Retry") { attempt += 1 }
+                HStack(spacing: 24) {
+                    Label("Workout failed to load", systemImage: "exclamationmark.triangle")
+                    Button("Retry") { attempt += 1 }
+                        .buttonStyle(.bordered)
+                }
+                .foregroundStyle(Color.Theme.accentSecondary)
+                .listRowBackground(Color.Theme.appBackground)
             }
         }
         .themedList()
@@ -94,6 +105,8 @@ struct WorkoutDetail: View {
                     WorkoutRouteMap(segments: details.route)
                 } else {
                     ContentUnavailableView("Route Unavailable", systemImage: "map")
+                        .foregroundStyle(Color.Theme.accentSecondary)
+                        .background(Color.Theme.appBackground)
                 }
             }
         }

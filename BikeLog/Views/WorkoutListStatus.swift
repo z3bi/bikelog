@@ -6,15 +6,23 @@ struct WorkoutListStatus: View {
     var body: some View {
         switch manager.refreshState {
         case .loading:
-            ProgressView("Loading workouts...")
+            HStack(spacing: 8) {
+                ProgressView()
+                    .tint(Color.Theme.accentSecondary)
+                Text("Loading workouts...")
+                    .foregroundStyle(Color.Theme.accentSecondary)
+            }
         case .ready:
             ContentUnavailableView("No Workouts", systemImage: "calendar")
+                .background(Color.Theme.appBackground)
+                .foregroundStyle(Color.Theme.accentSecondary)
         case .failed:
-            VStack(alignment: .leading, spacing: 8) {
-                Label("Couldn't refresh workouts", systemImage: "exclamationmark.circle")
+            HStack(spacing: 24) {
+                Label("Refresh failed", systemImage: "exclamationmark.triangle")
                 Button("Retry", action: manager.retryRefresh)
                     .buttonStyle(.bordered)
             }
+            .foregroundStyle(Color.Theme.accentSecondary)
         }
     }
 }
