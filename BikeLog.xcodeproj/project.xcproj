@@ -153,6 +153,7 @@
         "INFOPLIST_KEY_CFBundleDisplayName": "Bike Log",
         "INFOPLIST_KEY_LSApplicationCategoryType": "public.app-category.healthcare-fitness",
         "INFOPLIST_KEY_NSHealthShareUsageDescription": "Bike Log reads your cycling workouts, routes, heart rate, and active energy to show your ride history and stats.",
+        "INFOPLIST_KEY_NSHealthUpdateUsageDescription": "Bike Log uses Apple Health integration to manage and sync your cycling workout records.",
         "INFOPLIST_KEY_UIApplicationSceneManifest_Generation": "YES",
         "INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents": "YES",
         "INFOPLIST_KEY_UISupportedInterfaceOrientations": "UIInterfaceOrientationPortrait",
